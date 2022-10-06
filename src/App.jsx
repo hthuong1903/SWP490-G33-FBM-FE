@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import { Button, ThemeProvider, Typography } from '@mui/material';
-import { theme } from './assets/theme';
+import { theme } from './Assets/Theme/theme';
 
 function App() {
   const [count, setCount] = useState(0);
