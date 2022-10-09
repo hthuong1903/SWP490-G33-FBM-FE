@@ -23,6 +23,7 @@ function App() {
         <Route path="/" element={<UserLayout />}>
           <Route index element={<Login />} />
         </Route>
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>

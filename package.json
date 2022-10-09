@@ -11,16 +11,20 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@hookform/resolvers": "^2.9.8",
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.8",
     "@mui/x-data-grid": "^5.17.6",
     "axios": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.37.0",
     "react-router-dom": "^6.4.2",
-    "react-toastify": "^9.0.8"
+    "react-toastify": "^9.0.8",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@rollup/plugin-alias": "^4.0.0",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.1.0",
