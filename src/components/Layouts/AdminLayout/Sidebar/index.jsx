@@ -13,6 +13,7 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import ConfirmModal from '../../../Common/Modal/ConfirmModal'
 
 function Sidebar() {
@@ -38,7 +39,7 @@ function Sidebar() {
         content="Bạn muốn đăng xuất?"
         isOpen={isOpenConfirmDialog}
         handleClose={() => setIsOpenConfirmDialog(false)}
-        handleConfirm={() => console.log('abc')}
+        handleConfirm={() => toast.success('Đăng xuất thành công!')}
       />
       <Box sx={{ p: 2, height: '100vh' }}>
         <Paper elevation={2} sx={{ height: '100%' }}>
