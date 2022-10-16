@@ -8,6 +8,7 @@ function OvertimeTab({ value, index }) {
     const [isOpenOvertimeModal, setIsOpenOvertimeModal] = useState(false)
 
     const handleAction = (params) => {
+        console.log(params)
         setIsOpenOvertimeModal(true)
     }
 

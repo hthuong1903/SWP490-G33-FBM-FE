@@ -1,21 +1,8 @@
-import DataTable from '@/components/Common/DataTable'
+import TimeKeepingApi from '@/api/TimeKeepingApi'
 import ConfirmModal from '@/components/Common/Modal/ConfirmModal'
-import {
-    Avatar,
-    Box,
-    Button,
-    Divider,
-    IconButton,
-    MenuItem,
-    Tab,
-    Tabs,
-    TextField,
-    Tooltip
-} from '@mui/material'
-import React, { useState } from 'react'
-import ModalAddProduct from '../Product/components/ModalAddProduct'
-import ModalOvertime from './components/ModalOvertime'
-import ModalTimeKeeping from './components/ModalTimeKeeping'
+import { Box, Button, Divider, MenuItem, Tab, Tabs, TextField } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import OvertimeTab from './OvertimeTab'
 import TimeKeepingTab from './TimeKeepingTab'
 
@@ -26,11 +13,39 @@ function a11yProps(index) {
     }
 }
 
+const _month = new Date().getMonth() + 1
+const _year = new Date().getFullYear()
+
 function TimeKeeping() {
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
-    const [month, setMonth] = useState(1)
-    const [year, setYear] = useState(1)
+    const [month, setMonth] = useState(_month)
+    const [year, setYear] = useState(_year)
     const [value, setValue] = useState(0)
+    const [timeSheetPeriods, setTimeSheetPeriods] = useState([])
+
+    const getTimeSheetPeriods = async (period_code) => {
+        try {
+            const response = await TimeKeepingApi.getTimeSheetPeriods(period_code)
+            console.log(response)
+            setTimeSheetPeriods(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const createTimeSheetPeriods = async (month, year) => {
+        try {
+            const data = { month: month, periodCode: month + '' + year, year: year }
+            const response = await TimeKeepingApi.createTimeSheetPeriods(data)
+            console.log('createTimeSheetPeriods ' + response)
+            setTimeSheetPeriods(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getTimeSheetPeriods(month + '' + year)
+    }, [])
 
     const handleChange = (event, newValue) => {
         setValue(newValue)
@@ -61,6 +76,7 @@ function TimeKeeping() {
                         value={month}
                         onChange={(event) => {
                             setMonth(event.target.value)
+                            getTimeSheetPeriods(event.target.value + '' + year)
                         }}
                         sx={{ mr: 2 }}>
                         <MenuItem value={1}>Tháng 1</MenuItem>
@@ -84,17 +100,19 @@ function TimeKeeping() {
                         value={year}
                         onChange={(event) => {
                             setYear(event.target.value)
+                            getTimeSheetPeriods(month + '' + event.target.value)
                         }}>
-                        <MenuItem value={1}>2021</MenuItem>
-                        <MenuItem value={2}>2022</MenuItem>
+                        <MenuItem value={2021}>2021</MenuItem>
+                        <MenuItem value={2022}>2022</MenuItem>
                     </TextField>
                 </Box>
                 <Box>
                     <Button
                         variant="contained"
                         onClick={() => {
-                            // setIsOpenAddModal(true)
+                            createTimeSheetPeriods(month, year)
                         }}
+                        disabled={timeSheetPeriods.length > 0}
                         sx={{ mr: 2 }}>
                         Tạo kì công
                     </Button>
@@ -102,28 +120,38 @@ function TimeKeeping() {
                         variant="contained"
                         onClick={() => {
                             // setIsOpenAddModal(true)
-                        }}>
+                        }}
+                        disabled={timeSheetPeriods.length == 0}>
                         Xóa kì công
                     </Button>
                 </Box>
             </Box>
             <Divider sx={{ mb: 2 }} />
-            <Box sx={{ mb: 1 }}>
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="basic tabs example"
-                    centered>
-                    <Tab
-                        label="Chấm công"
-                        {...a11yProps(0)}
-                        sx={{ backgroundColor: 'white', mr: 2 }}
-                    />
-                    <Tab label="Làm thêm" {...a11yProps(1)} sx={{ backgroundColor: 'white' }} />
-                </Tabs>
-            </Box>
-            <TimeKeepingTab value={value} index={0} />
-            <OvertimeTab value={value} index={1} />
+
+            {timeSheetPeriods.length > 0 && (
+                <>
+                    <Box sx={{ mb: 1 }}>
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
+                            aria-label="basic tabs example"
+                            centered>
+                            <Tab
+                                label="Chấm công"
+                                {...a11yProps(0)}
+                                sx={{ backgroundColor: 'white', mr: 2 }}
+                            />
+                            <Tab
+                                label="Làm thêm"
+                                {...a11yProps(1)}
+                                sx={{ backgroundColor: 'white' }}
+                            />
+                        </Tabs>
+                    </Box>
+                    <TimeKeepingTab value={value} index={0} periodCode={month + '' + year} />
+                    <OvertimeTab value={value} index={1} />
+                </>
+            )}
         </>
     )
 }

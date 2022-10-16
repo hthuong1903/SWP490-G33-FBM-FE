@@ -1,17 +1,43 @@
+import TimeKeepingApi from '@/api/TimeKeepingApi'
 import DataTable from '@/components/Common/DataTable'
 import { Button, Tooltip } from '@mui/material'
 import { Box } from '@mui/system'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ModalTimeKeeping from './components/ModalTimeKeeping'
 
-function TimeKeepingTab({ value, index }) {
+function TimeKeepingTab({ value, index, periodCode }) {
     const [isOpenTimeKeepingModal, setIsOpenTimeKeepingModal] = useState(false)
+    const [timeSheetDetail, setTimeSheetDetail] = useState([])
+    const [employee, setEmployee] = useState({})
+
+    const getTimeSheetDetail = async (period_code) => {
+        try {
+            const response = await TimeKeepingApi.getTimeSheetDetails(period_code)
+            console.log(response)
+            if (response.data.length > 0) {
+                console.log('getTimeSheetDetail - ', response.data)
+                setTimeSheetDetail(response.data)
+            } else {
+                const res = await TimeKeepingApi.createTimeSheetDetails(period_code)
+                console.log('createTimeSheetDetails - ', res.data)
+                setTimeSheetDetail(res.data)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getTimeSheetDetail(periodCode)
+    }, [])
 
     const handleAction = (params) => {
+        setEmployee(params)
         setIsOpenTimeKeepingModal(true)
     }
 
     const columns = [
+        { field: 'id', headerName: 'Số thứ tự', flex: 0.5 },
         { field: 'name', headerName: 'TÊN', flex: 1 },
         {
             field: 'roles',
@@ -39,7 +65,7 @@ function TimeKeepingTab({ value, index }) {
                             <Button
                                 variant="contained"
                                 size="small"
-                                onClick={() => handleAction(params)}>
+                                onClick={() => handleAction(params.row)}>
                                 {/* <EditRounded fontSize="inherit" /> */}
                                 Chấm công
                             </Button>
@@ -49,41 +75,22 @@ function TimeKeepingTab({ value, index }) {
             }
         }
     ]
-    const rows = [
-        {
-            id: 1,
-            name: 'Le Anh Tuan',
-            roles: 'Bán hàng',
-            allowedDay: 2,
-            absentDay: 0,
-            holidaysWorking: 2,
-            weekendWorking: 2,
-            totalDayWorking: 22,
-            actions: 'ok'
-        },
-        {
-            id: 2,
-            name: 'Nguyen Van B',
-            roles: 'Bán hàng',
-            allowedDay: 2,
-            absentDay: 0,
-            holidaysWorking: 2,
-            weekendWorking: 2,
-            totalDayWorking: 22,
-            actions: 'ok'
-        },
-        {
-            id: 3,
-            name: 'Nguyen Van A',
-            roles: 'Bán hàng',
-            allowedDay: 2,
-            absentDay: 0,
-            holidaysWorking: 2,
-            weekendWorking: 2,
-            totalDayWorking: 22,
-            actions: 'ok'
-        }
-    ]
+    const rows = timeSheetDetail.map((item) => {
+        const container = {}
+        container['id'] = item.id
+        container['absentDay'] = item.absentDay
+        container['allowedDay'] = item.allowedDay
+        container['holidaysWorking'] = item.holidaysWorking
+        container['periodCode'] = item.periodCode
+        container['totalDayWorking'] = item.totalDayWorking
+        container['weekendWorking'] = item.weekendWorking
+        container['workingDay'] = item.workingDay
+        container['name'] = item.employee.name
+        container['roles'] = item.employee.roles[0].name
+        return container
+    })
+
+    console.log(rows)
 
     return (
         <div
@@ -91,11 +98,13 @@ function TimeKeepingTab({ value, index }) {
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}>
-            {isOpenTimeKeepingModal && (
+            {isOpenTimeKeepingModal && employee && (
                 <ModalTimeKeeping
                     isOpen={isOpenTimeKeepingModal}
                     title={'Chấm công'}
                     handleClose={() => setIsOpenTimeKeepingModal(false)}
+                    employee={employee}
+                    timeSheetDetail={timeSheetDetail}
                 />
             )}
 

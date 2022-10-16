@@ -5,7 +5,7 @@ export const schemaOvertime = yup.object().shape({
 
 })
 export const schemaTimeKeeping = yup.object().shape({
-  date: yup.string().required('Vui lòng điền vào trường này.'),
-
+  date: yup.date().nullable().required('Vui lòng điền vào trường này.').typeError('Vui lòng nhập định dạng dd/MM/yyyy'),
+  timesheet: yup.mixed(),
 })
 
