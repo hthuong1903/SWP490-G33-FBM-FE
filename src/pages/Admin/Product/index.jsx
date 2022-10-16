@@ -12,13 +12,13 @@ import ModalAddProduct from './components/ModalAddProduct'
 import ModalUpdateProduct from './components/ModalUpdateProduct'
 
 export default function Product() {
-  const [isOpenAddModal, setIsOpenAddModal] = useState(false)
-  const [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false)
+    const [isOpenAddModal, setIsOpenAddModal] = useState(false)
+    const [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false)
   const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
-  const [selectedRow, setSelectedRow] = useState(null)
-  const [listProducts, setListProducts] = useState([])
-  const [category, setCategory] = useState(-1)
-  const [provider, setProvider] = useState(-1)
+    const [selectedRow, setSelectedRow] = useState(null)
+    const [listProducts, setListProducts] = useState([])
+    const [category, setCategory] = useState(-1)
+    const [provider, setProvider] = useState(-1)
   const [isUpdated, setIsUpdated] = useState(false)
   const [isEdit, setIsEdit] = useState(true)
 
@@ -184,28 +184,28 @@ export default function Product() {
         />
       )}
 
-      <ConfirmModal
-        isOpen={isOpenConfirmModal}
-        title="Xác nhận"
-        content={`Bạn có muốn xóa ${selectedRow?.row.name}?`}
-        handleClose={() => setIsOpenConfirmModal(false)}
-        handleConfirm={() => handleDelete()}
-      />
-      <h2>Quản lý sản phẩm</h2>
-      <Box sx={{ mb: 2, mt: 3, display: 'flex', justifyContent: 'space-between' }}>
-        <FilterTable
-          chooseCategory={(category) => setCategory(category)}
-          chooseProvider={(provider) => setProvider(provider)}
-        />
-        <Button
-          variant="contained"
-          onClick={() => {
-            setIsOpenAddModal(true)
-          }}>
-          Thêm sản phẩm
-        </Button>
-      </Box>
-      <DataTable columns={columns} rows={listProducts} />
-    </>
-  )
+            <ConfirmModal
+                isOpen={isOpenConfirmModal}
+                title="Xác nhận"
+                content={`Bạn có muốn xóa ${selectedRow?.row.name}?`}
+                handleClose={() => setIsOpenConfirmModal(false)}
+                handleConfirm={() => handleDelete()}
+            />
+            <h2>Quản lý sản phẩm</h2>
+            <Box sx={{ mb: 2, mt: 3, display: 'flex', justifyContent: 'space-between' }}>
+                <FilterTable
+                    chooseCategory={(category) => setCategory(category)}
+                    chooseProvider={(provider) => setProvider(provider)}
+                />
+                <Button
+                    variant="contained"
+                    onClick={() => {
+                        setIsOpenAddModal(true)
+                    }}>
+                    Thêm sản phẩm
+                </Button>
+            </Box>
+            <DataTable columns={columns} rows={listProducts} />
+        </>
+    )
 }

@@ -7,6 +7,7 @@ import AdminLayout from './components/Layouts/AdminLayout'
 import UserLayout from './components/Layouts/UserLayout'
 import Product from './pages/Admin/Product'
 import Receipt from './pages/Admin/Receipt'
+import TimeKeeping from './pages/Admin/TimeKeeping'
 import Login from './pages/Login'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Product />} />
           <Route path="receipts" element={<Receipt />} />
+          <Route path="timekeeping" element={<TimeKeeping />} />
         </Route>
         <Route path="/" element={<UserLayout />}>
           <Route index element={<Login />} />
