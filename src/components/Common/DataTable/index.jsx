@@ -1,9 +1,7 @@
-import styled from '@emotion/styled';
+import styled from '@emotion/styled'
 import { Box, Paper } from '@mui/material'
-import {
-    DataGrid, GridToolbar
-} from '@mui/x-data-grid'
-function DataTable({columns, rows}) {
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+function DataTable({ columns, rows }) {
     const StyledGridOverlay = styled('div')(({ theme }) => ({
         display: 'flex',
         flexDirection: 'column',
@@ -11,29 +9,35 @@ function DataTable({columns, rows}) {
         justifyContent: 'center',
         height: '100%',
         '& .ant-empty-img-1': {
-            fill: theme.palette.mode === 'light' ? '#aeb8c2' : '#262626',
+            fill: theme.palette.mode === 'light' ? '#aeb8c2' : '#262626'
         },
         '& .ant-empty-img-2': {
-            fill: theme.palette.mode === 'light' ? '#f5f5f7' : '#595959',
+            fill: theme.palette.mode === 'light' ? '#f5f5f7' : '#595959'
         },
         '& .ant-empty-img-3': {
-            fill: theme.palette.mode === 'light' ? '#dce0e6' : '#434343',
+            fill: theme.palette.mode === 'light' ? '#dce0e6' : '#434343'
         },
         '& .ant-empty-img-4': {
-            fill: theme.palette.mode === 'light' ? '#fff' : '#1c1c1c',
+            fill: theme.palette.mode === 'light' ? '#fff' : '#1c1c1c'
         },
         '& .ant-empty-img-5': {
             fillOpacity: theme.palette.mode === 'light' ? '0.8' : '0.08',
-            fill: theme.palette.mode === 'light' ? '#f5f5f5' : '#fff',
-        },
-    }));
+            fill: theme.palette.mode === 'light' ? '#f5f5f5' : '#fff'
+        }
+    }))
     function CustomNoRowsOverlay() {
         return (
             <StyledGridOverlay>
                 <svg width="120" height="100" viewBox="0 0 184 152" aria-hidden focusable="false">
                     <g fill="none" fillRule="evenodd">
                         <g transform="translate(24 31.67)">
-                            <ellipse className="ant-empty-img-5" cx="67.797" cy="106.89" rx="67.797" ry="12.668" />
+                            <ellipse
+                                className="ant-empty-img-5"
+                                cx="67.797"
+                                cy="106.89"
+                                rx="67.797"
+                                ry="12.668"
+                            />
                             <path
                                 className="ant-empty-img-1"
                                 d="M122.034 69.674L98.109 40.229c-1.148-1.386-2.826-2.225-4.593-2.225h-51.44c-1.766 0-3.444.839-4.592 2.225L13.56 69.674v15.383h108.475V69.674z"
@@ -59,35 +63,35 @@ function DataTable({columns, rows}) {
                 </svg>
                 <Box sx={{ mt: 1 }}>Danh sách trống</Box>
             </StyledGridOverlay>
-        );
+        )
     }
-  return (
-    <Paper style={{ display: 'flex', height: '85%' }}>
-      <div style={{ flexGrow: 1 }}>
-        <DataGrid
-          disableColumnFilter
-          disableColumnSelector
-          disableDensitySelector
-          // checkboxSelection
-          disableSelectionOnClick={true}
-          rows={rows}
-          columns={columns}
-          // pageSize={pageSize}
-          rowsPerPageOptions={[30, 50, 70]}
-          components={{
-            Toolbar: GridToolbar,
-            NoRowsOverlay: CustomNoRowsOverlay,
-          }}
-          componentsProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500 }
-            }
-          }}
-        />
-      </div>
-    </Paper>
-  )
+    return (
+        <Paper style={{ display: 'flex', height: '85%' }}>
+            <div style={{ flexGrow: 1 }}>
+                <DataGrid
+                    disableColumnFilter
+                    disableColumnSelector
+                    disableDensitySelector
+                    // checkboxSelection
+                    disableSelectionOnClick={true}
+                    rows={rows}
+                    columns={columns}
+                    // pageSize={pageSize}
+                    rowsPerPageOptions={[30, 50, 70]}
+                    components={{
+                        Toolbar: GridToolbar,
+                        NoRowsOverlay: CustomNoRowsOverlay
+                    }}
+                    componentsProps={{
+                        toolbar: {
+                            showQuickFilter: true,
+                            quickFilterProps: { debounceMs: 500 }
+                        }
+                    }}
+                />
+            </div>
+        </Paper>
+    )
 }
 
 export default DataTable
