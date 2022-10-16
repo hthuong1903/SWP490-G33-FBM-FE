@@ -26,7 +26,7 @@ function Sidebar() {
   const items = [
     { name: 'Sản phẩm', href: '/admin' },
     { name: 'Hóa đơn', href: '/admin/receipts' },
-    { name: 'Chấm công', href: '/admin/timekeepings' },
+    { name: 'Chấm công', href: '/admin/timekeeping' },
     { name: 'Bảng lương', href: '/admin/payrolls' },
     { name: 'Hợp đồng', href: '/admin/contracts' },
     { name: 'Thống kê', href: '/admin/statisticals' },
