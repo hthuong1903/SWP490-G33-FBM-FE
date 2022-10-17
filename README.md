@@ -1,6 +1,6 @@
 # SWP490-G33-FB-FE
 
-## Project setup
+### Project setup
 ```
 npm install
 ```
