@@ -19,10 +19,12 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { vi } from 'date-fns/locale'
 import { toast } from 'react-toastify'
+import moment from 'moment'
 
 import { schemaTimeKeeping } from '../validation'
 import { useState } from 'react'
 import TimeKeepingApi from '@/api/TimeKeepingApi'
+import axios from 'axios'
 // import { toast } from 'react-toastify'
 
 function ModalTimeKeeping({
@@ -34,7 +36,7 @@ function ModalTimeKeeping({
     employee,
     timeSheetDetail
 }) {
-    const [value, setValue] = useState(0)
+    const [value, setValue] = useState(1)
 
     const {
         handleSubmit,
@@ -61,366 +63,19 @@ function ModalTimeKeeping({
     }
 
     const onSubmit = (data) => {
-        const objEmp = timeSheetDetail.find((item) => item.id == employee.id)
-        const date = data.date.getDate()
-        var newObj
-        if (value < 4) {
-            switch (date) {
-                case 1:
-                    newObj = {
-                        ...objEmp,
-                        day1: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 2:
-                    newObj = {
-                        ...objEmp,
-                        day2: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 3:
-                    newObj = {
-                        ...objEmp,
-                        day3: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 4:
-                    newObj = {
-                        ...objEmp,
-                        day4: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 5:
-                    newObj = {
-                        ...objEmp,
-                        day5: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 6:
-                    newObj = {
-                        ...objEmp,
-                        day6: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 7:
-                    newObj = {
-                        ...objEmp,
-                        day7: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 8:
-                    newObj = {
-                        ...objEmp,
-                        day8: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 9:
-                    newObj = {
-                        ...objEmp,
-                        day9: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 10:
-                    newObj = {
-                        ...objEmp,
-                        day10: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 11:
-                    newObj = {
-                        ...objEmp,
-                        day11: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 12:
-                    newObj = {
-                        ...objEmp,
-                        day12: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 13:
-                    newObj = {
-                        ...objEmp,
-                        day13: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 14:
-                    newObj = {
-                        ...objEmp,
-                        day14: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 15:
-                    newObj = {
-                        ...objEmp,
-                        day15: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 16:
-                    newObj = {
-                        ...objEmp,
-                        day16: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 17:
-                    newObj = {
-                        ...objEmp,
-                        day17: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 18:
-                    newObj = {
-                        ...objEmp,
-                        day18: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 19:
-                    newObj = {
-                        ...objEmp,
-                        day19: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 20:
-                    newObj = {
-                        ...objEmp,
-                        day20: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 21:
-                    newObj = {
-                        ...objEmp,
-                        day21: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 22:
-                    newObj = {
-                        ...objEmp,
-                        day22: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 23:
-                    newObj = {
-                        ...objEmp,
-                        day23: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 24:
-                    newObj = {
-                        ...objEmp,
-                        day24: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 25:
-                    newObj = {
-                        ...objEmp,
-                        day25: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 26:
-                    newObj = {
-                        ...objEmp,
-                        day26: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 27:
-                    newObj = {
-                        ...objEmp,
-                        day27: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 28:
-                    newObj = {
-                        ...objEmp,
-                        day28: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 29:
-                    newObj = {
-                        ...objEmp,
-                        day29: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 30:
-                    newObj = {
-                        ...objEmp,
-                        day30: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                case 31:
-                    newObj = {
-                        ...objEmp,
-                        day31: 1,
-                        totalDayWorking: objEmp.totalDayWorking + 1,
-                        weekendWorking:
-                            value == 2 ? objEmp.weekendWorking + 1 : objEmp.weekendWorking,
-                        holidaysWorking:
-                            value == 3 ? objEmp.holidaysWorking + 1 : objEmp.holidaysWorking
-                    }
-                    break
-                default:
-                    newObj = objEmp
-                    break
-            }
-        } else {
-            value == 4
-                ? (newObj = {
-                      ...objEmp,
-                      allowedDay: objEmp.allowedDay + 1
-                  })
-                : (newObj = objEmp)
+        console.log(
+            employee.employee.id,
+            moment(data.date).format('DD/MM/yyyy'),
+            employee.periodCode,
+            value
+        )
+        const obj = {
+            employee_id: employee.employee.id,
+            date: moment(data.date).format('DD/MM/yyyy'),
+            period_code: employee.periodCode,
+            case_day: value
         }
-        console.log(newObj)
-        updateTimesheetDetailPerEmployee(newObj)
+        updateTimesheetDetailPerEmployee(obj)
     }
     return (
         <Dialog
