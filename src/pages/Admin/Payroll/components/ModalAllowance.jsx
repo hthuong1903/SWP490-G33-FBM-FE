@@ -7,15 +7,26 @@ import {
     DialogTitle,
     Grid,
     MenuItem,
-    TextField
+    TextField,
+    Typography
 } from '@mui/material'
 import { Box } from '@mui/system'
+import axios from 'axios'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { schemaSubsidize } from '../validation'
 
-function ModalSubsidize({ title, content, isOpen, handleClose, handleConfirm }) {
+function ModalAllowance({
+    title,
+    content,
+    isOpen,
+    handleClose,
+    handleConfirm,
+    allowanceDetail,
+    employee,
+    periodCode
+}) {
     const [type, setType] = useState(1)
 
     const {
@@ -28,7 +39,24 @@ function ModalSubsidize({ title, content, isOpen, handleClose, handleConfirm }) 
     })
     const onSubmit = (data) => {
         console.log(data)
-        toast.success('Overtime')
+        const newObj = {
+            allowanceId: type,
+            content: data.subsidize,
+            employeeId: employee.id,
+            periodCode: periodCode
+        }
+        updateAllowanceDetail(newObj)
+    }
+
+    const updateAllowanceDetail = async (data) => {
+        try {
+            await axios.put('http://20.205.46.182:8081/api/allowance_detail', data).then((res) => {
+                toast.success(res.data.message)
+            })
+            handleClose && handleClose()
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -39,26 +67,29 @@ function ModalSubsidize({ title, content, isOpen, handleClose, handleConfirm }) 
             aria-describedby="alert-dialog-description"
             fullWidth
             maxWidth="md">
-            <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+            <DialogTitle id="alert-dialog-title" sx={{ pt: 0 }}>
+                {title}
+            </DialogTitle>
 
-            <DialogContent>
-                <Grid container>
+            <DialogContent sx={{ pt: 2, mt: 2 }}>
+                <Grid container sx={{ pt: 2 }}>
                     <Grid item xs={6}>
                         <TextField
                             id="outlined-select-currency"
                             select
                             size="small"
-                            label="Tháng"
+                            label="Chọn phụ cấp"
                             value={type}
                             onChange={(event) => {
                                 setType(event.target.value)
                                 // getTimeSheetPeriods(event.target.value + '' + year)
                             }}
                             sx={{ mr: 2 }}>
-                            <MenuItem value={1}>Ăn trưa</MenuItem>
-                            <MenuItem value={2}>Thất nghiệp</MenuItem>
-                            <MenuItem value={3}>Hoàn cảnh</MenuItem>
-                            <MenuItem value={4}>Tai nạn</MenuItem>
+                            {allowanceDetail.map((item, index) => (
+                                <MenuItem key={index} value={item.id}>
+                                    {item.typeOfAllowance}
+                                </MenuItem>
+                            ))}
                         </TextField>
                     </Grid>
                     <Grid item xs={6}>
@@ -74,6 +105,17 @@ function ModalSubsidize({ title, content, isOpen, handleClose, handleConfirm }) 
                                 helperText={errors.subsidize?.message}
                             />
                         </Box>
+                        <Box>
+                            <Typography variant="body1">
+                                Số tiền:{' '}
+                                {allowanceDetail
+                                    .find((item) => item.id == type)
+                                    .money.toLocaleString('vi-VN', {
+                                        style: 'currency',
+                                        currency: 'VND'
+                                    })}
+                            </Typography>
+                        </Box>
                     </Grid>
                 </Grid>
             </DialogContent>
@@ -87,4 +129,4 @@ function ModalSubsidize({ title, content, isOpen, handleClose, handleConfirm }) 
     )
 }
 
-export default ModalSubsidize
+export default ModalAllowance

@@ -40,7 +40,7 @@ function TimeKeeping() {
             await axios.post('http://20.205.46.182:8081/api/timesheetperiods', data).then((res) => {
                 console.log(res)
                 setTimeSheetPeriods(res.data)
-                toast.success('Tạo sản phẩm thành công')
+                toast.success(res.message)
             })
             setIsRender(true)
             // setTimeSheetPeriods(response.data)
@@ -156,7 +156,7 @@ function TimeKeeping() {
                         </Tabs>
                     </Box>
                     <TimeKeepingTab value={value} index={0} periodCode={month + '' + year} />
-                    <OvertimeTab value={value} index={1} />
+                    <OvertimeTab value={value} index={1} periodCode={month + '' + year} />
                 </>
             )}
         </>
