@@ -7,15 +7,26 @@ import {
     DialogTitle,
     Grid,
     MenuItem,
-    TextField
+    TextField,
+    Typography
 } from '@mui/material'
 import { Box } from '@mui/system'
+import axios from 'axios'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { schemaBonus } from '../validation'
 
-function ModalBonus({ title, content, isOpen, handleClose, handleConfirm }) {
+function ModalBonus({
+    title,
+    content,
+    isOpen,
+    handleClose,
+    handleConfirm,
+    bonusDetail,
+    employee,
+    periodCode
+}) {
     const [type, setType] = useState(1)
 
     const {
@@ -28,7 +39,24 @@ function ModalBonus({ title, content, isOpen, handleClose, handleConfirm }) {
     })
     const onSubmit = (data) => {
         console.log(data)
-        toast.success('Overtime')
+        const newObj = {
+            bonusId: type,
+            content: data.bonus,
+            employeeId: employee.id,
+            periodCode: periodCode
+        }
+        updateAllowanceDetail(newObj)
+    }
+
+    const updateAllowanceDetail = async (data) => {
+        try {
+            await axios.put('http://20.205.46.182:8081/api/bonus_detail', data).then((res) => {
+                toast.success(res.data.message)
+            })
+            handleClose && handleClose()
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -42,24 +70,25 @@ function ModalBonus({ title, content, isOpen, handleClose, handleConfirm }) {
             <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
 
             <DialogContent>
-                <Grid container>
+                <Grid container sx={{ pt: 2 }}>
                     <Grid item xs={6}>
                         <Box>
                             <TextField
                                 id="outlined-select-currency"
                                 select
                                 size="small"
-                                label="Tháng"
+                                label="Chọn loại thưởng"
                                 value={type}
                                 onChange={(event) => {
                                     setType(event.target.value)
                                     // getTimeSheetPeriods(event.target.value + '' + year)
                                 }}
                                 sx={{ mr: 2 }}>
-                                <MenuItem value={1}>Doanh thu</MenuItem>
-                                <MenuItem value={2}>Chăm chỉ</MenuItem>
-                                <MenuItem value={3}>Doanh số</MenuItem>
-                                <MenuItem value={4}>Đi làm đúng giờ</MenuItem>
+                                {bonusDetail.map((item, index) => (
+                                    <MenuItem key={index} value={item.id}>
+                                        {item.typeOfBonus}
+                                    </MenuItem>
+                                ))}
                             </TextField>
                         </Box>
                     </Grid>
@@ -75,6 +104,17 @@ function ModalBonus({ title, content, isOpen, handleClose, handleConfirm }) {
                                 error={errors.bonus ? true : false}
                                 helperText={errors.bonus?.message}
                             />
+                        </Box>
+                        <Box>
+                            <Typography variant="body1">
+                                Số tiền:{' '}
+                                {bonusDetail
+                                    .find((item) => item.id == type)
+                                    .money.toLocaleString('vi-VN', {
+                                        style: 'currency',
+                                        currency: 'VND'
+                                    })}
+                            </Typography>
                         </Box>
                     </Grid>
                 </Grid>

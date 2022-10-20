@@ -27,6 +27,9 @@ function TimeKeepingTab({ value, index, periodCode }) {
             console.log(error)
         }
     }
+    useEffect(() => {
+        getTimeSheetDetail(periodCode)
+    }, [periodCode])
 
     useEffect(() => {
         isRender && getTimeSheetDetail(periodCode)

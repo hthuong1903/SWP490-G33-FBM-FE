@@ -1,8 +1,8 @@
-import { Box, Button, Divider, MenuItem, Tab, Tabs, TextField } from '@mui/material'
+import { Box, Divider, MenuItem, Tab, Tabs, TextField } from '@mui/material'
 import React, { useState } from 'react'
-import { toast } from 'react-toastify'
 import Bonus from './Bonus'
-import Subsidize from './Subsidize'
+import Salary from './Salary'
+import Allowance from './Allowance'
 
 function a11yProps(index) {
     return {
@@ -15,35 +15,9 @@ const _month = new Date().getMonth() + 1
 const _year = new Date().getFullYear()
 
 function Payroll() {
-    const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
     const [month, setMonth] = useState(_month)
     const [year, setYear] = useState(_year)
     const [value, setValue] = useState(0)
-    const [timeSheetPeriods, setTimeSheetPeriods] = useState([])
-
-    // const getTimeSheetPeriods = async (period_code) => {
-    //     try {
-    //         const response = await TimeKeepingApi.getTimeSheetPeriods(period_code)
-    //         console.log(response)
-    //         setTimeSheetPeriods(response.data)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-    // const createTimeSheetPeriods = async (month, year) => {
-    //     try {
-    //         const data = { month: month, periodCode: month + '' + year, year: year }
-    //         const response = await TimeKeepingApi.createTimeSheetPeriods(data)
-    //         console.log('createTimeSheetPeriods ' + response)
-    //         setTimeSheetPeriods(response.data)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     getTimeSheetPeriods(month + '' + year)
-    // }, [])
 
     const handleChange = (event, newValue) => {
         setValue(newValue)
@@ -51,14 +25,6 @@ function Payroll() {
 
     return (
         <>
-            {/* <ConfirmModal
-                isOpen={isOpenConfirmModal}
-                title="Xác nhận"
-                content={`Bạn có muốn xóa kì công?`}
-                handleClose={() => setIsOpenConfirmModal(false)}
-                handleConfirm={() => handleDelete()}
-            /> */}
-            <h2>Bảng lương</h2>
             <Box sx={{ mb: 2, mt: 3, display: 'flex', justifyContent: 'space-between' }}>
                 <Box>
                     <TextField
@@ -99,17 +65,6 @@ function Payroll() {
                         <MenuItem value={2022}>2022</MenuItem>
                     </TextField>
                 </Box>
-                <Box>
-                    <Button
-                        variant="contained"
-                        onClick={() => {
-                            // createTimeSheetPeriods(month, year)
-                        }}
-                        disabled={timeSheetPeriods.length > 0}
-                        sx={{ mr: 2 }}>
-                        Xem bảng lương
-                    </Button>
-                </Box>
             </Box>
             <Divider sx={{ mb: 2 }} />
 
@@ -122,15 +77,21 @@ function Payroll() {
                         aria-label="basic tabs example"
                         centered>
                         <Tab
-                            label="Phụ cấp"
+                            label="Lương"
                             {...a11yProps(0)}
                             sx={{ backgroundColor: 'white', mr: 2 }}
                         />
-                        <Tab label="Thưởng" {...a11yProps(1)} sx={{ backgroundColor: 'white' }} />
+                        <Tab
+                            label="Phụ cấp"
+                            {...a11yProps(1)}
+                            sx={{ backgroundColor: 'white', mr: 2 }}
+                        />
+                        <Tab label="Thưởng" {...a11yProps(2)} sx={{ backgroundColor: 'white' }} />
                     </Tabs>
                 </Box>
-                <Subsidize value={value} index={0} periodCode={month + '' + year} />
-                <Bonus value={value} index={1} />
+                <Salary value={value} index={0} periodCode={month + '' + year} />
+                <Allowance value={value} index={1} periodCode={month + '' + year} />
+                <Bonus value={value} index={2} periodCode={month + '' + year} />
             </>
             {/* )} */}
         </>

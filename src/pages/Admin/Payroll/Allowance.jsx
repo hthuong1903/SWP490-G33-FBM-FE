@@ -1,53 +1,54 @@
-import BonusApi from '@/api/BonusApi'
+import AllowanceApi from '@/api/AllowanceApi'
 import DataTable from '@/components/Common/DataTable'
 import { Box, Button, Tooltip } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import ModalBonus from './components/ModalBonus'
 
-function Bonus({ value, index, periodCode }) {
-    const [isOpenBonusModal, setIsOpenBonusModal] = useState(false)
-    const [bonus, setBonus] = useState([])
+import ModalAllowance from './components/ModalAllowance'
+
+function Allowance({ value, index, periodCode }) {
+    const [isOpenSubsidizeModal, setIsOpenSubsidizeModal] = useState(false)
+    const [allowance, setAllowance] = useState([])
     const [isRender, setIsRender] = useState(true)
     const [employee, setEmployee] = useState({})
-    const [bonusDetail, setBonusDetail] = useState([])
-
-    const getBonus = async () => {
-        try {
-            const response = await BonusApi.getBonus()
-            console.log('get bonus detail', response.data)
-            setBonusDetail(response.data)
-        } catch (error) {
-            console.warn('Failed to get bonus detail', error)
-        }
-    }
-
-    const getBonusByPeriodCode = async (period_code) => {
-        try {
-            const response = await BonusApi.createBonusDetail(period_code)
-            console.log('Get bonus', response.data)
-            setBonus(response.data)
-        } catch (error) {
-            console.warn('Failed to get bonus', error)
-        }
-    }
-    useEffect(() => {
-        getBonus()
-    }, [])
-
-    useEffect(() => {
-        getBonusByPeriodCode(periodCode)
-    }, [periodCode])
-
-    useEffect(() => {
-        isRender && getBonusByPeriodCode(periodCode)
-        setIsRender(false)
-    }, [isRender, bonus])
+    const [allowanceDetail, setAllowanceDetail] = useState([])
 
     const handleAction = (params) => {
         console.log(params)
         setEmployee(params)
-        setIsOpenBonusModal(true)
+        setIsOpenSubsidizeModal(true)
     }
+
+    const getAllowance = async () => {
+        try {
+            const response = await AllowanceApi.getAllowance()
+            // console.log('get allowance detail', response.data)
+            setAllowanceDetail(response.data)
+        } catch (error) {
+            console.warn('Failed to get allowance detail', error)
+        }
+    }
+
+    const getAllowanceByPeriodCode = async (period_code) => {
+        try {
+            const response = await AllowanceApi.createAllowance(period_code)
+            // console.log('Get allowance', response.data)
+            setAllowance(response.data)
+        } catch (error) {
+            console.warn('Failed to get allowance', error)
+        }
+    }
+    useEffect(() => {
+        getAllowance()
+    }, [])
+
+    useEffect(() => {
+        getAllowanceByPeriodCode(periodCode)
+    }, [periodCode])
+
+    useEffect(() => {
+        isRender && getAllowanceByPeriodCode(periodCode)
+        setIsRender(false)
+    }, [isRender, allowance])
 
     const columns = [
         { field: 'employeeName', headerName: 'TÊN', flex: 1 },
@@ -57,7 +58,7 @@ function Bonus({ value, index, periodCode }) {
             flex: 1,
             cellClassName: 'roles'
         },
-        { field: 'totalMoney', headerName: 'TỔNG SỐ TIỀN THƯỞNG', flex: 1 },
+        { field: 'totalMoney', headerName: 'TỔNG TIỀN PHỤ CẤP', flex: 1 },
         {
             field: 'actions',
             headerName: 'TÁC VỤ',
@@ -65,13 +66,13 @@ function Bonus({ value, index, periodCode }) {
             renderCell: (params) => {
                 return (
                     <>
-                        <Tooltip title="Thưởng">
+                        <Tooltip title="Phụ cấp">
                             <Button
                                 variant="contained"
                                 size="small"
                                 onClick={() => handleAction(params.row)}>
                                 {/* <EditRounded fontSize="inherit" /> */}
-                                Thưởng
+                                Phụ cấp
                             </Button>
                         </Tooltip>
                     </>
@@ -79,7 +80,7 @@ function Bonus({ value, index, periodCode }) {
             }
         }
     ]
-    const rows = bonus.map((item) => {
+    const rows = allowance.map((item) => {
         const container = {}
         container['id'] = item.employeeId
         container['employeeName'] = item.employeeName
@@ -87,23 +88,24 @@ function Bonus({ value, index, periodCode }) {
         container['totalMoney'] = item.totalMoney
         return container
     })
+
     return (
         <div
             role="tabpanel"
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}>
-            {isOpenBonusModal && employee && bonusDetail.length > 0 && (
-                <ModalBonus
-                    isOpen={isOpenBonusModal}
-                    title={'Thêm sản phẩm'}
+            {isOpenSubsidizeModal && employee && allowanceDetail.length > 0 && (
+                <ModalAllowance
+                    isOpen={isOpenSubsidizeModal}
+                    title={'Thêm phụ cấp'}
+                    allowanceDetail={allowanceDetail}
                     employee={employee}
-                    bonusDetail={bonusDetail}
-                    periodCode={periodCode}
                     handleClose={() => {
-                        setIsOpenBonusModal(false)
+                        setIsOpenSubsidizeModal(false)
                         setIsRender(true)
                     }}
+                    periodCode={periodCode}
                 />
             )}
             <Box
@@ -121,4 +123,4 @@ function Bonus({ value, index, periodCode }) {
     )
 }
 
-export default Bonus
+export default Allowance
