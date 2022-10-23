@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { Link, Route, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
 import NotFoundPage from './components/Common/NotFoundPage'
@@ -11,8 +10,6 @@ import TimeKeeping from './pages/Admin/TimeKeeping'
 import Login from './pages/Login'
 
 function App() {
-  const [count, setCount] = useState(0)
-  const location = useLocation()
 
   return (
     <div className="App">
