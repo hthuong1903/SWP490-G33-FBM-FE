@@ -1,77 +1,104 @@
-import productApi from '@/api/productApi'
+import categoryApi from '@/api/categoryApi'
+import contractApi from '@/api/contractApi'
 import DataTable from '@/components/Common/DataTable'
 import ConfirmModal from '@/components/Common/Modal/ConfirmModal'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
 import EditRoundedIcon from '@mui/icons-material/EditRounded'
-import { Avatar, Button, IconButton, Tooltip } from '@mui/material'
+import { Button, Chip, IconButton, MenuItem, TextField, Tooltip, Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import moment from 'moment/moment'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import FilterTable from './components/FilterTable'
-import ModalAddProduct from './components/ModalAddProduct'
-import ModalUpdateProduct from './components/ModalUpdateProduct'
+import ModalAddContract from './components/ModalAddContract'
+import ModalUpdateContract from './components/ModalUpdateContract'
 
-export default function Product() {
+export default function Contract() {
     const [isOpenAddModal, setIsOpenAddModal] = useState(false)
     const [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false)
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
     const [selectedRow, setSelectedRow] = useState(null)
-    const [listProducts, setListProducts] = useState([])
-    const [category, setCategory] = useState(-1)
-    const [provider, setProvider] = useState(-1)
-    const [isExisted, setIsExisted] = useState(-1)
+    const [listContract, setContractList] = useState([])
     const [isUpdated, setIsUpdated] = useState(false)
     const [isEdit, setIsEdit] = useState(true)
+    const [expired, setExpired] = useState(-1)
+
+    useEffect(() => {
+        const getAllContracts = async (expired) => {
+            try {
+                const response = await contractApi.getAllContracts(expired)
+                setContractList(response.data)
+            } catch (error) {
+                console.log('fail at getAllContracts', error)
+            }
+        }
+        getAllContracts(expired)
+        setIsUpdated(false)
+    }, [isUpdated, expired])
 
     const handleDelete = async () => {
         try {
-            await productApi.deleteProduct(selectedRow?.row.id)
+            await contractApi.deleteContract(selectedRow?.row.id)
             toast.success('Xóa thành công !')
             setIsOpenConfirmModal(false)
             setIsUpdated(true)
         } catch (error) {
             console.log(error)
         }
-
     }
-
-    useEffect(() => {
-        const getAllProducts = async (categoryId, providerId, isExist) => {
-            try {
-                const response = await productApi.getAllProduct(categoryId, providerId, isExist)
-                setListProducts(response.data)
-                console.log(response)
-            } catch (error) {
-                console.log('fail when getAllProducts', error)
-            }
-        }
-        setIsUpdated(false)
-        getAllProducts(category, provider, isExisted)
-    }, [isUpdated, category, provider, isExisted])
-
 
     const columns = [
         {
-            field: 'photoMainURl',
-            headerName: 'ẢNH',
+            field: 'content',
+            headerName: 'TÊN',
             flex: 1,
             renderCell: (params) => {
-                return (
-                    <Box sx={{ display: 'flex' }}>
-                        <Avatar src={params.row.photoMainURl} />
-                        <Avatar src={params.row.photoOnceURL} />
-                        <Avatar src={params.row.photoSecondURL} />
-                        <Avatar src={params.row.photoThirdURL} />
-                    </Box>
-                )
+                return <Typography sx={{ fontWeight: 'bold' }}>{params.value}</Typography>
             }
         },
-        { field: 'productCode', headerName: 'MÃ SẢN PHẨM', flex: 1 },
-        { field: 'name', headerName: 'TÊN', flex: 1 },
-        { field: 'quantity', headerName: 'SỐ LƯỢNG', flex: 1 },
         {
-            field: 'priceIn',
-            headerName: 'GIÁ NHẬP',
+            field: 'role',
+            headerName: 'VAI TRÒ',
+            flex: 1,
+            renderCell: (params) => {
+                return <Chip label={params.row.employee.roles[0].name} color="primary" />
+            }
+        },
+        {
+            field: 'startDate',
+            headerName: 'NGÀY BẮT ĐẦU',
+            flex: 1,
+            renderCell: (params) => {
+                return moment(params.row.startDate).format('DD/MM/YYYY')
+            }
+        },
+        {
+            field: 'endDate',
+            headerName: 'NGÀY KẾT THÚC',
+            flex: 1,
+            renderCell: (params) => {
+                return moment(params.row.endDate).format('DD/MM/YYYY')
+            }
+        },
+        {
+            field: 'contractTerm',
+            headerName: 'THỜI HẠN',
+            flex: 1,
+            valueFormatter: (params) => {
+                if (params.value == null) {
+                    return ''
+                }
+                return `${params.value} năm`
+            }
+        },
+        {
+            field: 'signTimes',
+            headerName: 'SỐ LẦN KÝ',
+            flex: 1,
+            type: 'number'
+        },
+        {
+            field: 'salary',
+            headerName: 'LƯƠNG CƠ BẢN',
             flex: 1,
             type: 'number',
             valueFormatter: (params) => {
@@ -82,51 +109,7 @@ export default function Product() {
             }
         },
         {
-            field: 'priceOut',
-            headerName: 'GIÁ BÁN',
-            flex: 1,
-            type: 'number',
-            valueFormatter: (params) => {
-                if (params.value == null) {
-                    return ''
-                }
-                return `${params.value.toLocaleString('vi-VN')} VND`
-            }
-        },
-        {
-            field: 'discount',
-            headerName: 'GIẢM GIÁ',
-            flex: 1,
-            type: 'number',
-            valueFormatter: (params) => {
-                if (params.value == null) {
-                    return ''
-                }
-                return `${params.value}%`
-            }
-        },
-        {
-            field: 'details',
-            headerName: 'THÔNG TIN ĐẦY ĐỦ',
-            flex: 1,
-            renderCell: (params) => {
-                return (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                        <Button
-                            variant="contained"
-                            onClick={() => {
-                                setSelectedRow(params)
-                                setIsEdit(false)
-                                setIsOpenUpdateModal(true)
-                            }}>
-                            Xem
-                        </Button>
-                    </Box>
-                )
-            }
-        },
-        {
-            field: 'actions',
+            field: 'action',
             headerName: 'TÁC VỤ',
             flex: 1,
             renderCell: (params) => {
@@ -139,6 +122,7 @@ export default function Product() {
                                 onClick={() => {
                                     setSelectedRow(params)
                                     setIsOpenConfirmModal(true)
+                                    console.log(params)
                                 }}>
                                 <ClearRoundedIcon fontSize="inherit" />
                             </IconButton>
@@ -151,7 +135,6 @@ export default function Product() {
                                     setIsEdit(true)
                                     setSelectedRow(params)
                                     setIsOpenUpdateModal(true)
-                                    console.log(params)
                                 }}>
                                 <EditRoundedIcon fontSize="inherit" />
                             </IconButton>
@@ -164,49 +147,55 @@ export default function Product() {
     return (
         <>
             {isOpenAddModal && (
-                <ModalAddProduct
+                <ModalAddContract
                     isOpen={isOpenAddModal}
-                    title={'Thêm sản phẩm'}
+                    title={'Thêm hợp đồng'}
                     handleClose={() => setIsOpenAddModal(false)}
                     handleConfirm={() => setIsUpdated(true)}
                     isEdit={isEdit}
                 />
             )}
-
             {isOpenUpdateModal && (
-                <ModalUpdateProduct
+                <ModalUpdateContract
                     isOpen={isOpenUpdateModal}
-                    title={'Cập nhật sản phẩm'}
+                    title={'Cập nhật hợp đồng'}
                     handleClose={() => setIsOpenUpdateModal(false)}
                     handleConfirm={() => setIsUpdated(true)}
                     selectedData={selectedRow}
                     isEdit={isEdit}
                 />
             )}
-
             <ConfirmModal
                 isOpen={isOpenConfirmModal}
                 title="Xác nhận"
-                content={`Bạn có muốn xóa ${selectedRow?.row.name}?`}
+                content={`Bạn có muốn xóa ${selectedRow?.row.content}?`}
                 handleClose={() => setIsOpenConfirmModal(false)}
                 handleConfirm={() => handleDelete()}
             />
-            <h2>Quản lý sản phẩm</h2>
+            <h2>Quản lý hợp đồng</h2>
             <Box sx={{ mb: 2, mt: 3, display: 'flex', justifyContent: 'space-between' }}>
-                <FilterTable
-                    chooseCategory={(category) => setCategory(category)}
-                    chooseProvider={(provider) => setProvider(provider)}
-                    chooseIsExisted={(isExisted) => setIsExisted(isExisted)}
-                />
+                <TextField
+                    id="outlined-select-currency"
+                    select
+                    size="small"
+                    label="Tình trạng"
+                    value={expired}
+                    onChange={(event) => {
+                        setExpired(event.target.value)
+                    }}>
+                    <MenuItem value={-1}>Tất cả</MenuItem>
+                    <MenuItem value={1}>Chưa hết hạn</MenuItem>
+                    <MenuItem value={2}>Hết hạn</MenuItem>
+                </TextField>
                 <Button
                     variant="contained"
                     onClick={() => {
                         setIsOpenAddModal(true)
                     }}>
-                    Thêm sản phẩm
+                    Thêm hợp đồng
                 </Button>
             </Box>
-            <DataTable columns={columns} rows={listProducts} />
+            <DataTable columns={columns} rows={listContract} />
         </>
     )
 }
