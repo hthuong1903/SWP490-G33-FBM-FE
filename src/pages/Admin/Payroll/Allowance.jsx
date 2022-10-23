@@ -4,9 +4,11 @@ import { Box, Button, Tooltip } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 
 import ModalAllowance from './components/ModalAllowance'
+import ModalAllowanceDetail from './components/ModalAllowanceDetail'
 
 function Allowance({ value, index, periodCode }) {
     const [isOpenSubsidizeModal, setIsOpenSubsidizeModal] = useState(false)
+    const [isOpenViewAllowanceModal, setIsOpenViewAllowanceModal] = useState(false)
     const [allowance, setAllowance] = useState([])
     const [isRender, setIsRender] = useState(true)
     const [employee, setEmployee] = useState({})
@@ -16,6 +18,12 @@ function Allowance({ value, index, periodCode }) {
         console.log(params)
         setEmployee(params)
         setIsOpenSubsidizeModal(true)
+    }
+
+    const handleView = (params) => {
+        console.log(params)
+        setEmployee(params)
+        setIsOpenViewAllowanceModal(true)
     }
 
     const getAllowance = async () => {
@@ -66,13 +74,22 @@ function Allowance({ value, index, periodCode }) {
             renderCell: (params) => {
                 return (
                     <>
-                        <Tooltip title="Phụ cấp">
+                        <Tooltip title="Phụ cấp" sx={{ mr: 2 }}>
                             <Button
                                 variant="contained"
                                 size="small"
                                 onClick={() => handleAction(params.row)}>
                                 {/* <EditRounded fontSize="inherit" /> */}
                                 Phụ cấp
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Phụ cấp">
+                            <Button
+                                variant="contained"
+                                size="small"
+                                onClick={() => handleView(params.row)}>
+                                {/* <EditRounded fontSize="inherit" /> */}
+                                Xem
                             </Button>
                         </Tooltip>
                     </>
@@ -108,6 +125,20 @@ function Allowance({ value, index, periodCode }) {
                     periodCode={periodCode}
                 />
             )}
+
+            {isOpenViewAllowanceModal && employee && (
+                <ModalAllowanceDetail
+                    isOpen={isOpenViewAllowanceModal}
+                    title={'Xem chi phụ cấp'}
+                    employee={employee}
+                    periodCode={periodCode}
+                    handleClose={() => {
+                        setIsOpenViewAllowanceModal(false)
+                        setIsRender(true)
+                    }}
+                />
+            )}
+
             <Box
                 sx={{
                     height: '65vh',

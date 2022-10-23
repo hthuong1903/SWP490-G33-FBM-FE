@@ -1,5 +1,6 @@
 import TimeKeepingApi from '@/api/TimeKeepingApi'
 import ConfirmModal from '@/components/Common/Modal/ConfirmModal'
+import Constants from '@/components/Constants'
 import { Box, Button, Divider, MenuItem, Tab, Tabs, TextField } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -37,7 +38,7 @@ function TimeKeeping() {
     const createTimeSheetPeriods = async (month, year) => {
         try {
             const data = { month: month, periodCode: month + '' + year, year: year }
-            await axios.post('http://20.205.46.182:8081/api/timesheetperiods', data).then((res) => {
+            await axios.post(Constants.baseAPI + 'api/timesheetperiods', data).then((res) => {
                 console.log(res)
                 setTimeSheetPeriods(res.data)
                 toast.success(res.message)

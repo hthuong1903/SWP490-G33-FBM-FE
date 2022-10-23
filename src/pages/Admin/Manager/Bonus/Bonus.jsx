@@ -1,26 +1,25 @@
-import AllowanceApi from '@/api/AllowanceApi'
+import BonusApi from '@/api/BonusApi'
 import DataTable from '@/components/Common/DataTable'
 import ConfirmModal from '@/components/Common/Modal/ConfirmModal'
 import { ClearRounded, EditRounded } from '@mui/icons-material'
 import { Box, Button, IconButton, Tooltip } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import ModalAddBonus from './components/ModalAddBonus'
+import ModalUpdateBonus from './components/ModalUpdateBonus'
 
-import ModalAddAllowance from './components/ModalAddAllowance'
-import ModalUpdateAllowance from './components/ModalUpdateAllowance'
-
-function Allowance() {
+function Bonus() {
     const [isOpenAddModal, setIsOpenAddModal] = useState(false)
     const [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false)
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
     const [selectedRow, setSelectedRow] = useState({})
-    const [listAllowance, setListAllowance] = useState([])
+    const [listBonus, setListBonus] = useState([])
     const [isRender, setIsRender] = useState(true)
     const [isEdit, setIsEdit] = useState(true)
 
     const handleDelete = async () => {
         try {
-            await AllowanceApi.deleteAllowance(selectedRow?.row.id)
+            await BonusApi.deleteBonus(selectedRow?.row.id)
             toast.success('Xóa thành công !')
             setIsOpenConfirmModal(false)
             setIsRender(true)
@@ -36,22 +35,22 @@ function Allowance() {
     }
 
     useEffect(() => {
-        const getListAllowance = async () => {
+        const getListBonus = async () => {
             try {
-                const response = await AllowanceApi.getAllowance()
-                setListAllowance(response.data)
+                const response = await BonusApi.getBonus()
+                setListBonus(response.data)
                 console.log(response)
             } catch (error) {
-                console.log('fail when getListAllowance', error)
+                console.log('fail when getListBonus', error)
             }
         }
-        isRender && getListAllowance()
+        isRender && getListBonus()
         setIsRender(false)
-    }, [isRender, listAllowance])
+    }, [isRender, listBonus])
 
     const columns = [
         { field: 'id', headerName: 'MÃ SẢN PHẨM', flex: 1, hide: true },
-        { field: 'typeOfAllowance', headerName: 'NỘI DUNG', flex: 1 },
+        { field: 'typeOfBonus', headerName: 'NỘI DUNG', flex: 1 },
         { field: 'money', headerName: 'SỐ TIỀN', flex: 1 },
         { field: 'content', headerName: 'NỘI DUNG', flex: 1 },
         {
@@ -88,9 +87,9 @@ function Allowance() {
     return (
         <>
             {isOpenAddModal && (
-                <ModalAddAllowance
+                <ModalAddBonus
                     isOpen={isOpenAddModal}
-                    title={'Thêm trợ cấp'}
+                    title={'Thêm thưởng'}
                     handleClose={() => {
                         setIsOpenAddModal(false)
                         setIsRender(true)
@@ -101,9 +100,9 @@ function Allowance() {
             )}
 
             {isOpenUpdateModal && selectedRow && (
-                <ModalUpdateAllowance
+                <ModalUpdateBonus
                     isOpen={isOpenUpdateModal}
-                    title={'Cập nhật trợ cấp'}
+                    title={'Cập nhật thưởng'}
                     handleClose={() => {
                         setIsOpenUpdateModal(false)
                         setIsRender(true)
@@ -118,24 +117,24 @@ function Allowance() {
                 <ConfirmModal
                     isOpen={isOpenConfirmModal}
                     title="Xác nhận"
-                    content={`Bạn có muốn xóa phụ cấp ${selectedRow?.row.typeOfAllowance}?`}
+                    content={`Bạn có muốn xóa thưởng ${selectedRow?.row.typeOfBonus}?`}
                     handleClose={() => setIsOpenConfirmModal(false)}
                     handleConfirm={() => handleDelete()}
                 />
             )}
-            <h2>Quản lý phụ cấp</h2>
+            <h2>Quản lý thưởng</h2>
             <Box sx={{ mb: 2, mt: 3, display: 'flex' }}>
                 <Button
                     variant="contained"
                     onClick={() => {
                         setIsOpenAddModal(true)
                     }}>
-                    Thêm phụ cấp
+                    Thêm thưởng
                 </Button>
             </Box>
-            <DataTable columns={columns} rows={listAllowance} />
+            <DataTable columns={columns} rows={listBonus} />
         </>
     )
 }
 
-export default Allowance
+export default Bonus
