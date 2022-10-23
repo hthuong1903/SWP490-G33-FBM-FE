@@ -32,6 +32,7 @@ export default function Product() {
         } catch (error) {
             console.log(error)
         }
+
     }
 
     useEffect(() => {
@@ -47,6 +48,7 @@ export default function Product() {
         setIsUpdated(false)
         getAllProducts(category, provider, isExisted)
     }, [isUpdated, category, provider, isExisted])
+
 
     const columns = [
         {

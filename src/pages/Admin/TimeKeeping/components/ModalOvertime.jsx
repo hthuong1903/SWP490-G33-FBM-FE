@@ -8,8 +8,9 @@ import DialogTitle from '@mui/material/DialogTitle'
 import { useForm } from 'react-hook-form'
 import { schemaOvertime } from '../validation'
 import { toast } from 'react-toastify'
+import axios from 'axios'
 
-function ModalOvertime({ title, content, isOpen, handleClose, handleConfirm }) {
+function ModalOvertime({ title, content, isOpen, handleClose, handleConfirm, employee }) {
     const {
         register,
         handleSubmit,
@@ -18,9 +19,22 @@ function ModalOvertime({ title, content, isOpen, handleClose, handleConfirm }) {
         mode: 'onChange',
         resolver: yupResolver(schemaOvertime)
     })
+
+    const updateOvertime = async (data) => {
+        try {
+            await axios.put('http://20.205.46.182:8081/api/overtime', data).then((res) => {
+                console.log(res)
+                toast.success(res.message)
+            })
+            handleClose && handleClose()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const onSubmit = (data) => {
-        console.log(data)
-        toast.success('Overtime')
+        const dataSubmit = { ...employee, hour: data.hour + employee.hour, content: data.content }
+        updateOvertime(dataSubmit)
     }
     return (
         <Dialog
@@ -49,7 +63,17 @@ function ModalOvertime({ title, content, isOpen, handleClose, handleConfirm }) {
                         </Box>
                     </Grid>
                     <Grid item xs={6}>
-                        1
+                        <TextField
+                            fullWidth
+                            id="outlined-multiline-static"
+                            label="Nội dung"
+                            multiline
+                            rows={2}
+                            defaultValue=""
+                            {...register('content')}
+                            error={errors.content ? true : false}
+                            helperText={errors.content?.message}
+                        />
                     </Grid>
                 </Grid>
             </DialogContent>

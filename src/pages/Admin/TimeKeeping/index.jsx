@@ -1,6 +1,7 @@
 import TimeKeepingApi from '@/api/TimeKeepingApi'
 import ConfirmModal from '@/components/Common/Modal/ConfirmModal'
 import { Box, Button, Divider, MenuItem, Tab, Tabs, TextField } from '@mui/material'
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import OvertimeTab from './OvertimeTab'
@@ -22,6 +23,7 @@ function TimeKeeping() {
     const [year, setYear] = useState(_year)
     const [value, setValue] = useState(0)
     const [timeSheetPeriods, setTimeSheetPeriods] = useState([])
+    const [isRender, setIsRender] = useState(true)
 
     const getTimeSheetPeriods = async (period_code) => {
         try {
@@ -35,17 +37,22 @@ function TimeKeeping() {
     const createTimeSheetPeriods = async (month, year) => {
         try {
             const data = { month: month, periodCode: month + '' + year, year: year }
-            const response = await TimeKeepingApi.createTimeSheetPeriods(data)
-            console.log('createTimeSheetPeriods ' + response)
-            setTimeSheetPeriods(response.data)
+            await axios.post('http://20.205.46.182:8081/api/timesheetperiods', data).then((res) => {
+                console.log(res)
+                setTimeSheetPeriods(res.data)
+                toast.success(res.message)
+            })
+            setIsRender(true)
+            // setTimeSheetPeriods(response.data)
         } catch (error) {
             console.log(error)
         }
     }
 
     useEffect(() => {
-        getTimeSheetPeriods(month + '' + year)
-    }, [])
+        isRender && getTimeSheetPeriods(month + '' + year)
+        setIsRender(false)
+    }, [timeSheetPeriods])
 
     const handleChange = (event, newValue) => {
         setValue(newValue)
@@ -149,7 +156,7 @@ function TimeKeeping() {
                         </Tabs>
                     </Box>
                     <TimeKeepingTab value={value} index={0} periodCode={month + '' + year} />
-                    <OvertimeTab value={value} index={1} />
+                    <OvertimeTab value={value} index={1} periodCode={month + '' + year} />
                 </>
             )}
         </>

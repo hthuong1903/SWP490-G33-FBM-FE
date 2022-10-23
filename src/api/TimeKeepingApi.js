@@ -28,7 +28,14 @@ const TimeKeepingApi = {
      */
     updateTimesheetDetailPerEmployee: (data) => {
         const url = '/timesheetdetails'
-        return axiosClient.put(url, data)
+        return axiosClient.put(url, null, {
+            params: {
+                employee_id: data.employee_id,
+                date: data.date,
+                period_code: data.period_code,
+                case_day: data.case_day
+            }
+        })
     },
 
     /**
@@ -50,6 +57,7 @@ const TimeKeepingApi = {
         const url = `/timesheetperiods/${period_code}`
         return axiosClient.get(url)
     },
+
 }
 
 export default TimeKeepingApi

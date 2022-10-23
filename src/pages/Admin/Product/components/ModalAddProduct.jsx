@@ -57,7 +57,6 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
                         photoThirdName: res.data.data[0].photoThirdName
                     }
                 }
-
                 productApi
                     .createProduct(dataSubmit)
                     .then((res) => {
@@ -83,7 +82,6 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
             console.log('fail when getAllCategory', error)
         }
     }
-
     const getAllProvider = async () => {
         try {
             const response = await productApi.getAllProvider()

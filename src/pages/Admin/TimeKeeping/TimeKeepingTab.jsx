@@ -9,6 +9,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
     const [isOpenTimeKeepingModal, setIsOpenTimeKeepingModal] = useState(false)
     const [timeSheetDetail, setTimeSheetDetail] = useState([])
     const [employee, setEmployee] = useState({})
+    const [isRender, setIsRender] = useState(true)
 
     const getTimeSheetDetail = async (period_code) => {
         try {
@@ -26,10 +27,14 @@ function TimeKeepingTab({ value, index, periodCode }) {
             console.log(error)
         }
     }
-
     useEffect(() => {
         getTimeSheetDetail(periodCode)
-    }, [])
+    }, [periodCode])
+
+    useEffect(() => {
+        isRender && getTimeSheetDetail(periodCode)
+        setIsRender(false)
+    }, [timeSheetDetail, isRender])
 
     const handleAction = (params) => {
         setEmployee(params)
@@ -37,6 +42,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
     }
 
     const columns = [
+        { field: 'employee', headerName: 'Số thứ tự', flex: 0.5, hide: true },
         { field: 'id', headerName: 'Số thứ tự', flex: 0.5 },
         { field: 'name', headerName: 'TÊN', flex: 1 },
         {
@@ -53,6 +59,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
         { field: 'absentDay', headerName: 'VẮNG', flex: 1 },
         { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 1 },
         { field: 'weekendWorking', headerName: 'CÔNG CUỐI TUẦN', flex: 1 },
+        // { field: 'workingDay', headerName: 'NGÀY THƯỜNG', flex: 1 },
         { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', flex: 1 },
         {
             field: 'actions',
@@ -75,22 +82,21 @@ function TimeKeepingTab({ value, index, periodCode }) {
             }
         }
     ]
-    const rows = timeSheetDetail.map((item) => {
+    const rows = timeSheetDetail.map((item, index) => {
         const container = {}
-        container['id'] = item.id
+        container['id'] = index + 1
         container['absentDay'] = item.absentDay
-        container['allowedDay'] = item.allowedDay
+        container['allowedDay'] = item.allowedAbsentDay
         container['holidaysWorking'] = item.holidaysWorking
         container['periodCode'] = item.periodCode
         container['totalDayWorking'] = item.totalDayWorking
         container['weekendWorking'] = item.weekendWorking
         container['workingDay'] = item.workingDay
+        container['employee'] = item.employee
         container['name'] = item.employee.name
         container['roles'] = item.employee.roles[0].name
         return container
     })
-
-    console.log(rows)
 
     return (
         <div
@@ -102,7 +108,10 @@ function TimeKeepingTab({ value, index, periodCode }) {
                 <ModalTimeKeeping
                     isOpen={isOpenTimeKeepingModal}
                     title={'Chấm công'}
-                    handleClose={() => setIsOpenTimeKeepingModal(false)}
+                    handleClose={() => {
+                        setIsOpenTimeKeepingModal(false)
+                        setIsRender(true)
+                    }}
                     employee={employee}
                     timeSheetDetail={timeSheetDetail}
                 />
