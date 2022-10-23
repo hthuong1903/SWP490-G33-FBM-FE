@@ -1,3 +1,4 @@
+import Constants from '@/components/Constants'
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
     Button,
@@ -50,7 +51,7 @@ function ModalBonus({
 
     const updateAllowanceDetail = async (data) => {
         try {
-            await axios.put('http://20.205.46.182:8081/api/bonus_detail', data).then((res) => {
+            await axios.put(Constants.baseAPI + 'api/bonus_detail', data).then((res) => {
                 toast.success(res.data.message)
             })
             handleClose && handleClose()

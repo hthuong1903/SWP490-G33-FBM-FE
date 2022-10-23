@@ -1,4 +1,5 @@
 import productApi from '@/api/productApi'
+import Constants from '@/components/Constants'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Box, Grid, InputAdornment, MenuItem, Slider, TextField, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
@@ -42,7 +43,7 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
         formData.append('photo_second', imageData?.photoSecondName)
         formData.append('photo_third', imageData?.photoThirdName)
         axios
-            .post('http://20.205.46.182:8081/api/storage_server/upload/product_image', formData)
+            .post(Constants.baseAPI + 'api/storage_server/upload/product_image', formData)
             .then((res) => {
                 console.log('up anh thanh cong', res.data.data[0])
                 const dataSubmit = {
@@ -67,7 +68,7 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
                 //     console.log('error when create product', error)
                 //   })
                 axios
-                    .post('http://20.205.46.182:8081/api/products', dataSubmit)
+                    .post(Constants.baseAPI + 'api/products', dataSubmit)
                     .then((res) => {
                         console.log(res)
                         toast.success('Tạo sản phẩm thành công')

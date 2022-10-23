@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form'
 import { schemaOvertime } from '../validation'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import Constants from '@/components/Constants'
 
 function ModalOvertime({ title, content, isOpen, handleClose, handleConfirm, employee }) {
     const {
@@ -22,7 +23,7 @@ function ModalOvertime({ title, content, isOpen, handleClose, handleConfirm, emp
 
     const updateOvertime = async (data) => {
         try {
-            await axios.put('http://20.205.46.182:8081/api/overtime', data).then((res) => {
+            await axios.put(Constants.baseAPI + 'api/overtime', data).then((res) => {
                 console.log(res)
                 toast.success(res.message)
             })
