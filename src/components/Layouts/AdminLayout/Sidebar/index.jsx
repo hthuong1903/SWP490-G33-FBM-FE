@@ -24,14 +24,15 @@ function Sidebar() {
     setSelectedIndex(index)
   }
   const items = [
-    { name: 'Sản phẩm', href: '/admin' },
+    { name: 'Danh mục', href: '/admin' },
+    { name: 'Sản phẩm', href: '/admin/products' },
     { name: 'Hóa đơn', href: '/admin/receipts' },
     { name: 'Chấm công', href: '/admin/timekeeping' },
     { name: 'Bảng lương', href: '/admin/payrolls' },
     { name: 'Hợp đồng', href: '/admin/contracts' },
     { name: 'Thống kê', href: '/admin/statisticals' },
     { name: 'Nhà cung cấp', href: '/admin/suppliers' }
-  ]
+  ] 
   return (
     <div>
       <ConfirmModal
@@ -60,8 +61,8 @@ function Sidebar() {
                     '& .MuiListItemText-secondary': { fontSize: '0.7rem' },
                     '& .MuiTypography-root': { fontWeight: '500' }
                   }}
-                  primary="Lê Anh Tuấn"
-                  secondary="tuanlahe141277@fpt.edu.vn"
+                  primary="Nguyen Van A"
+                  secondary="abc@gmail.com"
                 />
               </ListItem>
               <Divider />
