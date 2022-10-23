@@ -41,8 +41,8 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
         formData.append('photo_once', imageData?.photoOnceName)
         formData.append('photo_second', imageData?.photoSecondName)
         formData.append('photo_third', imageData?.photoThirdName)
-        axios
-            .post('http://20.205.46.182:8081/api/storage_server/upload/product_image', formData)
+        productApi
+            .uploadImage(formData)
             .then((res) => {
                 console.log('up anh thanh cong', res.data.data[0])
                 const dataSubmit = {
@@ -57,17 +57,8 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
                         photoThirdName: res.data.data[0].photoThirdName
                     }
                 }
-                // productApi
-                //   .createProduct(dataSubmit)
-                //   .then((res) => {
-                //     console.log(res)
-                //     toast.success('Tạo sản phẩm thành công')
-                //   })
-                //   .catch((error) => {
-                //     console.log('error when create product', error)
-                //   })
-                axios
-                    .post('http://20.205.46.182:8081/api/products', dataSubmit)
+                productApi
+                    .createProduct(dataSubmit)
                     .then((res) => {
                         console.log(res)
                         toast.success('Tạo sản phẩm thành công')
@@ -91,7 +82,6 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
             console.log('fail when getAllCategory', error)
         }
     }
-
     const getAllProvider = async () => {
         try {
             const response = await productApi.getAllProvider()

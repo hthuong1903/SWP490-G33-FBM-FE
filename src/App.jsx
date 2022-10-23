@@ -1,3 +1,4 @@
+import { Route, Routes } from 'react-router-dom'
 import { useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
@@ -5,22 +6,28 @@ import './App.css'
 import NotFoundPage from './components/Common/NotFoundPage'
 import AdminLayout from './components/Layouts/AdminLayout'
 import UserLayout from './components/Layouts/UserLayout'
+import Category from './pages/Admin/Category'
+import Contract from './pages/Admin/Contract'
 import Payroll from './pages/Admin/Payroll'
 import Allowance from './pages/Admin/Manager/Allowance/Allowance'
 import Bonus from './pages/Admin/Manager/Bonus'
 import Product from './pages/Admin/Product'
+import Provider from './pages/Admin/Provider'
 import Receipt from './pages/Admin/Receipt'
 import TimeKeeping from './pages/Admin/TimeKeeping'
 import Login from './pages/Login'
 
 function App() {
-    const [count, setCount] = useState(0)
-    const location = useLocation()
-
     return (
         <div className="App">
             <Routes>
                 <Route path="/admin" element={<AdminLayout />}>
+                    <Route index element={<Category />} />
+                    <Route path="products" element={<Product />} />
+                    <Route path="suppliers" element={<Provider />} />
+                    <Route path="receipts" element={<Receipt />} />
+                    <Route path="timekeeping" element={<TimeKeeping />} />
+                    <Route path="contracts" element={<Contract />} />
                     <Route index element={<Product />} />
                     <Route path="receipts" element={<Receipt />} />
                     <Route path="timekeeping" element={<TimeKeeping />} />
