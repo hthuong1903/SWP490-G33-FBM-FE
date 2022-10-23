@@ -2,10 +2,9 @@ import productApi from '@/api/productApi'
 import { Box, MenuItem, TextField } from '@mui/material'
 import { useEffect, useState } from 'react'
 
-function FilterTable({ chooseProvider, chooseCategory, chooseIsExisted }) {
+function FilterTable({ chooseProvider, chooseCategory }) {
   const [provider, setProvider] = useState(-1)
   const [category, setCategory] = useState(-1)
-  const [isExisted, setIsExisted] = useState(-1)
   const [providerList, setProviderList] = useState([])
   const [categoryList, setCategoryList] = useState([])
 
@@ -64,8 +63,7 @@ function FilterTable({ chooseProvider, chooseCategory, chooseIsExisted }) {
           onChange={(event) => {
             setCategory(event.target.value)
             chooseCategory(event.target.value)
-          }}
-          sx={{ mr: 2 }}>
+          }}>
           <MenuItem value={-1}>Tất cả</MenuItem>
           {categoryList.map((category) => {
             return (
@@ -74,22 +72,6 @@ function FilterTable({ chooseProvider, chooseCategory, chooseIsExisted }) {
               </MenuItem>
             )
           })}
-        </TextField>
-        <TextField
-          id="outlined-select-currency"
-          select
-          size="small"
-          label="Tình trạng"
-          value={isExisted}
-          onChange={(event) => {
-            setIsExisted(event.target.value)
-            chooseIsExisted(event.target.value)
-          }}
-          >
-          <MenuItem value={-1}>Tất cả</MenuItem>
-          <MenuItem value={1}>Còn hàng</MenuItem>
-          <MenuItem value={2}>Hết hàng</MenuItem>
-          
         </TextField>
       </Box>
     </>

@@ -1,5 +1,4 @@
 import productApi from '@/api/productApi'
-import Constants from '@/components/Constants'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Box, Grid, InputAdornment, MenuItem, Slider, TextField, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
@@ -42,8 +41,8 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
         formData.append('photo_once', imageData?.photoOnceName)
         formData.append('photo_second', imageData?.photoSecondName)
         formData.append('photo_third', imageData?.photoThirdName)
-        axios
-            .post(Constants.baseAPI + 'api/storage_server/upload/product_image', formData)
+        productApi
+            .uploadImage(formData)
             .then((res) => {
                 console.log('up anh thanh cong', res.data.data[0])
                 const dataSubmit = {
@@ -58,17 +57,8 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
                         photoThirdName: res.data.data[0].photoThirdName
                     }
                 }
-                // productApi
-                //   .createProduct(dataSubmit)
-                //   .then((res) => {
-                //     console.log(res)
-                //     toast.success('Tạo sản phẩm thành công')
-                //   })
-                //   .catch((error) => {
-                //     console.log('error when create product', error)
-                //   })
-                axios
-                    .post(Constants.baseAPI + 'api/products', dataSubmit)
+                productApi
+                    .createProduct(dataSubmit)
                     .then((res) => {
                         console.log(res)
                         toast.success('Tạo sản phẩm thành công')
@@ -92,7 +82,6 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
             console.log('fail when getAllCategory', error)
         }
     }
-
     const getAllProvider = async () => {
         try {
             const response = await productApi.getAllProvider()

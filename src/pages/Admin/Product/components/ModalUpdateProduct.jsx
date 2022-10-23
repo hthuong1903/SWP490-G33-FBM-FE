@@ -1,5 +1,4 @@
 import productApi from '@/api/productApi'
-import Constants from '@/components/Constants'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Box, Grid, InputAdornment, MenuItem, Slider, TextField, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
@@ -57,12 +56,13 @@ export default function ModalUpdateProduct({
         imageData?.photoThirdName
             ? formData.append('photo_third', imageData?.photoThirdName)
             : formData.append('photo_third_name', selectedData?.row.productPhoto.photoThirdName)
-        axios
-            .post(Constants.baseAPI + 'api/storage_server/upload/product_image_by_update', formData)
+        productApi
+            .updateImage(formData)
             .then((res) => {
                 console.log('up anh thanh cong', res.data.data[0])
                 const dataSubmit = {
                     ...data,
+                    id: selectedData?.row.id,
                     provider: { id: provider },
                     category: { id: category },
                     discount: discountValue,
@@ -73,8 +73,8 @@ export default function ModalUpdateProduct({
                         photoThirdName: res.data.data[0].photoThirdName
                     }
                 }
-                axios
-                    .put(Constants.baseAPI + 'api/products', dataSubmit)
+                productApi
+                    .updateProduct(dataSubmit)
                     .then((res) => {
                         console.log(res)
                         toast.success('Cập nhật sản phẩm thành công')
@@ -146,7 +146,7 @@ export default function ModalUpdateProduct({
                                 id="outlined-basic"
                                 label="Tên"
                                 variant="outlined"
-                                value={selectedData?.row.name}
+                                defaultValue={selectedData?.row.name}
                                 disabled={!isEdit}
                                 {...register('name')}
                                 error={errors.name ? true : false}
@@ -294,7 +294,7 @@ export default function ModalUpdateProduct({
                                 id="outlined-basic"
                                 label="Kích thước"
                                 variant="outlined"
-                                value={selectedData?.row.size}
+                                defaultValue={selectedData?.row.size}
                                 {...register('size')}
                                 error={errors.size ? true : false}
                                 helperText={errors.size?.message}
@@ -313,7 +313,7 @@ export default function ModalUpdateProduct({
                                 id="outlined-basic"
                                 label="Số lượng"
                                 variant="outlined"
-                                value={selectedData?.row.quantity}
+                                defaultValue={selectedData?.row.quantity}
                                 {...register('quantity')}
                                 error={errors.quantity ? true : false}
                                 helperText={errors.quantity?.message}
@@ -325,7 +325,7 @@ export default function ModalUpdateProduct({
                                 id="outlined-basic"
                                 label="Màu sắc"
                                 variant="outlined"
-                                value={selectedData?.row.color}
+                                defaultValue={selectedData?.row.color}
                                 {...register('color')}
                                 error={errors.color ? true : false}
                                 helperText={errors.color?.message}
@@ -337,7 +337,7 @@ export default function ModalUpdateProduct({
                                 id="outlined-basic"
                                 label="Chất liệu"
                                 variant="outlined"
-                                value={selectedData?.row.material}
+                                defaultValue={selectedData?.row.material}
                                 {...register('material')}
                                 error={errors.material ? true : false}
                                 helperText={errors.material?.message}
@@ -355,7 +355,7 @@ export default function ModalUpdateProduct({
                                 id="outlined-basic"
                                 label="Mô tả sản phẩm"
                                 variant="outlined"
-                                value={selectedData?.row.description}
+                                defaultValue={selectedData?.row.description}
                                 {...register('description')}
                                 error={errors.description ? true : false}
                                 helperText={errors.description?.message}
@@ -366,9 +366,11 @@ export default function ModalUpdateProduct({
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Hủy bỏ</Button>
-                <Button onClick={handleSubmit(onSubmit)} autoFocus>
-                    Đồng ý
-                </Button>
+                {isEdit && (
+                    <Button onClick={handleSubmit(onSubmit)} autoFocus>
+                        Đồng ý
+                    </Button>
+                )}
             </DialogActions>
         </Dialog>
     )
