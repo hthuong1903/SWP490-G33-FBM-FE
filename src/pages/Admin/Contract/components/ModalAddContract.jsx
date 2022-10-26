@@ -1,5 +1,4 @@
 import authApi from '@/api/authApi'
-import categoryApi from '@/api/categoryApi'
 import contractApi from '@/api/contractApi'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Autocomplete, Box, InputAdornment, MenuItem, TextField } from '@mui/material'
@@ -18,7 +17,7 @@ import NumberFormat from 'react-number-format'
 import { toast } from 'react-toastify'
 import schema from '../validation'
 
-export default function ModalAddContract({ title, isOpen, handleClose, handleConfirm, isEdit }) {
+export default function ModalAddContract({ title, isOpen, handleClose, handleConfirm }) {
     const [selectedEmployee, setSelectedEmployee] = useState([])
     const [startDate, setStartDate] = useState()
     const [contractTerm, setContractTerm] = useState(1)
