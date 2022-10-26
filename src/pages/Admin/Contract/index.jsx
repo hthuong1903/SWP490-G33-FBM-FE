@@ -87,7 +87,7 @@ export default function Contract() {
                 if (params.value == null) {
                     return ''
                 }
-                return `${params.value} năm`
+                return `${params.value} tháng`
             }
         },
         {

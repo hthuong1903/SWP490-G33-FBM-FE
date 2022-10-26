@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 function FilterTable({ chooseProvider, chooseCategory, chooseIsExisted }) {
   const [provider, setProvider] = useState(-1)
   const [category, setCategory] = useState(-1)
-  const [isExisted, setIsExisted] = useState(-1)
+  const [isExisted, setIsExisted] = useState(0)
   const [providerList, setProviderList] = useState([])
   const [categoryList, setCategoryList] = useState([])
 
@@ -86,9 +86,9 @@ function FilterTable({ chooseProvider, chooseCategory, chooseIsExisted }) {
             chooseIsExisted(event.target.value)
           }}
           >
-          <MenuItem value={-1}>Tất cả</MenuItem>
-          <MenuItem value={1}>Còn hàng</MenuItem>
-          <MenuItem value={2}>Hết hàng</MenuItem>
+          <MenuItem value={0}>Tất cả</MenuItem>
+          <MenuItem value={-1}>Còn hàng</MenuItem>
+          <MenuItem value={1}>Hết hàng</MenuItem>
           
         </TextField>
       </Box>
