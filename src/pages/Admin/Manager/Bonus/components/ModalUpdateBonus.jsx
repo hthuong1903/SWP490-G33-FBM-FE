@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Box, Grid, InputAdornment, TextField } from '@mui/material'
 import Button from '@mui/material/Button'
@@ -13,7 +12,7 @@ import schema from '../validation'
 import Constants from '@/components/Constants'
 import NumberFormat from 'react-number-format'
 
-function ModalUpdateAllowance({ title, selectedData, isOpen, handleClose, handleConfirm, isEdit }) {
+function ModalUpdateBonus({ title, selectedData, isOpen, handleClose, isEdit }) {
     const {
         register,
         handleSubmit,
@@ -27,12 +26,12 @@ function ModalUpdateAllowance({ title, selectedData, isOpen, handleClose, handle
     const onSubmit = (data) => {
         const newObj = {
             ...selectedData,
-            content: data.description,
+            content: data.content,
             money: data.money,
-            typeOfAllowance: data.name
+            typeOfBonus: data.typeOfBonus
         }
         axios
-            .put(Constants.baseAPI + 'api/allowance', newObj)
+            .put(Constants.baseAPI + 'api/bonus', newObj)
             .then((res) => {
                 toast.success(res.data.message)
                 handleClose && handleClose()
@@ -62,10 +61,10 @@ function ModalUpdateAllowance({ title, selectedData, isOpen, handleClose, handle
                                 id="outlined-basic"
                                 label="Tên"
                                 variant="outlined"
-                                defaultValue={selectedData.typeOfAllowance}
-                                {...register('name')}
-                                error={errors.name ? true : false}
-                                helperText={errors.name?.message}
+                                defaultValue={selectedData.typeOfBonus}
+                                {...register('typeOfBonus')}
+                                error={errors.typeOfBonus ? true : false}
+                                helperText={errors.typeOfBonus?.message}
                             />
                         </Box>
                     </Grid>
@@ -81,7 +80,7 @@ function ModalUpdateAllowance({ title, selectedData, isOpen, handleClose, handle
                                         name="money"
                                         size="small"
                                         customInput={TextField}
-                                        label="Giá bán"
+                                        label="Số tiền"
                                         thousandSeparator={true}
                                         variant="outlined"
                                         defaultValue={selectedData.money}
@@ -114,9 +113,9 @@ function ModalUpdateAllowance({ title, selectedData, isOpen, handleClose, handle
                                 label="Nội dung"
                                 variant="outlined"
                                 defaultValue={selectedData.content}
-                                {...register('description')}
-                                error={errors.description ? true : false}
-                                helperText={errors.description?.message}
+                                {...register('content')}
+                                error={errors.content ? true : false}
+                                helperText={errors.content?.message}
                             />
                         </Box>
                     </Grid>
@@ -132,4 +131,4 @@ function ModalUpdateAllowance({ title, selectedData, isOpen, handleClose, handle
     )
 }
 
-export default ModalUpdateAllowance
+export default ModalUpdateBonus

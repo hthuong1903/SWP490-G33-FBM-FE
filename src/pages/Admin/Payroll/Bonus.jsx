@@ -3,9 +3,11 @@ import DataTable from '@/components/Common/DataTable'
 import { Box, Button, Tooltip } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import ModalBonus from './components/ModalBonus'
+import ModalBonusDetail from './components/ModalBonusDetail'
 
 function Bonus({ value, index, periodCode }) {
     const [isOpenBonusModal, setIsOpenBonusModal] = useState(false)
+    const [isOpenViewBonusModal, setIsOpenViewBonusModal] = useState(false)
     const [bonus, setBonus] = useState([])
     const [isRender, setIsRender] = useState(true)
     const [employee, setEmployee] = useState({})
@@ -49,6 +51,12 @@ function Bonus({ value, index, periodCode }) {
         setIsOpenBonusModal(true)
     }
 
+    const handleView = (params) => {
+        console.log(params)
+        setEmployee(params)
+        setIsOpenViewBonusModal(true)
+    }
+
     const columns = [
         { field: 'employeeName', headerName: 'TÊN', flex: 1 },
         {
@@ -65,13 +73,22 @@ function Bonus({ value, index, periodCode }) {
             renderCell: (params) => {
                 return (
                     <>
-                        <Tooltip title="Thưởng">
+                        <Tooltip title="Thưởng" sx={{ mr: 2 }}>
                             <Button
                                 variant="contained"
                                 size="small"
                                 onClick={() => handleAction(params.row)}>
                                 {/* <EditRounded fontSize="inherit" /> */}
                                 Thưởng
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Thưởng">
+                            <Button
+                                variant="contained"
+                                size="small"
+                                onClick={() => handleView(params.row)}>
+                                {/* <EditRounded fontSize="inherit" /> */}
+                                Xem
                             </Button>
                         </Tooltip>
                     </>
@@ -96,12 +113,24 @@ function Bonus({ value, index, periodCode }) {
             {isOpenBonusModal && employee && bonusDetail.length > 0 && (
                 <ModalBonus
                     isOpen={isOpenBonusModal}
-                    title={'Thêm sản phẩm'}
+                    title={'Thêm thưởng'}
                     employee={employee}
                     bonusDetail={bonusDetail}
                     periodCode={periodCode}
                     handleClose={() => {
                         setIsOpenBonusModal(false)
+                        setIsRender(true)
+                    }}
+                />
+            )}
+            {isOpenViewBonusModal && employee && (
+                <ModalBonusDetail
+                    isOpen={isOpenViewBonusModal}
+                    title={'Xem chi tiết thưởng'}
+                    employee={employee}
+                    periodCode={periodCode}
+                    handleClose={() => {
+                        setIsOpenViewBonusModal(false)
                         setIsRender(true)
                     }}
                 />

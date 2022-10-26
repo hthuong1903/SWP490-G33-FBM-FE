@@ -17,7 +17,22 @@ const BonusApi = {
     getBonus: () => {
         const url = '/bonus'
         return axiosClient.get(url)
+    },
+
+    deleteBonus: (id) => {
+        const url = `/bonus/${id}`
+        return axiosClient.delete(url)
+    },
+
+    getBonusDetailByPeriodCodeAndEmployee: (period_code, employee_id) => {
+        const url = `/bonus_detail/period/employee`
+        return axiosClient.get(url, { params: { period_code, employee_id } })
+    },
+    deleteBonusDetail: (id) => {
+        const url = `/bonus_detail/${id}`
+        return axiosClient.delete(url)
     }
+
 }
 
 export default BonusApi

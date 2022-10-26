@@ -50,9 +50,11 @@ function ModalAllowance({
 
     const updateAllowanceDetail = async (data) => {
         try {
-            await axios.put('http://20.205.46.182:8081/api/allowance_detail', data).then((res) => {
-                toast.success(res.data.message)
-            })
+            await axios
+                .put('https://api.dinhtruong.live/api/allowance_detail', data)
+                .then((res) => {
+                    toast.success(res.data.message)
+                })
             handleClose && handleClose()
         } catch (error) {
             console.log(error)

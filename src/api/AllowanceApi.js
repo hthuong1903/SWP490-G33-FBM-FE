@@ -32,6 +32,17 @@ const AllowanceApi = {
     deleteAllowance: (id) => {
         const url = `/allowance/${id}`
         return axiosClient.delete(url)
+    },
+
+
+    getAllowanceDetailByPeriodCodeAndEmployee: (period_code, employee_id) => {
+        const url = `/allowance_detail/period/employee`
+        return axiosClient.get(url, { params: { period_code, employee_id } })
+    },
+
+    deleteAllowanceDetail: (id) => {
+        const url = `/allowance_detail/${id}`
+        return axiosClient.delete(url)
     }
 }
 
