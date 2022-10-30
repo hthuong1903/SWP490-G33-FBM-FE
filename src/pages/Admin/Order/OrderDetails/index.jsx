@@ -26,21 +26,31 @@ export default function OrderDetails() {
                 const response = await orderApi.getAllOrderById(orderId)
                 setOrderDetail(response.data)
             } catch (error) {
-                console.log('fail when getAllProduct', error)
+                console.log('fail when getOrderById', error)
             }
         }
         getOrderById(orderId)
-    }, [orderId])
+    }, [])
     const addressDetails = () =>
         orderDetail[0]?.customer.address
             ? `${orderDetail[0]?.customer.address}, ${orderDetail[0]?.customer.districtName}, ${orderDetail[0]?.customer.wardName}, ${orderDetail[0]?.customer.provinceName}`
             : 'Khách hàng chưa có địa chỉ'
 
     const paymentMethod = () => orderDetail[0] && PAYMENT_METHOD[orderDetail[0]?.typeOfPay - 1].name
+
     const orderStatus = () =>
         orderDetail[0] && ORDER_STATUS.filter((item) => item.id === orderDetail[0]?.status)[0]
 
-    console.log(orderStatus())
+    const totalAmount = orderDetail[0] && orderDetail[0].orderProductDtos.reduce(
+        (result, value) => result + value.quantity * value.product.priceOut,
+        0
+    )
+
+    const totalAmountAfter = orderDetail[0] && orderDetail[0].orderProductDtos.reduce(
+        (result, value) => result + value.quantity * value.product.priceOut - value.changedPrice,
+        0
+    )
+
     return (
         <>
             <h2>Chi tiết đơn hàng</h2>
@@ -75,43 +85,49 @@ export default function OrderDetails() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {orderDetail.map((row) => (
-                            <StyledTableRow key={row.id}>
-                                <StyledTableCell align="left">
-                                    <Box
-                                        sx={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-                                        <img
-                                            src={`http://api.dinhtruong.live/api/storage_server/download/${row?.orderProductDtos[0].product.photoMain}`}
-                                            alt="123"
-                                            width="100px"
-                                        />
-                                        <Box>
-                                            <Typography sx={{ fontWeight: 'bold' }}>
-                                                {row?.orderProductDtos[0].product.name}
-                                            </Typography>
-                                            <Typography variant="button">
-                                                SKU: {row?.orderProductDtos[0].product.productCode}
-                                            </Typography>
+                        {orderDetail[0] &&
+                            orderDetail[0].orderProductDtos.map((row) => (
+                                <StyledTableRow key={row.productId}>
+                                    <StyledTableCell align="left">
+                                        <Box
+                                            sx={{
+                                                display: 'flex',
+                                                gap: '15px',
+                                                alignItems: 'center'
+                                            }}>
+                                            <img
+                                                src={`http://api.dinhtruong.live/api/storage_server/download/${row?.product.photoMain}`}
+                                                alt="123"
+                                                width="100px"
+                                            />
+                                            <Box>
+                                                <Typography sx={{ fontWeight: 'bold' }}>
+                                                    {row?.product.name}
+                                                </Typography>
+                                                <Typography variant="button">
+                                                    SKU: {row?.product.productCode}
+                                                </Typography>
+                                            </Box>
                                         </Box>
-                                    </Box>
-                                </StyledTableCell>
-                                <StyledTableCell align="left">
-                                    {row?.totalOrderPrice.toLocaleString('vi-vn')} VND
-                                </StyledTableCell>
-                                <StyledTableCell align="left">
-                                    {row?.numberOfProducts}
-                                </StyledTableCell>
-                                <StyledTableCell align="left">
-                                    {row?.orderProductDtos[0].product.discount.toLocaleString(
-                                        'vi-vn'
-                                    )}{' '}
-                                    VND
-                                </StyledTableCell>
-                                <StyledTableCell align="left">
-                                    {row?.totalOrderPriceAfter.toLocaleString('vi-vn')} VND
-                                </StyledTableCell>
-                            </StyledTableRow>
-                        ))}
+                                    </StyledTableCell>
+                                    <StyledTableCell align="left">
+                                        {row?.product.priceOut.toLocaleString('vi-vn')} VND
+                                    </StyledTableCell>
+                                    <StyledTableCell align="left">{row?.quantity}</StyledTableCell>
+                                    <StyledTableCell align="left">
+                                        {row?.changedPrice.toLocaleString('vi-vn')} VND
+                                    </StyledTableCell>
+                                    <StyledTableCell align="left">
+                                        <b>
+                                            {(
+                                                row?.product.priceOut * row?.quantity -
+                                                row?.changedPrice
+                                            ).toLocaleString('vi-VN')}{' '}
+                                            VND
+                                        </b>
+                                    </StyledTableCell>
+                                </StyledTableRow>
+                            ))}
                     </TableBody>
                 </Table>
             </TableContainer>
@@ -126,18 +142,20 @@ export default function OrderDetails() {
                     <table>
                         <tr>
                             <td className="td">Tổng</td>
-                            <td>2</td>
+                            <td>{totalAmount?.toLocaleString('vi-VN')} VND</td>
                         </tr>
                         <tr>
                             <td>Tổng tiền chiết khấu</td>
-                            <td>5</td>
+                            <td>
+                                {orderDetail[0]?.totalOrderPriceAfter.toLocaleString('vi-VN')} VND
+                            </td>
                         </tr>
                         <tr>
                             <td>
                                 <b>Tổng tiền</b>
                             </td>
                             <td>
-                                <b>5</b>
+                                <b>{totalAmountAfter?.toLocaleString('vi-VN')} VND</b>
                             </td>
                         </tr>
                     </table>

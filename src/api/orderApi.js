@@ -22,7 +22,20 @@ const orderApi = {
     createQuote: (orderId) => {
         const url = '/orders/quote'
         return axiosClient.put(url, null, { params: { orderId } })
-    }
+    },
+    createOrderT:(data)=>{
+        const url = `/orders`
+        return axios.post(`${BASE_URL}` + url, data)
+    },
+    deleteOrderT:(orderId)=>{
+        const url = `/orders?orderId=${orderId}`
+        return axios.delete(`${BASE_URL}` + url)
+    },
+    createQuoteT:(orderId, data)=>{
+        const url = `/orders/quote?orderId=${orderId}`
+        return axios.put(`${BASE_URL}` + url, data)
+    },
+
 }
 
 export default orderApi
