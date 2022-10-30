@@ -10,6 +10,18 @@ const orderApi = {
     getAllOrderById: (orderId) => {
         const url = `/orders/detail?orderId=${orderId}`
         return axiosClient.get(url)
+    },
+    createOrder: (data) => {
+        const url = '/orders'
+        return axiosClient.post(url, data)
+    },
+    createInvoiceFromQuote: (orderId) => {
+        const url = '/orders/invoce'
+        return axiosClient.put(url, null, { params: { orderId } })
+    },
+    createQuote: (orderId) => {
+        const url = '/orders/quote'
+        return axiosClient.put(url, null, { params: { orderId } })
     }
 }
 

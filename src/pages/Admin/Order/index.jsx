@@ -126,7 +126,7 @@ export default function Order() {
                                 <VisibilityIcon fontSize="inherit" />
                             </IconButton>
                         </Tooltip>
-                        {params.row.status !==4 ? (
+                        {params.row.status !== 4 ? (
                             <Tooltip title="Xóa" placement="right">
                                 <IconButton
                                     aria-label="delete"

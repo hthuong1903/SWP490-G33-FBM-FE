@@ -1,9 +1,7 @@
-import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
 import {
     Avatar,
     Box,
-    Collapse,
     Divider,
     List,
     ListItem,
@@ -21,13 +19,10 @@ import ConfirmModal from '../../../Common/Modal/ConfirmModal'
 function Sidebar() {
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [isOpenConfirmDialog, setIsOpenConfirmDialog] = useState(false)
-    const [open, setOpen] = useState(false)
     const handleListItemClick = (event, index) => {
         setSelectedIndex(index)
     }
-    const handleClick = () => {
-        setOpen(!open)
-    }
+
     const items = [
         { name: 'Danh mục', href: '/admin' },
         { name: 'Sản phẩm', href: '/admin/products' },
@@ -35,7 +30,8 @@ function Sidebar() {
         { name: 'Chấm công', href: '/admin/timekeeping' },
         { name: 'Bảng lương', href: '/admin/payrolls' },
         { name: 'Đơn hàng', href: '/admin/orders' },
-        { name: 'Quản lý', href: '/admin/manager' },
+        { name: 'Quản lý phụ cấp', href: '/admin/manager/allowance' },
+        { name: 'Quản lý thưởng', href: '/admin/manager/bonus' },
         { name: 'Hợp đồng', href: '/admin/contracts' },
         { name: 'Thống kê', href: '/admin/statisticals' },
         { name: 'Nhà cung cấp', href: '/admin/suppliers' }
@@ -76,83 +72,25 @@ function Sidebar() {
                             </Box>
                             <Box sx={{ overflow: 'auto', height: '75vh' }}>
                                 <Divider />
-                                {items.map((item, index) =>
-                                    item.name == 'Quản lý' ? (
-                                        <Box key={item}>
-                                            <ListItem button onClick={handleClick}>
-                                                <ListItemText
-                                                    sx={{
-                                                        '& .MuiTypography-root': {
-                                                            fontWeight: '500'
-                                                        }
-                                                    }}>
-                                                    {item.name}
-                                                </ListItemText>
-                                                {open ? <ExpandLess /> : <ExpandMore />}
-                                            </ListItem>
-                                            <Collapse in={open} timeout="auto" unmountOnExit>
-                                                <List component="div" disablePadding>
-                                                    <ListItem
-                                                        button
-                                                        sx={{ pl: 4 }}
-                                                        component={Link}
-                                                        to="/admin/manager/allowance"
-                                                        selected={selectedIndex === 41}
-                                                        onClick={(event) =>
-                                                            handleListItemClick(event, 41)
-                                                        }>
-                                                        <ListItemText
-                                                            sx={{
-                                                                '& .MuiTypography-root': {
-                                                                    fontWeight: '500'
-                                                                }
-                                                            }}>
-                                                            Phụ cấp
-                                                        </ListItemText>
-                                                    </ListItem>
-                                                    <ListItem
-                                                        button
-                                                        sx={{ pl: 4 }}
-                                                        component={Link}
-                                                        to="/admin/manager/bonus"
-                                                        selected={selectedIndex === 42}
-                                                        onClick={(event) =>
-                                                            handleListItemClick(event, 42)
-                                                        }>
-                                                        <ListItemText
-                                                            sx={{
-                                                                '& .MuiTypography-root': {
-                                                                    fontWeight: '500'
-                                                                }
-                                                            }}>
-                                                            Thưởng
-                                                        </ListItemText>
-                                                    </ListItem>
-                                                </List>
-                                            </Collapse>
-                                        </Box>
-                                    ) : (
-                                        <ListItem key={index} sx={{ p: 0 }}>
-                                            <ListItemButton
-                                                sx={{ py: 2 }}
-                                                component={Link}
-                                                to={item.href}
-                                                selected={selectedIndex === index}
-                                                onClick={(event) =>
-                                                    handleListItemClick(event, index)
-                                                }>
-                                                <ListItemText
-                                                    sx={{
-                                                        '& .MuiTypography-root': {
-                                                            fontWeight: '500'
-                                                        }
-                                                    }}>
-                                                    {item.name}
-                                                </ListItemText>
-                                            </ListItemButton>
-                                        </ListItem>
-                                    )
-                                )}
+                                {items.map((item, index) => (
+                                    <ListItem key={index} sx={{ p: 0 }}>
+                                        <ListItemButton
+                                            sx={{ py: 2 }}
+                                            component={Link}
+                                            to={item.href}
+                                            selected={selectedIndex === index}
+                                            onClick={(event) => handleListItemClick(event, index)}>
+                                            <ListItemText
+                                                sx={{
+                                                    '& .MuiTypography-root': {
+                                                        fontWeight: '500'
+                                                    }
+                                                }}>
+                                                {item.name}
+                                            </ListItemText>
+                                        </ListItemButton>
+                                    </ListItem>
+                                ))}
                             </Box>
                         </Box>
                         <Box>

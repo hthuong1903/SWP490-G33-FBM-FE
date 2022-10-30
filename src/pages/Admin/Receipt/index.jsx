@@ -1,58 +1,83 @@
-import { Grow } from '@mui/material'
+import orderApi from '@/api/orderApi'
 import productApi from '@/api/productApi'
 import DataTable from '@/components/Common/DataTable'
 import ConfirmModal from '@/components/Common/Modal/ConfirmModal'
+import { EditRounded } from '@mui/icons-material'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
-import EditRoundedIcon from '@mui/icons-material/EditRounded'
-import { Avatar, Button, IconButton, Tooltip } from '@mui/material'
+import { Button, Tooltip } from '@mui/material'
 import { Box } from '@mui/system'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import moment from 'moment/moment'
 
 function Receipt() {
+    const navigate = useNavigate()
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
     const [selectedRow, setSelectedRow] = useState(null)
     const [listProducts, setListProducts] = useState([])
-    const [category, setCategory] = useState(-1)
-    const [provider, setProvider] = useState(-1)
-    const [isExisted, setIsExisted] = useState(-1)
-    const [isUpdated, setIsUpdated] = useState(false)
+    const [isRender, setIsRender] = useState(true)
 
     const handleDelete = async () => {
-        // try {
-        //     await productApi.deleteProduct(selectedRow?.row.id)
-        //     toast.success('Xóa thành công !')
-        //     setIsOpenConfirmModal(false)
-        //     setIsUpdated(true)
-        // } catch (error) {
-        //     console.log(error)
-        // }
+        try {
+            await productApi.deleteProduct(selectedRow?.row.id)
+            toast.success('Xóa thành công !')
+            setIsOpenConfirmModal(false)
+            setIsRender(true)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     useEffect(() => {
-        const getAllProducts = async (categoryId, providerId, isExist) => {
+        const getAllProduct = async (status) => {
             try {
-                const response = await productApi.getAllProduct(categoryId, providerId, isExist)
+                const response = await orderApi.getAllOrder(status)
                 setListProducts(response.data)
-                console.log(response)
             } catch (error) {
-                console.log('fail when getAllProducts', error)
+                console.log('fail when getAllProduct', error)
             }
         }
-        setIsUpdated(false)
-        getAllProducts(category, provider, isExisted)
-    }, [isUpdated, category, provider, isExisted])
+        isRender && getAllProduct(3)
+        setIsRender(false)
+    }, [listProducts, isRender])
 
     const columns = [
         { field: 'id', headerName: 'ID', flex: 1, hide: true },
-        { field: 'name', headerName: 'TÊN KHÁCH HÀNG', flex: 1 },
-        { field: 'phone', headerName: 'SỐ ĐIỆN THOẠI', flex: 1 },
-        { field: 'createdBy', headerName: 'NGƯỜI TẠO', flex: 1 },
         {
-            field: 'totalPrice',
+            field: 'customerName',
+            headerName: 'TÊN KHÁCH HÀNG',
+            flex: 1,
+            renderCell: (params) => {
+                return (
+                    params.row.customer.firstName +
+                    ' ' +
+                    params.row.customer.middleName +
+                    ' ' +
+                    params.row.customer.lastName
+                )
+            }
+        },
+        {
+            field: 'phone',
+            headerName: 'SỐ ĐIỆN THOẠI',
+            flex: 1,
+            renderCell: (params) => {
+                return params.row.customer.phone
+            }
+        },
+        {
+            field: 'createdBy',
+            headerName: 'NGƯỜI TẠO',
+            flex: 1,
+            renderCell: (params) => {
+                return params.row.employeeSale.username
+            }
+        },
+        {
+            field: 'totalOrderPrice',
             headerName: 'TỔNG HÓA ĐƠN',
             flex: 1,
-            type: 'number',
             valueFormatter: (params) => {
                 if (params.value == null) {
                     return ''
@@ -61,9 +86,16 @@ function Receipt() {
             }
         },
         {
-            field: 'createdOn',
+            field: 'dateCreated',
             headerName: 'NGÀY TẠO',
-            flex: 1
+            flex: 1,
+            type: 'number',
+            valueFormatter: (params) => {
+                if (params.value == null) {
+                    return ''
+                }
+                return moment(params.value).format('DD/MM/YYYY HH:MM')
+            }
         },
 
         {
@@ -78,7 +110,7 @@ function Receipt() {
                                 variant="contained"
                                 size="small"
                                 onClick={() => {
-                                    setSelectedRow(params)
+                                    navigate(`/admin/receipts/details/${params.row.id}`)
                                 }}>
                                 Xem
                             </Button>
@@ -106,7 +138,7 @@ function Receipt() {
                                     console.log(params)
                                 }}>
                                 Xuất
-                                <EditRoundedIcon fontSize="inherit" />
+                                <EditRounded fontSize="inherit" />
                             </Button>
                         </Tooltip>
                     </>
@@ -131,10 +163,14 @@ function Receipt() {
                     display: 'flex',
                     justifyContent: 'space-between'
                 }}>
-                <Button variant="contained" sx={{ float: 'right' }} onClick={() => {}}>
+                <Button
+                    variant="contained"
+                    sx={{ float: 'right' }}
+                    onClick={() => navigate('../receipts/createReceipt')}>
                     Thêm hóa đơn
                 </Button>
             </Box>
+
             <DataTable columns={columns} rows={listProducts} />
         </>
     )

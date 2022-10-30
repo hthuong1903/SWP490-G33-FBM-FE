@@ -15,6 +15,8 @@ import Payroll from './pages/Admin/Payroll'
 import Product from './pages/Admin/Product'
 import Provider from './pages/Admin/Provider'
 import Receipt from './pages/Admin/Receipt'
+import CreateReceipt from './pages/Admin/Receipt/CreateReceipt'
+import DetailReceipt from './pages/Admin/Receipt/DetailReceipt'
 import TimeKeeping from './pages/Admin/TimeKeeping'
 import Login from './pages/Login'
 
@@ -27,6 +29,8 @@ function App() {
                     <Route path="products" element={<Product />} />
                     <Route path="suppliers" element={<Provider />} />
                     <Route path="receipts" element={<Receipt />} />
+                    <Route path="receipts/details/:receiptId" element={<DetailReceipt />} />
+                    <Route path="receipts/createReceipt" element={<CreateReceipt />} />
                     <Route path="timekeeping" element={<TimeKeeping />} />
                     <Route path="contracts" element={<Contract />} />
                     <Route path="payrolls" element={<Payroll />} />
