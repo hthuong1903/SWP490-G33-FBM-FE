@@ -10,7 +10,16 @@ const orderApi = {
     getAllOrderById: (orderId) => {
         const url = `/orders/detail?orderId=${orderId}`
         return axiosClient.get(url)
-    }
+    }, 
+    createOrder:(data)=>{
+        const url = `/orders`
+        return axios.post(`${BASE_URL}` + url, data)
+    },
+    deleteOrder:(orderId)=>{
+        const url = `/orders?orderId=${orderId}`
+        return axios.delete(`${BASE_URL}` + url)
+    },
+
 }
 
 export default orderApi

@@ -1,5 +1,4 @@
 import orderApi from '@/api/orderApi'
-import productApi from '@/api/productApi'
 import DataTable from '@/components/Common/DataTable'
 import ConfirmModal from '@/components/Common/Modal/ConfirmModal'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
@@ -24,9 +23,10 @@ export default function Order() {
     const [isUpdated, setIsUpdated] = useState(false)
     const [isEdit, setIsEdit] = useState(true)
     const navigate = useNavigate()
+
     const handleDelete = async () => {
         try {
-            await productApi.deleteProduct(selectedRow?.row.id)
+            await orderApi.deleteOrder(selectedRow?.row.id)
             toast.success('Xóa thành công !')
             setIsOpenConfirmModal(false)
             setIsUpdated(true)
@@ -45,7 +45,8 @@ export default function Order() {
             }
         }
         getAllProduct(status)
-    }, [])
+        setIsUpdated(false)
+    }, [isUpdated])
 
     const columns = [
         {
@@ -126,7 +127,7 @@ export default function Order() {
                                 <VisibilityIcon fontSize="inherit" />
                             </IconButton>
                         </Tooltip>
-                        {params.row.status !==4 ? (
+                        {params.row.status !== 4 ? (
                             <Tooltip title="Xóa" placement="right">
                                 <IconButton
                                     aria-label="delete"
@@ -149,7 +150,7 @@ export default function Order() {
             <ConfirmModal
                 isOpen={isOpenConfirmModal}
                 title="Xác nhận"
-                content={`Bạn có muốn xóa ${selectedRow?.row.name}?`}
+                content={`Bạn có muốn xóa đơn hàng này?`}
                 handleClose={() => setIsOpenConfirmModal(false)}
                 handleConfirm={() => handleDelete()}
             />

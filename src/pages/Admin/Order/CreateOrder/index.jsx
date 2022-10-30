@@ -1,4 +1,5 @@
 import authApi from '@/api/authApi'
+import orderApi from '@/api/orderApi'
 import productApi from '@/api/productApi'
 import StyledTableCell from '@/components/Common/Table/StyledTableCell'
 import StyledTableRow from '@/components/Common/Table/StyledTableRow'
@@ -22,10 +23,10 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import { Box } from '@mui/system'
+import moment from 'moment/moment'
 import { useEffect, useMemo, useState } from 'react'
-import { Controller } from 'react-hook-form'
-import NumberFormat from 'react-number-format'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import './style.css'
 
 export default function CreateOrder() {
@@ -36,9 +37,8 @@ export default function CreateOrder() {
     const [selectedEmployee, setSelectedEmployee] = useState(null)
     const [selectedProduct, setSelectedProduct] = useState([])
     const [rows, setRows] = useState([])
-
+    let navigate = useNavigate()
     const location = useLocation()
-    const handleChange = (event, value) => setSelectedEmployee(value)
     let { orderId } = useParams()
 
     const min = 1
@@ -66,6 +66,7 @@ export default function CreateOrder() {
         getAllUser()
         getAllProduct()
         setRows([...location.state[0].orderProductDtos])
+        console.log(location.state[0])
     }, [location])
 
     const formatProductList = productList.map((i) => {
@@ -97,7 +98,57 @@ export default function CreateOrder() {
         () => rows.reduce((result, value) => result + value.changedPrice, 0),
         [rows]
     )
-    // const resultDiscount = () => rows.reduce((result, value) => result + value.discount, 0)
+
+    const totalPriceOut = useMemo(
+        () => rows.reduce((result, value) => result + value.product.priceOut, 0),
+        [rows]
+    )
+    const totalQuantity = useMemo(
+        () => rows.reduce((result, value) => result + value.quantity, 0),
+        [rows]
+    )
+
+    const totalAmount = rows.reduce(
+        (result, value) => result + value.quantity * value.product.priceOut,
+        0
+    )
+    const totalAmountAfter = rows.reduce(
+        (result, value) => result + value.quantity * value.product.priceOut - value.changedPrice,
+        0
+    )
+    const addressDetails = () =>
+        location.state[0]?.customer.address
+            ? `${location.state[0]?.customer.address}, ${location.state[0]?.customer.districtName}, ${location.state[0]?.customer.wardName}, ${location.state[0]?.customer.provinceName}`
+            : 'Khách hàng chưa có địa chỉ'
+
+    const handleCreate = async (status) => {
+        const dataSubmit = {
+            customerId: location.state[0]?.customer.id,
+            dateCreated: moment(new Date()).format('YYYY-MM-DD'),
+            dateRequired: moment(new Date()).format('YYYY-MM-DD'),
+            employeeSaleId: 2,
+            id: location.state[0]?.id,
+            numberOfProducts: rows.length,
+            orderProductDtos: rows,
+            status: status,
+            totalOrderPrice: totalPriceOut * totalQuantity,
+            totalOrderPriceAfter: totalPriceOut * totalQuantity - totalDiscount,
+            typeOfPay: location.state[0]?.typeOfPay
+        }
+        try {
+            const response = await orderApi.createOrder(dataSubmit)
+            if (response.data.data) {
+                toast.success(response.data.message)
+                navigate(-1)
+            } else {
+                toast.error(response.data.message)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+        console.log(dataSubmit)
+    }
 
     return (
         <>
@@ -110,16 +161,22 @@ export default function CreateOrder() {
                     alignItems: 'center'
                 }}>
                 <Typography sx={{ fontWeight: 'bold' }}>
-                    Thông tin chi tiết đơn hàng {orderId}
+                    Thông tin chi tiết đơn hàng {location.state[0]?.customer.email}
                 </Typography>
                 <Box sx={{ display: 'flex', gap: '12px' }}>
-                    <Button variant="contained">Xem báo giá</Button>
-                    <Button variant="contained">Tạo báo giá</Button>
-                    <Button variant="contained">Tạo hóa đơn</Button>
+                    <Button variant="contained" onClick={() => navigate(-1)}>
+                        Xem báo giá
+                    </Button>
+                    <Button variant="contained" onClick={() => handleCreate(2)}>
+                        Tạo báo giá
+                    </Button>
+                    <Button variant="contained" onClick={() => handleCreate(3)}>
+                        Tạo hóa đơn
+                    </Button>
                 </Box>
             </Box>
             <Collapse in={Boolean(rows)}>
-                <TableContainer component={Paper} sx={{ maxHeight: '380px' }}>
+                <TableContainer component={Paper} sx={{ maxHeight: '500px' }}>
                     <Table sx={{ minWidth: 700 }} stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow>
@@ -279,11 +336,13 @@ export default function CreateOrder() {
                                             />
                                         </StyledTableCell>
                                         <StyledTableCell align="left">
-                                            {(
-                                                row?.product.priceOut * row.quantity -
-                                                row.changedPrice
-                                            ).toLocaleString('vi-VN')}{' '}
-                                            VND
+                                            <b>
+                                                {(
+                                                    row?.product.priceOut * row.quantity -
+                                                    row.changedPrice
+                                                ).toLocaleString('vi-VN')}{' '}
+                                                VND
+                                            </b>
                                         </StyledTableCell>
                                         <StyledTableCell align="left">
                                             <IconButton
@@ -308,7 +367,6 @@ export default function CreateOrder() {
                                                         },
                                                         ...productList
                                                     ])
-                                                    console.log(row)
                                                 }}>
                                                 <DeleteIcon />
                                             </IconButton>
@@ -369,51 +427,35 @@ export default function CreateOrder() {
                             </Collapse>
                         </Box>
                         <Box>
-                            <Button
-                                variant="text"
-                                startIcon={checkedCustomer ? <RemoveIcon /> : <AddIcon />}
-                                onClick={() => {
-                                    setCheckedCustomer((prev) => !prev)
-                                }}>
-                                Thông tin người mua
-                            </Button>
-                            <Collapse in={checkedCustomer}>
-                                {userList && (
-                                    <Autocomplete
-                                        id="tags-outlined"
-                                        options={userList}
-                                        getOptionLabel={(option) => option.name}
-                                        onChange={handleChange}
-                                        filterSelectedOptions
-                                        sx={{ width: 300, mt: 1, ml: 4 }}
-                                        renderOption={(props, option) => (
-                                            <Box
-                                                component="li"
-                                                sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-                                                {...props}>
-                                                {option.name} - {option.phone}
-                                                <br />
-                                                {option.roles[0].name}
-                                            </Box>
-                                        )}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                variant="outlined"
-                                                size="small"
-                                                label="Chọn khách hàng"
-                                            />
-                                        )}
-                                    />
-                                )}
-                            </Collapse>
+                            <Box>
+                                <Typography variant="subtitle1">
+                                    <b>THÔNG TIN KHÁCH HÀNG</b>
+                                </Typography>
+                                <Typography variant="subtitle1">
+                                    {location.state[0].customer.firstName +
+                                        ' ' +
+                                        location.state[0].customer.middleName +
+                                        ' ' +
+                                        location.state[0].customer.lastName}
+                                </Typography>
+                                <Typography variant="subtitle1">
+                                    <b>Địa chỉ: </b>
+                                    {addressDetails()}
+                                </Typography>
+                                <Typography variant="subtitle1">
+                                    <b>SĐT: </b> {location.state[0]?.customer.phone}
+                                </Typography>
+                                <Typography variant="subtitle1">
+                                    <b>Email: </b> {location.state[0]?.customer.email}
+                                </Typography>
+                            </Box>
                         </Box>
                     </Grid>
                     <Grid item xs={4}>
                         <table>
                             <tr>
                                 <td>Tổng</td>
-                                <td>{rows.length}</td>
+                                <td>{totalAmount.toLocaleString('vi-VN')} VND</td>
                             </tr>
                             <tr>
                                 <td>Tổng tiền chiết khấu</td>
@@ -424,7 +466,7 @@ export default function CreateOrder() {
                                     <b>Tổng tiền</b>
                                 </td>
                                 <td>
-                                    <b>5</b>
+                                    <b>{totalAmountAfter.toLocaleString('vi-VN')} VND</b>
                                 </td>
                             </tr>
                         </table>
