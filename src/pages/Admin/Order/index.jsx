@@ -1,3 +1,4 @@
+import orderApi from '@/api/orderApi'
 import productApi from '@/api/productApi'
 import DataTable from '@/components/Common/DataTable'
 import ConfirmModal from '@/components/Common/Modal/ConfirmModal'
@@ -16,10 +17,10 @@ export default function Order() {
     const [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false)
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
     const [selectedRow, setSelectedRow] = useState(null)
-    // const [listProducts, setListProducts] = useState([])
+    const [listProducts, setListProducts] = useState([])
     const [category, setCategory] = useState(-1)
     const [provider, setProvider] = useState(-1)
-    const [sortBy, setSortBy] = useState(-1)
+    const [status, setStatus] = useState(-1)
     const [isUpdated, setIsUpdated] = useState(false)
     const [isEdit, setIsEdit] = useState(true)
     const navigate = useNavigate()
@@ -33,50 +34,44 @@ export default function Order() {
             console.log(error)
         }
     }
-    const listProducts = [
-        {
-            id: 0,
-            customerName: 'Dot',
-            phone: '0972536780',
-            totalReceipt: 1500000,
-            createdOn: '2022-10-26',
-            status: 0
-        },
-        {
-            id: 1,
-            customerName: 'Ga',
-            phone: '0972536780',
-            totalReceipt: 1500000,
-            createdOn: '2022-10-26',
-            status: 1
-        },
-        {
-            id: 2,
-            customerName: 'Ngu',
-            phone: '0972536780',
-            totalReceipt: 1500000,
-            createdOn: '2022-10-26',
-            status: 2
-        },
-        {
-            id: 3,
-            customerName: 'Si',
-            phone: '0972536780',
-            totalReceipt: 1500000,
-            createdOn: '2022-10-26',
-            status: 3
-        }
-    ]
 
     useEffect(() => {
-        console.log(ORDER_STATUS.filter((i) => i.id === 3)[0].name)
-    })
+        const getAllProduct = async (status) => {
+            try {
+                const response = await orderApi.getAllOrder(status)
+                setListProducts(response.data)
+            } catch (error) {
+                console.log('fail when getAllProduct', error)
+            }
+        }
+        getAllProduct(status)
+    }, [])
 
     const columns = [
-        { field: 'customerName', headerName: 'TÊN KHÁCH HÀNG', flex: 1 },
-        { field: 'phone', headerName: 'SỐ ĐIỆN THOẠI', flex: 1 },
         {
-            field: 'totalReceipt',
+            field: 'customerName',
+            headerName: 'TÊN KHÁCH HÀNG',
+            flex: 1,
+            renderCell: (params) => {
+                return (
+                    params.row.customer.firstName +
+                    ' ' +
+                    params.row.customer.middleName +
+                    ' ' +
+                    params.row.customer.lastName
+                )
+            }
+        },
+        {
+            field: 'phone',
+            headerName: 'SỐ ĐIỆN THOẠI',
+            flex: 1,
+            renderCell: (params) => {
+                return params.row.customer.phone
+            }
+        },
+        {
+            field: 'totalOrderPrice',
             headerName: 'TỔNG HÓA ĐƠN',
             flex: 1,
             valueFormatter: (params) => {
@@ -87,7 +82,7 @@ export default function Order() {
             }
         },
         {
-            field: 'createdOn',
+            field: 'dateCreated',
             headerName: 'NGÀY TẠO',
             flex: 1,
             type: 'number',
@@ -105,11 +100,10 @@ export default function Order() {
             renderCell: (params) => {
                 return (
                     <Chip
-                        key={params.row.id}
-                        label={ORDER_STATUS[params.row.id].name}
+                        label={ORDER_STATUS[params.row.status - 1].name}
                         sx={{
-                            border: `1px solid ${ORDER_STATUS[params.row.id].color}`,
-                            color: `${ORDER_STATUS[params.row.id].color}`
+                            border: `1px solid ${ORDER_STATUS[params.row.status - 1].color}`,
+                            color: `${ORDER_STATUS[params.row.status - 1].color}`
                         }}
                     />
                 )
@@ -132,7 +126,7 @@ export default function Order() {
                                 <VisibilityIcon fontSize="inherit" />
                             </IconButton>
                         </Tooltip>
-                        {params.row.id ? (
+                        {params.row.status !==4 ? (
                             <Tooltip title="Xóa" placement="right">
                                 <IconButton
                                     aria-label="delete"
@@ -165,9 +159,9 @@ export default function Order() {
                     id="outlined-select-currency"
                     select
                     size="small"
-                    value={sortBy}
+                    value={status}
                     onChange={(event) => {
-                        setSortBy(event.target.value)
+                        setStatus(event.target.value)
                     }}>
                     <MenuItem value={-1}>Sắp xếp theo mới nhất</MenuItem>
                     <MenuItem value={1}>Chưa hết hạn</MenuItem>

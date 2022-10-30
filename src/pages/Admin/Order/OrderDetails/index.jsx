@@ -1,118 +1,46 @@
-import { Button, Divider, Grid, Typography } from '@mui/material'
+import { Button, Chip, Divider, Grid, Typography } from '@mui/material'
 import Paper from '@mui/material/Paper'
-import { styled } from '@mui/material/styles'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
-import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import { Box } from '@mui/system'
 import { useNavigate, useParams } from 'react-router-dom'
+import StyledTableCell from '@/components/Common/Table/StyledTableCell'
+import StyledTableRow from '@/components/Common/Table/StyledTableRow'
 import './style.css'
+import { useEffect, useState } from 'react'
+import orderApi from '@/api/orderApi'
+import { ORDER_STATUS, PAYMENT_METHOD } from '../constant'
+import moment from 'moment'
 
-export const listProducts = [
-    { id: 1, name: 'Tuan', discount: 1000 },
-    { id: 2, name: 'Tuan', discount: 1000 }
-]
 export default function OrderDetails() {
+    const [orderDetail, setOrderDetail] = useState([])
     let { orderId } = useParams()
     const navigate = useNavigate()
-    const StyledTableCell = styled(TableCell)(({ theme }) => ({
-        [`&.${tableCellClasses.head}`]: {
-            backgroundColor: theme.palette.common.lightOrange,
-            color: theme.palette.common.black
-        },
-        [`&.${tableCellClasses.body}`]: {
-            fontSize: 14
+
+    useEffect(() => {
+        const getOrderById = async (orderId) => {
+            try {
+                const response = await orderApi.getAllOrderById(orderId)
+                setOrderDetail(response.data)
+            } catch (error) {
+                console.log('fail when getAllProduct', error)
+            }
         }
-    }))
+        getOrderById(orderId)
+    }, [orderId])
+    const addressDetails = () =>
+        orderDetail[0]?.customer.address
+            ? `${orderDetail[0]?.customer.address}, ${orderDetail[0]?.customer.districtName}, ${orderDetail[0]?.customer.wardName}, ${orderDetail[0]?.customer.provinceName}`
+            : 'Khách hàng chưa có địa chỉ'
 
-    const StyledTableRow = styled(TableRow)(({ theme }) => ({
-        '&:nth-of-type(odd)': {
-            backgroundColor: theme.palette.action.hover
-        },
-        // hide last border
-        '&:last-child td, &:last-child th': {
-            border: 0
-        }
-    }))
+    const paymentMethod = () => orderDetail[0] && PAYMENT_METHOD[orderDetail[0]?.typeOfPay - 1].name
+    const orderStatus = () =>
+        orderDetail[0] && ORDER_STATUS.filter((item) => item.id === orderDetail[0]?.status)[0]
 
-    const rows = [
-        {
-            id: 1,
-            image: 'https://www.noithatthanhthuy.com/uploads/news/2020_02/truong-ky-noi-that-thanh-thuy-1.jpg',
-            product: 'Bộ trường kỷ',
-            price: 1000000,
-            quantity: 1,
-            discount: 0,
-            total: 1000000,
-            sku: 'HHNCL'
-        },
-        {
-            id: 2,
-            image: 'https://www.noithatthanhthuy.com/uploads/news/2020_02/truong-ky-noi-that-thanh-thuy-1.jpg',
-            product: 'Bộ trường kỷ',
-            price: 1000000,
-            quantity: 1,
-            discount: 0,
-            total: 1000000,
-            sku: 'HHNCL'
-        },
-        {
-            id: 3,
-            image: 'https://www.noithatthanhthuy.com/uploads/news/2020_02/truong-ky-noi-that-thanh-thuy-1.jpg',
-            product: 'Bộ trường kỷ',
-            price: 1000000,
-            quantity: 1,
-            discount: 0,
-            total: 1000000,
-            sku: 'HHNCL'
-        },
-        {
-            id: 4,
-            image: 'https://www.noithatthanhthuy.com/uploads/news/2020_02/truong-ky-noi-that-thanh-thuy-1.jpg',
-            product: 'Bộ trường kỷ',
-            price: 1000000,
-            quantity: 1,
-            discount: 0,
-            total: 1000000,
-            sku: 'HHNCL'
-        },
-        {
-            id: 4,
-            image: 'https://www.noithatthanhthuy.com/uploads/news/2020_02/truong-ky-noi-that-thanh-thuy-1.jpg',
-            product: 'Bộ trường kỷ',
-            price: 1000000,
-            quantity: 1,
-            discount: 0,
-            total: 1000000,
-            sku: 'HHNCL'
-        },
-        {
-            id: 4,
-            image: 'https://www.noithatthanhthuy.com/uploads/news/2020_02/truong-ky-noi-that-thanh-thuy-1.jpg',
-            product: 'Bộ trường kỷ',
-            price: 1000000,
-            quantity: 1,
-            discount: 0,
-            total: 1000000,
-            sku: 'HHNCL'
-        },
-        {
-            id: 4,
-            image: 'https://www.noithatthanhthuy.com/uploads/news/2020_02/truong-ky-noi-that-thanh-thuy-1.jpg',
-            product: 'Bộ trường kỷ',
-            price: 1000000,
-            quantity: 1,
-            discount: 0,
-            total: 1000000,
-            sku: 'HHNCL'
-        }
-    ]
-
-    console.log(rows)
-
+    console.log(orderStatus())
     return (
         <>
             <h2>Chi tiết đơn hàng</h2>
@@ -128,11 +56,10 @@ export default function OrderDetails() {
                 </Typography>
                 <Box sx={{ display: 'flex', gap: '12px' }}>
                     <Button variant="contained">Xem báo giá</Button>
-                    <Button variant="contained" onClick={() => navigate('../orders/createOrder')}>
+                    <Button
+                        variant="contained"
+                        onClick={() => navigate('../orders/createOrder', { state: orderDetail })}>
                         Tạo báo giá
-                    </Button>
-                    <Button variant="contained" onClick={() => navigate('../orders/createOrder')}>
-                        Tạo hóa đơn
                     </Button>
                 </Box>
             </Box>
@@ -148,33 +75,40 @@ export default function OrderDetails() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {orderDetail.map((row) => (
                             <StyledTableRow key={row.id}>
                                 <StyledTableCell align="left">
                                     <Box
                                         sx={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
                                         <img
-                                            src="https://www.noithatthanhthuy.com/uploads/news/2020_02/truong-ky-noi-that-thanh-thuy-1.jpg"
+                                            src={`http://api.dinhtruong.live/api/storage_server/download/${row?.orderProductDtos[0].product.photoMain}`}
                                             alt="123"
                                             width="100px"
                                         />
                                         <Box>
                                             <Typography sx={{ fontWeight: 'bold' }}>
-                                                {row.product}
+                                                {row?.orderProductDtos[0].product.name}
                                             </Typography>
-                                            <Typography variant="button">SKU: {row.sku}</Typography>
+                                            <Typography variant="button">
+                                                SKU: {row?.orderProductDtos[0].product.productCode}
+                                            </Typography>
                                         </Box>
                                     </Box>
                                 </StyledTableCell>
                                 <StyledTableCell align="left">
-                                    {row.price.toLocaleString('vi-vn')} VND
-                                </StyledTableCell>
-                                <StyledTableCell align="left">{row.quantity}</StyledTableCell>
-                                <StyledTableCell align="left">
-                                    {row.discount.toLocaleString('vi-vn')} VND
+                                    {row?.totalOrderPrice.toLocaleString('vi-vn')} VND
                                 </StyledTableCell>
                                 <StyledTableCell align="left">
-                                    {row.total.toLocaleString('vi-vn')} VND
+                                    {row?.numberOfProducts}
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                    {row?.orderProductDtos[0].product.discount.toLocaleString(
+                                        'vi-vn'
+                                    )}{' '}
+                                    VND
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                    {row?.totalOrderPriceAfter.toLocaleString('vi-vn')} VND
                                 </StyledTableCell>
                             </StyledTableRow>
                         ))}
@@ -212,19 +146,43 @@ export default function OrderDetails() {
                 <Grid container sx={{ px: 4, py: 2 }}>
                     <Grid item xs={4}>
                         <Box>
-                            <Typography variant="subtitle1">THÔNG TIN KHÁCH HÀNG</Typography>
-                            <Typography variant="subtitle1">Lê Anh Tuấn</Typography>
-                            <Typography variant="subtitle1">Địa chỉ</Typography>
-                            <Typography variant="subtitle1">SĐT</Typography>
-                            <Typography variant="subtitle1">Email</Typography>
+                            <Typography variant="subtitle1">
+                                <b>THÔNG TIN KHÁCH HÀNG</b>
+                            </Typography>
+                            <Typography variant="subtitle1">
+                                {orderDetail[0]?.customer.username}
+                            </Typography>
+                            <Typography variant="subtitle1">
+                                <b>Địa chỉ: </b> {addressDetails()}
+                            </Typography>
+                            <Typography variant="subtitle1">
+                                <b>SĐT: </b> {orderDetail[0]?.customer.phone}
+                            </Typography>
+                            <Typography variant="subtitle1">
+                                <b>Email: </b> {orderDetail[0]?.customer.email}
+                            </Typography>
                         </Box>
                     </Grid>
                     <Grid item xs={4}>
-                        <Typography variant="subtitle1">Hình thức thanh toán: COD</Typography>
+                        <Typography variant="subtitle1">
+                            <b>Hình thức thanh toán: </b> {paymentMethod()}
+                        </Typography>
                     </Grid>
                     <Grid item xs={4}>
-                        <Typography variant="subtitle1">Ngày tạo đơn hàng:</Typography>
-                        <Typography variant="subtitle1">Tình trạng đơn hàng:</Typography>
+                        <Typography variant="subtitle1">
+                            <b>Ngày tạo đơn hàng: </b>
+                            {moment(orderDetail[0]?.dateCreated).format('DD/MM/YYYY')}
+                        </Typography>
+                        <Typography variant="subtitle1">
+                            <b>Tình trạng đơn hàng:</b>{' '}
+                            <Chip
+                                label={orderStatus()?.name}
+                                sx={{
+                                    border: `1px solid ${orderStatus()?.color}`,
+                                    color: `${orderStatus()?.color}`
+                                }}
+                            />
+                        </Typography>
                     </Grid>
                 </Grid>
             </Paper>
