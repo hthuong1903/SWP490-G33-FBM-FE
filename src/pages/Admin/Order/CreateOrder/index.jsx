@@ -156,7 +156,7 @@ export default function CreateOrder() {
 
     return (
         <>
-            <h2>Chi tiết đơn hàng</h2>
+            <h2>Tạo báo giá</h2>
             <Box
                 sx={{
                     my: 3,
