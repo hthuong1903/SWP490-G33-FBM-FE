@@ -2,12 +2,12 @@ import { Box } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar'
 
-const sidebarWidth = 240
+const sidebarWidth = 250
 function AdminLayout() {
   return (
     <div>
       <Box sx={{ display: 'flex' }}>
-        <Box sx={{ width: `calc(100%-${sidebarWidth}px)` }}>
+        <Box sx={{ width: `${sidebarWidth}px`, position:'relative' }}>
           <Sidebar />
         </Box>
         <Box
