@@ -11,7 +11,7 @@ const OvertimeApi = {
     },
     getOvertimeByPeriodCode: (period_code) => {
         const url = '/overtime/period'
-        return axiosClient.get(url, { params: { period_code } })
+        return axiosClient.post(url, { params: { period_code } })
     },
     getOvertimeByPeriodCodeAndEmployee: (period_code, employee_id) => {
         const url = '/overtime/period/employee'

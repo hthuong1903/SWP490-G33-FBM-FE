@@ -2,28 +2,34 @@ import orderApi from '@/api/orderApi'
 import productApi from '@/api/productApi'
 import DataTable from '@/components/Common/DataTable'
 import ConfirmModal from '@/components/Common/Modal/ConfirmModal'
-import { EditRounded } from '@mui/icons-material'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
-import { Button, Tooltip } from '@mui/material'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import { Chip, IconButton, MenuItem, TextField, Tooltip } from '@mui/material'
 import { Box } from '@mui/system'
+import moment from 'moment/moment'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import moment from 'moment/moment'
+import { ORDER_STATUS } from './constant'
 
-function Receipt() {
-    const navigate = useNavigate()
+export default function Order() {
+    const [isOpenAddModal, setIsOpenAddModal] = useState(false)
+    const [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false)
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
     const [selectedRow, setSelectedRow] = useState(null)
     const [listProducts, setListProducts] = useState([])
-    const [isRender, setIsRender] = useState(true)
-
+    const [category, setCategory] = useState(-1)
+    const [provider, setProvider] = useState(-1)
+    const [status, setStatus] = useState(-1)
+    const [isUpdated, setIsUpdated] = useState(false)
+    const [isEdit, setIsEdit] = useState(true)
+    const navigate = useNavigate()
     const handleDelete = async () => {
         try {
             await productApi.deleteProduct(selectedRow?.row.id)
             toast.success('Xóa thành công !')
             setIsOpenConfirmModal(false)
-            setIsRender(true)
+            setIsUpdated(true)
         } catch (error) {
             console.log(error)
         }
@@ -38,12 +44,10 @@ function Receipt() {
                 console.log('fail when getAllProduct', error)
             }
         }
-        isRender && getAllProduct(3)
-        setIsRender(false)
-    }, [listProducts, isRender])
+        getAllProduct(status)
+    }, [])
 
     const columns = [
-        { field: 'id', headerName: 'ID', flex: 1, hide: true },
         {
             field: 'customerName',
             headerName: 'TÊN KHÁCH HÀNG',
@@ -64,14 +68,6 @@ function Receipt() {
             flex: 1,
             renderCell: (params) => {
                 return params.row.customer.phone
-            }
-        },
-        {
-            field: 'createdBy',
-            headerName: 'NGƯỜI TẠO',
-            flex: 1,
-            renderCell: (params) => {
-                return params.row.employeeSale.username
             }
         },
         {
@@ -97,50 +93,52 @@ function Receipt() {
                 return moment(params.value).format('DD/MM/YYYY HH:MM')
             }
         },
-
+        {
+            field: 'status',
+            headerName: 'TRẠNG THÁI',
+            flex: 1,
+            renderCell: (params) => {
+                return (
+                    <Chip
+                        label={ORDER_STATUS[params.row.status - 1].name}
+                        sx={{
+                            border: `1px solid ${ORDER_STATUS[params.row.status - 1].color}`,
+                            color: `${ORDER_STATUS[params.row.status - 1].color}`
+                        }}
+                    />
+                )
+            }
+        },
         {
             field: 'actions',
             headerName: 'TÁC VỤ',
-            flex: 1.5,
+            flex: 1,
             renderCell: (params) => {
                 return (
                     <>
-                        <Tooltip title="Xem">
-                            <Button
-                                variant="contained"
+                        <Tooltip title="Xem chi tiết" placement="left">
+                            <IconButton
+                                aria-label="view"
                                 size="small"
                                 onClick={() => {
-                                    navigate(`/admin/receipts/details/${params.row.id}`)
+                                    navigate(`/admin/orders/details/${params.row.id}`)
                                 }}>
-                                Xem
-                            </Button>
+                                <VisibilityIcon fontSize="inherit" />
+                            </IconButton>
                         </Tooltip>
-                        <Tooltip title="Xóa" sx={{ m: 1 }}>
-                            <Button
-                                aria-label="delete"
-                                variant="contained"
-                                size="small"
-                                onClick={() => {
-                                    setSelectedRow(params)
-                                    setIsOpenConfirmModal(true)
-                                }}>
-                                XÓA
-                                <ClearRoundedIcon fontSize="inherit" />
-                            </Button>
-                        </Tooltip>
-                        <Tooltip title="XUẤT">
-                            <Button
-                                aria-label="delete"
-                                variant="contained"
-                                size="small"
-                                onClick={() => {
-                                    setSelectedRow(params)
-                                    console.log(params)
-                                }}>
-                                Xuất
-                                <EditRounded fontSize="inherit" />
-                            </Button>
-                        </Tooltip>
+                        {params.row.status !== 4 ? (
+                            <Tooltip title="Xóa" placement="right">
+                                <IconButton
+                                    aria-label="delete"
+                                    size="small"
+                                    onClick={() => {
+                                        setSelectedRow(params)
+                                        setIsOpenConfirmModal(true)
+                                    }}>
+                                    <ClearRoundedIcon fontSize="inherit" />
+                                </IconButton>
+                            </Tooltip>
+                        ) : null}
                     </>
                 )
             }
@@ -155,25 +153,22 @@ function Receipt() {
                 handleClose={() => setIsOpenConfirmModal(false)}
                 handleConfirm={() => handleDelete()}
             />
-            <h2>Quản lý hóa đơn</h2>
-            <Box
-                sx={{
-                    mb: 2,
-                    mt: 3,
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                }}>
-                <Button
-                    variant="contained"
-                    sx={{ float: 'right' }}
-                    onClick={() => navigate('../receipts/createReceipt')}>
-                    Thêm hóa đơn
-                </Button>
+            <h2>Danh sách đơn hàng</h2>
+            <Box sx={{ mb: 2, mt: 3, display: 'flex', justifyContent: 'space-between' }}>
+                <TextField
+                    id="outlined-select-currency"
+                    select
+                    size="small"
+                    value={status}
+                    onChange={(event) => {
+                        setStatus(event.target.value)
+                    }}>
+                    <MenuItem value={-1}>Sắp xếp theo mới nhất</MenuItem>
+                    <MenuItem value={1}>Chưa hết hạn</MenuItem>
+                    <MenuItem value={2}>Hết hạn</MenuItem>
+                </TextField>
             </Box>
-
             <DataTable columns={columns} rows={listProducts} />
         </>
     )
 }
-
-export default Receipt
