@@ -19,6 +19,10 @@ const orderApi = {
         const url = `/orders?orderId=${orderId}`
         return axios.delete(`${BASE_URL}` + url)
     },
+    createQuote:(orderId, data)=>{
+        const url = `/orders/quote?orderId=${orderId}`
+        return axios.put(`${BASE_URL}` + url, data)
+    },
 
 }
 

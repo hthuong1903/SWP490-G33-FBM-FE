@@ -138,6 +138,10 @@ export default function CreateOrder() {
         try {
             const response = await orderApi.createOrder(dataSubmit)
             if (response.data.data) {
+                orderApi
+                    .createQuote(location.state[0]?.id, dataSubmit)
+                    .then((res) => console.log(res))
+                    .catch((error) => console.log(error))
                 toast.success(response.data.message)
                 navigate(-1)
             } else {
