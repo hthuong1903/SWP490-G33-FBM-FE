@@ -12,7 +12,7 @@ import {
     Paper
 } from '@mui/material'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import ConfirmModal from '../../../Common/Modal/ConfirmModal'
 
@@ -23,18 +23,20 @@ function Sidebar() {
         setSelectedIndex(index)
     }
 
+    const location = useLocation()
+    console.log(location)
     const items = [
-        { name: 'Danh mục', href: '/admin' },
-        { name: 'Sản phẩm', href: '/admin/products' },
-        { name: 'Hóa đơn', href: '/admin/receipts' },
-        { name: 'Chấm công', href: '/admin/timekeeping' },
-        { name: 'Bảng lương', href: '/admin/payrolls' },
-        { name: 'Đơn hàng', href: '/admin/orders' },
-        { name: 'Quản lý phụ cấp', href: '/admin/manager/allowance' },
-        { name: 'Quản lý thưởng', href: '/admin/manager/bonus' },
-        { name: 'Hợp đồng', href: '/admin/contracts' },
-        { name: 'Thống kê', href: '/admin/statisticals' },
-        { name: 'Nhà cung cấp', href: '/admin/suppliers' }
+        { name: 'Danh mục', href: '/admin', path:'/admin' },
+        { name: 'Sản phẩm', href: '/admin/products', path:'/products' },
+        { name: 'Hóa đơn', href: '/admin/receipts', path:'/receipts' },
+        { name: 'Chấm công', href: '/admin/timekeeping', path:'/timekeeping' },
+        { name: 'Bảng lương', href: '/admin/payrolls', path:'/payrolls' },
+        { name: 'Đơn hàng', href: '/admin/orders', path:'/orders' },
+        { name: 'Quản lý phụ cấp', href: '/admin/manager/allowance', path:'/allowance' },
+        { name: 'Quản lý thưởng', href: '/admin/manager/bonus', path:'/bonus' },
+        { name: 'Hợp đồng', href: '/admin/contracts', path:'/contracts' },
+        { name: 'Thống kê', href: '/admin/statisticals', path:'/statisticals' },
+        { name: 'Nhà cung cấp', href: '/admin/suppliers', path:'/suppliers' }
     ]
     return (
         <Box sx={{ position: 'sticky', top: '0px' }}>
@@ -78,8 +80,10 @@ function Sidebar() {
                                             sx={{ py: 2 }}
                                             component={Link}
                                             to={item.href}
-                                            selected={selectedIndex === index}
-                                            onClick={(event) => handleListItemClick(event, index)}>
+                                            selected={new RegExp(item.path).test(location.pathname.slice(6))}
+                                            // selected={selectedIndex === index}
+                                            onClick={(event) => handleListItemClick(event, index)}
+                                        >
                                             <ListItemText
                                                 sx={{
                                                     '& .MuiTypography-root': {
