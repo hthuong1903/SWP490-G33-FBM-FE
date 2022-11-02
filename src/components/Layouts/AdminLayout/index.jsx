@@ -7,7 +7,7 @@ function AdminLayout() {
   return (
     <div>
       <Box sx={{ display: 'flex' }}>
-        <Box sx={{ width: `${sidebarWidth}px`, position:'relative' }}>
+        <Box sx={{ minWidth: `${sidebarWidth}px`, position:'relative' }}>
           <Sidebar />
         </Box>
         <Box
