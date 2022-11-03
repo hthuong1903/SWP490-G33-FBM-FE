@@ -17,6 +17,7 @@ import Provider from './pages/Admin/Provider'
 import Receipt from './pages/Admin/Receipt'
 import CreateReceipt from './pages/Admin/Receipt/CreateReceipt'
 import DetailReceipt from './pages/Admin/Receipt/DetailReceipt'
+import Statistical from './pages/Admin/Statistical'
 import TimeKeeping from './pages/Admin/TimeKeeping'
 import Login from './pages/Login'
 
@@ -38,6 +39,7 @@ function App() {
                     <Route path="manager/allowance" element={<Allowance />} />
                     <Route path="manager/bonus" element={<Bonus />} />
                     <Route path="orders" element={<Order />} />
+                    <Route path="statisticals" element={<Statistical />} />
                     <Route path="orders/details/:orderId" element={<OrderDetails />} />
                     <Route path="orders/createOrder" element={<CreateOrder />} />
                 </Route>

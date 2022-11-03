@@ -1,15 +1,16 @@
 import orderApi from '@/api/orderApi'
-import productApi from '@/api/productApi'
 import DataTable from '@/components/Common/DataTable'
 import ConfirmModal from '@/components/Common/Modal/ConfirmModal'
 import { EditRounded } from '@mui/icons-material'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
 import { Button, Tooltip } from '@mui/material'
 import { Box } from '@mui/system'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import moment from 'moment/moment'
+import { useReactToPrint } from 'react-to-print'
+import ReceiptPrint from './components/ReceiptPrint'
 
 function Receipt() {
     const navigate = useNavigate()
@@ -17,10 +18,16 @@ function Receipt() {
     const [selectedRow, setSelectedRow] = useState(null)
     const [listProducts, setListProducts] = useState([])
     const [isRender, setIsRender] = useState(true)
+    const componentRef = useRef()
+
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        documentTitle: 'Invoice'
+    })
 
     const handleDelete = async () => {
         try {
-            await productApi.deleteProduct(selectedRow?.row.id)
+            await orderApi.deleteOrderT(selectedRow?.id)
             toast.success('Xóa thành công !')
             setIsOpenConfirmModal(false)
             setIsRender(true)
@@ -34,6 +41,7 @@ function Receipt() {
             try {
                 const response = await orderApi.getAllOrder(status)
                 setListProducts(response.data)
+                if (response.data.length > 0) setSelectedRow(response.data[0])
             } catch (error) {
                 console.log('fail when getAllProduct', error)
             }
@@ -121,10 +129,10 @@ function Receipt() {
                                 variant="contained"
                                 size="small"
                                 onClick={() => {
-                                    setSelectedRow(params)
+                                    setSelectedRow(params.row)
                                     setIsOpenConfirmModal(true)
                                 }}>
-                                XÓA
+                                HỦY
                                 <ClearRoundedIcon fontSize="inherit" />
                             </Button>
                         </Tooltip>
@@ -134,7 +142,8 @@ function Receipt() {
                                 variant="contained"
                                 size="small"
                                 onClick={() => {
-                                    setSelectedRow(params)
+                                    setSelectedRow(params.row)
+                                    handlePrint()
                                     console.log(params)
                                 }}>
                                 Xuất
@@ -151,7 +160,7 @@ function Receipt() {
             <ConfirmModal
                 isOpen={isOpenConfirmModal}
                 title="Xác nhận"
-                content={`Bạn có muốn xóa ${selectedRow?.row.name}?`}
+                content={`Bạn có muốn xóa hóa đơn này không?`}
                 handleClose={() => setIsOpenConfirmModal(false)}
                 handleConfirm={() => handleDelete()}
             />
@@ -172,6 +181,11 @@ function Receipt() {
             </Box>
 
             <DataTable columns={columns} rows={listProducts} />
+            {selectedRow && (
+                <Box ref={componentRef}>
+                    <ReceiptPrint data={selectedRow} />
+                </Box>
+            )}
         </>
     )
 }
