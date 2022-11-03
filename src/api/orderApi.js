@@ -35,6 +35,10 @@ const orderApi = {
         const url = `/orders/quote?orderId=${orderId}`
         return axios.put(`${BASE_URL}` + url, data)
     },
+    deleteOrder:(orderId)=>{
+        const url = `/orders?orderId=${orderId}`
+        return axiosClient.delete(url)
+    }
 
 }
 

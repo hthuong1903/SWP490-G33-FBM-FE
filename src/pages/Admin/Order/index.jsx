@@ -12,16 +12,11 @@ import { toast } from 'react-toastify'
 import { ORDER_STATUS } from './constant'
 
 export default function Order() {
-    const [isOpenAddModal, setIsOpenAddModal] = useState(false)
-    const [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false)
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
     const [selectedRow, setSelectedRow] = useState(null)
     const [listProducts, setListProducts] = useState([])
-    const [category, setCategory] = useState(-1)
-    const [provider, setProvider] = useState(-1)
     const [status, setStatus] = useState(-1)
     const [isUpdated, setIsUpdated] = useState(false)
-    const [isEdit, setIsEdit] = useState(true)
     const navigate = useNavigate()
 
     const handleDelete = async () => {
@@ -46,7 +41,7 @@ export default function Order() {
         }
         getAllProduct(status)
         setIsUpdated(false)
-    }, [isUpdated])
+    }, [isUpdated, status])
 
     const columns = [
         {
@@ -160,13 +155,20 @@ export default function Order() {
                     id="outlined-select-currency"
                     select
                     size="small"
+                    label="Trạng thái đơn hàng"
                     value={status}
                     onChange={(event) => {
                         setStatus(event.target.value)
-                    }}>
-                    <MenuItem value={-1}>Sắp xếp theo mới nhất</MenuItem>
-                    <MenuItem value={1}>Chưa hết hạn</MenuItem>
-                    <MenuItem value={2}>Hết hạn</MenuItem>
+                    }}
+                    sx={{ width: '200px' }}>
+                    <MenuItem value={-1}>Tất cả</MenuItem>
+                    {ORDER_STATUS.map((i) => {
+                        return (
+                            <MenuItem value={i.id} key={i.id}>
+                                {i.name}
+                            </MenuItem>
+                        )
+                    })}
                 </TextField>
             </Box>
             <DataTable columns={columns} rows={listProducts} />

@@ -41,15 +41,20 @@ export default function OrderDetails() {
     const orderStatus = () =>
         orderDetail[0] && ORDER_STATUS.filter((item) => item.id === orderDetail[0]?.status)[0]
 
-    const totalAmount = orderDetail[0] && orderDetail[0].orderProductDtos.reduce(
-        (result, value) => result + value.quantity * value.product.priceOut,
-        0
-    )
+    const totalAmount =
+        orderDetail[0] &&
+        orderDetail[0].orderProductDtos.reduce(
+            (result, value) => result + value.quantity * value.product.priceOut,
+            0
+        )
 
-    const totalAmountAfter = orderDetail[0] && orderDetail[0].orderProductDtos.reduce(
-        (result, value) => result + value.quantity * value.product.priceOut - value.changedPrice,
-        0
-    )
+    const totalAmountAfter =
+        orderDetail[0] &&
+        orderDetail[0].orderProductDtos.reduce(
+            (result, value) =>
+                result + value.quantity * value.product.priceOut - value.changedPrice,
+            0
+        )
 
     return (
         <>
@@ -66,11 +71,15 @@ export default function OrderDetails() {
                 </Typography>
                 <Box sx={{ display: 'flex', gap: '12px' }}>
                     <Button variant="contained">Xem báo giá</Button>
-                    <Button
-                        variant="contained"
-                        onClick={() => navigate('../orders/createOrder', { state: orderDetail })}>
-                        Tạo báo giá
-                    </Button>
+                    {orderDetail[0]?.status !== 3 && orderDetail[0]?.status !== 4 ? (
+                        <Button
+                            variant="contained"
+                            onClick={() =>
+                                navigate('../orders/createOrder', { state: orderDetail })
+                            }>
+                            Tạo báo giá
+                        </Button>
+                    ) : null}
                 </Box>
             </Box>
             <TableContainer component={Paper} sx={{ maxHeight: '380px' }}>

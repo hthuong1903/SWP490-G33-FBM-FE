@@ -86,10 +86,14 @@ export default function CreateOrder() {
         console.log('rows', rows)
     }, [rows])
     const handleSelectedProduct = (event, value) => {
-        console.log(value)
+        const createdValue = {
+            ...value,
+            quantity: 1,
+            changedPrice: 0
+        }
         setSelectedProduct(value)
         if (value) {
-            setRows([value, ...rows])
+            setRows([createdValue, ...rows])
             setProductList((prev) => prev.filter((item) => item.id !== value.productId))
         }
     }
