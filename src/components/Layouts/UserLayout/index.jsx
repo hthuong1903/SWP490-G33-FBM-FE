@@ -1,12 +1,11 @@
 import { Outlet } from 'react-router-dom'
 
 function UserLayout() {
-  return (
-    <>
-      <h1>UserLayout</h1>
-      <Outlet />
-    </>
-  )
+    return (
+        <>
+            <Outlet />
+        </>
+    )
 }
 
 export default UserLayout

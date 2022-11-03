@@ -33,7 +33,7 @@ export default function Login() {
                   <Box>LOGO</Box>
                   <Box>
                     Bạn không có tài khoản?{' '}
-                    <Typography component={Link} to="/admin">
+                    <Typography component={Link} to="/registor">
                       Đăng ký
                     </Typography>
                   </Box>

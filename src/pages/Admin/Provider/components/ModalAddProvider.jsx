@@ -47,7 +47,7 @@ export default function ModalAddProvider({ title, isOpen, handleClose, handleCon
                 province: { id: Number(data.province), name: provinceName },
                 district: { id: Number(data.district), name: districtName },
                 ward: { id: Number(data.ward), name: wardName },
-                image: res.data.data[0]
+                image: res.data.data[0],
             }
             providerApi
                 .createProvider(dataSubmit)

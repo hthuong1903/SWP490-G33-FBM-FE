@@ -19,6 +19,8 @@ import CreateReceipt from './pages/Admin/Receipt/CreateReceipt'
 import DetailReceipt from './pages/Admin/Receipt/DetailReceipt'
 import TimeKeeping from './pages/Admin/TimeKeeping'
 import Login from './pages/Login'
+import Registor from './pages/Registor'
+import ConfirmEmailCode from './pages/Registor/components/ConfirmEmailCode'
 
 function App() {
     return (
@@ -43,6 +45,8 @@ function App() {
                 </Route>
                 <Route path="/" element={<UserLayout />}>
                     <Route index element={<Login />} />
+                    <Route path="registor" element={<Registor />} />
+                    <Route path="registor/confirm" element={<ConfirmEmailCode />} />
                 </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="*" element={<NotFoundPage />} />
