@@ -201,6 +201,7 @@ export default function Product() {
                 <Button
                     variant="contained"
                     onClick={() => {
+                        setIsEdit(true)
                         setIsOpenAddModal(true)
                     }}>
                     Thêm sản phẩm
