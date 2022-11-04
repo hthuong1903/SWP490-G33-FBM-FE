@@ -306,6 +306,20 @@ function CreateReceipt() {
                                                 sx={{ width: '250px' }}
                                                 onChange={(event) => {
                                                     row.changedPrice = event.target.value
+                                                    // let newQuantity = Number(row.changedPrice)
+                                                    // setRows((oldRow) => {
+                                                    //     return oldRow.map((item) => {
+                                                    //         if (item.id === row.id) {
+                                                    //             return {
+                                                    //                 ...item,
+                                                    //                 changedPrice: newQuantity
+                                                    //             }
+                                                    //         }
+                                                    //         return item
+                                                    //     })
+                                                    // })
+                                                }}
+                                                onBlur={() => {
                                                     let newQuantity = Number(row.changedPrice)
                                                     setRows((oldRow) => {
                                                         return oldRow.map((item) => {
