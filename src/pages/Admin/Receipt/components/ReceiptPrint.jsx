@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
     Container,
     Table,
@@ -25,6 +25,9 @@ const StyledTableCell = styled(TableCell)(() => ({
 }))
 
 function ReceiptPrint({ data }) {
+    useEffect(() => {
+        console.log(data)
+    }, [data])
     const totalAmountAfter =
         data &&
         data.orderProductDtos.reduce(
@@ -39,7 +42,7 @@ function ReceiptPrint({ data }) {
         <Container className="print">
             <Box sx={{ textAlign: 'right', m: 2, mb: 5 }}>
                 <Typography variant="subtitle2" sx={{ m: 1 }}>
-                    HD06/048
+                    {data.orderCode}
                 </Typography>
             </Box>
             <Box sx={{ textAlign: 'center', m: 2 }}>
