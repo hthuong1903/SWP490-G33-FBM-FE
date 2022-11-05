@@ -1,10 +1,10 @@
 import { Box, Card, CardContent, MenuItem, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 
-const monthInSemester = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+const years = [2020, 2021, 2022]
 
-function CommonCard({ title }) {
-    const [month, setMonth] = useState(1)
+function CommonCard({ title, data, onChangeYear }) {
+    const [month, setMonth] = useState(2022)
 
     return (
         <Card sx={{ minWidth: 275, mr: 5 }}>
@@ -27,17 +27,18 @@ function CommonCard({ title }) {
                         value={month}
                         onChange={(e) => {
                             setMonth(e.target.value)
+                            onChangeYear && onChangeYear(e.target.value)
                         }}>
-                        {monthInSemester.map((month) => (
+                        {years.map((month) => (
                             <MenuItem key={month} value={month}>
-                                Tháng {month}
+                                {month}
                             </MenuItem>
                         ))}
                     </TextField>
                 </Box>
 
                 <Typography variant="h5" component="div">
-                    5.15$
+                    {data}
                 </Typography>
             </CardContent>
         </Card>

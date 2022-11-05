@@ -15,6 +15,7 @@ import ReceiptPrint from './components/ReceiptPrint'
 function Receipt() {
     const navigate = useNavigate()
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
+    const [isOpenPrintModal, setIsOpenPrintModal] = useState(false)
     const [selectedRow, setSelectedRow] = useState(null)
     const [listProducts, setListProducts] = useState([])
     const [isRender, setIsRender] = useState(true)
@@ -143,8 +144,9 @@ function Receipt() {
                                 size="small"
                                 onClick={() => {
                                     setSelectedRow(params.row)
-                                    handlePrint()
-                                    console.log(params)
+                                    setIsOpenPrintModal(true)
+                                    // handlePrint()
+                                    // console.log(params)
                                 }}>
                                 Xuất
                                 <EditRounded fontSize="inherit" />
@@ -163,6 +165,16 @@ function Receipt() {
                 content={`Bạn có muốn xóa hóa đơn này không?`}
                 handleClose={() => setIsOpenConfirmModal(false)}
                 handleConfirm={() => handleDelete()}
+            />
+            <ConfirmModal
+                isOpen={isOpenPrintModal}
+                title="Xác nhận"
+                content={`Bạn có muốn in hóa đơn này không?`}
+                handleClose={() => setIsOpenPrintModal(false)}
+                handleConfirm={() => {
+                    handlePrint()
+                    setIsOpenPrintModal(false)
+                }}
             />
             <h2>Quản lý hóa đơn</h2>
             <Box
