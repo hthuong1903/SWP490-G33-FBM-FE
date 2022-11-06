@@ -1,3 +1,4 @@
+import useAuth from '@/hooks/useAuth'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
 import {
@@ -14,11 +15,16 @@ import {
     Paper
 } from '@mui/material'
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import ConfirmModal from '../../../Common/Modal/ConfirmModal'
 
 function Sidebar() {
+    const user = JSON.parse(localStorage.getItem('fbm-user')) || []
+    let navigate = useNavigate()
+    const { auth, setAuth } = useAuth()
+    console.log(auth)
+
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [isOpenConfirmDialog, setIsOpenConfirmDialog] = useState(false)
     const [open, setOpen] = useState(false)
@@ -29,19 +35,38 @@ function Sidebar() {
         setOpen(!open)
     }
     const location = useLocation()
-    console.log(location)
     const items = [
-        { name: 'Danh mục', href: '/admin', path: '/admin' },
-        { name: 'Sản phẩm', href: '/admin/products', path: '/products' },
-        { name: 'Hóa đơn', href: '/admin/receipts', path: '/receipts' },
-        { name: 'Chấm công', href: '/admin/timekeeping', path: '/timekeeping' },
-        { name: 'Bảng lương', href: '/admin/payrolls', path: '/payrolls' },
-        { name: 'Đơn hàng', href: '/admin/orders', path: '/orders' },
-        { name: 'Quản lý phụ cấp', href: '/admin/manager/allowance', path: '/allowance' },
-        { name: 'Quản lý thưởng', href: '/admin/manager/bonus', path: '/bonus' },
-        { name: 'Hợp đồng', href: '/admin/contracts', path: '/contracts' },
-        { name: 'Thống kê', href: '/admin/statisticals', path: '/statisticals' },
-        { name: 'Nhà cung cấp', href: '/admin/suppliers', path: '/suppliers' }
+        { name: 'Danh mục', href: '/admin', path: '/admin', allow: ['MANAGER'] },
+        { name: 'Sản phẩm', href: '/admin/products', path: '/products', allow: ['MANAGER'] },
+        {
+            name: 'Hóa đơn',
+            href: '/admin/receipts',
+            path: '/receipts',
+            allow: ['MANAGER', 'SELLER']
+        },
+        { name: 'Chấm công', href: '/admin/timekeeping', path: '/timekeeping', allow: ['MANAGER'] },
+        { name: 'Bảng lương', href: '/admin/payrolls', path: '/payrolls', allow: ['MANAGER'] },
+        { name: 'Đơn hàng', href: '/admin/orders', path: '/orders', allow: ['MANAGER', 'SELLER'] },
+        {
+            name: 'Quản lý phụ cấp',
+            href: '/admin/manager/allowance',
+            path: '/allowance',
+            allow: ['MANAGER']
+        },
+        {
+            name: 'Quản lý thưởng',
+            href: '/admin/manager/bonus',
+            path: '/bonus',
+            allow: ['MANAGER']
+        },
+        { name: 'Hợp đồng', href: '/admin/contracts', path: '/contracts', allow: ['MANAGER'] },
+        {
+            name: 'Thống kê',
+            href: '/admin/statisticals',
+            path: '/statisticals',
+            allow: ['MANAGER']
+        },
+        { name: 'Nhà cung cấp', href: '/admin/suppliers', path: '/suppliers', allow: ['MANAGER'] }
     ]
     return (
         <Box sx={{ position: 'sticky', top: '0px' }}>
@@ -50,7 +75,11 @@ function Sidebar() {
                 content="Bạn muốn đăng xuất?"
                 isOpen={isOpenConfirmDialog}
                 handleClose={() => setIsOpenConfirmDialog(false)}
-                handleConfirm={() => toast.success('Đăng xuất thành công!')}
+                handleConfirm={() => {
+                    localStorage.removeItem('fbm-user')
+                    navigate('/')
+                    setAuth(null)
+                }}
             />
             <Box sx={{ p: 2 }}>
                 <Paper elevation={2} sx={{ height: '100%' }}>
@@ -72,94 +101,40 @@ function Sidebar() {
                                             '& .MuiListItemText-secondary': { fontSize: '0.7rem' },
                                             '& .MuiTypography-root': { fontWeight: '500' }
                                         }}
-                                        primary="Nguyen Van A"
+                                        primary={user.username}
                                         secondary="abc@gmail.com"
                                     />
                                 </ListItem>
                             </Box>
                             <Box sx={{ overflow: 'auto', height: '75vh' }}>
                                 <Divider />
-                                {items.map((item, index) =>
-                                    item.name == 'Thống kê' ? (
-                                        <Box key={index}>
-                                            <ListItem button onClick={handleClick}>
-                                                <ListItemText
-                                                    sx={{
-                                                        '& .MuiTypography-root': {
-                                                            fontWeight: '500'
-                                                        }
-                                                    }}>
-                                                    {item.name}
-                                                </ListItemText>
-                                                {open ? <ExpandLess /> : <ExpandMore />}
-                                            </ListItem>
-                                            <Collapse in={open} timeout="auto" unmountOnExit>
-                                                <List component="div" disablePadding>
-                                                    <ListItem
-                                                        button
-                                                        sx={{ pl: 4 }}
-                                                        component={Link}
-                                                        to="/admin/statisticals/income"
-                                                        selected={selectedIndex === 91}
-                                                        onClick={(event) =>
-                                                            handleListItemClick(event, 91)
-                                                        }>
-                                                        <ListItemText
-                                                            sx={{
-                                                                '& .MuiTypography-root': {
-                                                                    fontWeight: '500'
-                                                                }
-                                                            }}>
-                                                            Doanh thu và doanh số
-                                                        </ListItemText>
-                                                    </ListItem>
-                                                    <ListItem
-                                                        button
-                                                        sx={{ pl: 4 }}
-                                                        component={Link}
-                                                        to="/admin/statisticals/product"
-                                                        selected={selectedIndex === 92}
-                                                        onClick={(event) =>
-                                                            handleListItemClick(event, 92)
-                                                        }>
-                                                        <ListItemText
-                                                            sx={{
-                                                                '& .MuiTypography-root': {
-                                                                    fontWeight: '500'
-                                                                }
-                                                            }}>
-                                                            Sản phẩm
-                                                        </ListItemText>
-                                                    </ListItem>
-                                                </List>
-                                            </Collapse>
-                                        </Box>
-                                    ) : (
-                                        <ListItem
-                                            key={index}
-                                            sx={{ p: 0 }}
-                                            selected={new RegExp(item.path).test(
-                                                location.pathname.slice(6) || location.pathname
-                                            )}>
-                                            <ListItemButton
-                                                sx={{ py: 2 }}
-                                                component={Link}
-                                                to={item.href}
-                                                // selected={selectedIndex === index}
-                                                // onClick={(event) => handleListItemClick(event, index)}
-                                            >
-                                                <ListItemText
-                                                    sx={{
-                                                        '& .MuiTypography-root': {
-                                                            fontWeight: '500'
-                                                        }
-                                                    }}>
-                                                    {item.name}
-                                                </ListItemText>
-                                            </ListItemButton>
-                                        </ListItem>
-                                    )
-                                )}
+                                {items.map((item, index) => (
+                                    <ListItem
+                                        key={index}
+                                        sx={{
+                                            p: 0,
+                                            ...(item.allow.find((i) => i.includes(auth.roles))
+                                                ? null
+                                                : { display: 'none' })
+                                        }}
+                                        selected={new RegExp(item.path).test(
+                                            location.pathname.slice(6) || location.pathname
+                                        )}>
+                                        <ListItemButton
+                                            sx={{ py: 2 }}
+                                            component={Link}
+                                            to={item.href}>
+                                            <ListItemText
+                                                sx={{
+                                                    '& .MuiTypography-root': {
+                                                        fontWeight: '500'
+                                                    }
+                                                }}>
+                                                {item.name}
+                                            </ListItemText>
+                                        </ListItemButton>
+                                    </ListItem>
+                                ))}
                             </Box>
                         </Box>
                         <Box>
