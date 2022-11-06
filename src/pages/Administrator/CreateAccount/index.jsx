@@ -10,7 +10,7 @@ import provincesApi from '@/api/provincesApi'
 import Button from '@mui/material/Button'
 import schema from '@/pages/Administrator/Staff/validation'
 
-function CreateAccount({handleClose}) {
+function CreateAccount() {
     const [role, setRole] = useState(null)
     const [provinceList, setProvinceList] = useState([])
     const [districtList, setDistrictList] = useState([])
@@ -19,8 +19,10 @@ function CreateAccount({handleClose}) {
     const [selectedDistrict, setSelectedDistrict] = useState(1)
     const [selectedWard, setSelectedWard] = useState(1)
     const [gender, setGender] = useState(null)
-    const [clear, setClear] = useState(true)
 
+    // const [formValue, setFormValue] = useState({firstName: "", middleName: "", username: "", email: "", lastName: "", phone: "", address: "",
+    //     province: "", district: "", ward: "", role: "", gender: ""
+    // })
     const roleList = [
         {
             id: 1,
@@ -57,6 +59,7 @@ function CreateAccount({handleClose}) {
         handleSubmit,
         control,
         resetField,
+        reset,
         formState: { errors }
     } = useForm({
         mode: 'onChange',
@@ -81,6 +84,7 @@ function CreateAccount({handleClose}) {
             .then((res) => {
                 console.log(res) 
                 toast.success('Them Tai Khoan Thanh Cong')
+                handleClearData()
             })
             .catch((error) => {
                 console.log(error)
@@ -88,6 +92,18 @@ function CreateAccount({handleClose}) {
             
     }
 
+    const handleClearData = () => {
+        resetField('firstName')
+        resetField('middleName')
+        resetField('lastName')
+        resetField('username')
+        resetField('email')
+        resetField('phone')
+        setRole(null)
+        setGender(null)
+        resetField('address')
+        reset()
+    }
     const getAllProvince = async () => {
         try {
             const response = await provincesApi.getAllProvince()
@@ -368,7 +384,7 @@ function CreateAccount({handleClose}) {
             </FormGroup>
             <Box sx={{display: 'flex', justifyContent: 'center'}}>
                 <Button 
-                    onClick={handleClose}>
+                    onClick={handleClearData}>
                     Huy Bo
                 </Button>
                 <Button sx={{ml: 15}} onClick= {handleSubmit(onSubmit)}

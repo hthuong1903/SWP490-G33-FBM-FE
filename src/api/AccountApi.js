@@ -16,14 +16,12 @@ const AccountApi = {
         const url = `${BASE_URL}/signup_internal`
         return axios.post(url, params)
     },
-    // updateManagerAccount: (params) => {
-    //     const url = `${BASE_URL}/staff`
-    //     return axios.put(url, params)
-    // },
+
     deleteAccount: (userId) => {
         const url = `/delete?userId=${userId}`
         return axiosClient.put(url)
     },
+    
     resetPassword: (userId) => {
         const url =  `reset_password?userId=${userId}`
         return axiosClient.post(url)
