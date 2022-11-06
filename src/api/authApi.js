@@ -11,7 +11,14 @@ const authApi = {
         const url = `${BASE_URL}/signup_customer`
         return axios.post(url, data)
     },
-   
+    verifyEmail: (verifyCode, email) => {
+        const url = `/verify?verifyCode=${verifyCode}&email=${email}`
+        return axiosClient.get(url)
+    },
+    signIn: (data) => {
+        const url = `${BASE_URL}/signin`
+        return axios.post(url, data)
+    }
 }
 
 export default authApi

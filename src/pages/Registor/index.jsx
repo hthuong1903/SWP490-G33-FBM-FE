@@ -27,6 +27,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import schema from './validation'
+import LoadingButton from '@mui/lab/LoadingButton'
 
 export default function Registor() {
     const [genderValue, setGenderValue] = useState(true)
@@ -39,7 +40,9 @@ export default function Registor() {
     const [wardList, setWardList] = useState([])
     const [isShowPassword, setIsShowPassword] = useState({ password: false, rePassword: false })
     const [isNextStep, setIsNextStep] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
     const containerRef = useRef(null)
+
     let navigate = useNavigate()
 
     const {
@@ -79,6 +82,7 @@ export default function Registor() {
     }
 
     const onSubmit = async (data) => {
+        setIsLoading(true)
         const provinceName = await provincesApi.getProvinceById(Number(data.province))
         const districtName = await provincesApi.getDistrictById(Number(data.district))
         const wardName = await provincesApi.getWardsById(Number(data.ward))
@@ -100,12 +104,23 @@ export default function Registor() {
                 if (res.data.data.length) {
                     toast.success(res.data.message)
                     setIsNextStep(false)
-                    setTimeout(() => navigate('./confirm'), 300)
+                    setTimeout(
+                        () =>
+                            navigate({
+                                pathname: './confirm',
+                                search: `?${new URLSearchParams({ email: data.email })}`
+                            }),
+                        300
+                    )
                 } else {
+                    setIsLoading(false)
                     toast.error(res.data.message)
                 }
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                console.log(error)
+                setIsLoading(false)
+            })
     }
 
     useEffect(() => {
@@ -468,9 +483,12 @@ export default function Registor() {
                         </Box>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-                        <Button variant="contained" onClick={handleSubmit(onSubmit)}>
+                        <LoadingButton
+                            loading={isLoading}
+                            variant="contained"
+                            onClick={handleSubmit(onSubmit)}>
                             Đăng ký
-                        </Button>
+                        </LoadingButton>
                     </Box>
                 </Paper>
             </Slide>
