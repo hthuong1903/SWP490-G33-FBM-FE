@@ -1,10 +1,13 @@
 import { Box } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar'
+import useAuth from '@/hooks/useAuth'
 
 const sidebarWidth = 240
 function AdministratorLayout() {
+  const { auth } = useAuth()
   return (
+    auth && (
     <div>
       <Box sx={{ display: 'flex' }}>
         <Box sx={{ width: `calc(100%-${sidebarWidth}px)` }}>
@@ -22,6 +25,7 @@ function AdministratorLayout() {
         </Box>
       </Box>
     </div>
+  )
   )
 }
 
