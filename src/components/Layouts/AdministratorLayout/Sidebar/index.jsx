@@ -1,5 +1,6 @@
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
+import useAuth from '@/hooks/useAuth'
 import {
     Avatar,
     Box,
@@ -14,20 +15,28 @@ import {
     Paper
 } from '@mui/material'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import ConfirmModal from '../../../Common/Modal/ConfirmModal'
 
 function Sidebar() {
+    const user = JSON.parse(localStorage.getItem('fbm-user')) || []
+    let navigate = useNavigate()
+    const { auth, setAuth } = useAuth()
+    console.log(auth)
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [isOpenConfirmDialog, setIsOpenConfirmDialog] = useState(false)
     const [open, setOpen] = useState(false)
+
     const handleListItemClick = (event, index) => {
         setSelectedIndex(index)
     }
     const handleClick = () => {
         setOpen(!open)
     }
+
+    const location = useLocation()
+
     const items = [
         { name: 'Tài Khoản Nhân Viên Bán Hàng', href: '/administrator' },
         { name: 'Tài Khoản Nhân Viên Quản Lí', href: '/administrator/manager' },
@@ -42,7 +51,12 @@ function Sidebar() {
                 content="Bạn muốn đăng xuất?"
                 isOpen={isOpenConfirmDialog}
                 handleClose={() => setIsOpenConfirmDialog(false)}
-                handleConfirm={() => toast.success('Đăng xuất thành công!')}
+                handleConfirm={() => {
+                    // toast.success('Đăng xuất thành công!')
+                    localStorage.removeItem('fbm-user')
+                    navigate('/')
+                    setAuth(null)}
+                }
             />
             <Box sx={{ p: 2 }}>
                 <Paper elevation={2} sx={{ height: '100%' }}>

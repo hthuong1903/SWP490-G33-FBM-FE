@@ -57,7 +57,7 @@ export default function Login() {
                 navigate('/admin/orders')
             }
             if (roles[0] === 'ADMIN') {
-                navigate('/admin')
+                navigate('/administrator')
             }
             if (roles[0] === 'CUSTOMER') {
                 toast.error('Sai thông tin đăng nhập!')

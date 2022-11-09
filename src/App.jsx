@@ -54,7 +54,7 @@ function App() {
                 navigate('/admin/orders')
             }
             if (roles[0] === 'ADMIN') {
-                navigate('/admin')
+                navigate('/administrator')
             }
         } else {
             navigate('/')
