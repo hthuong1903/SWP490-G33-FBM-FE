@@ -37,7 +37,7 @@ export default function FixerAccount() {
     const handleDelete = async () => {
         try {
             await AccountApi.deleteAccount(selectedRow?.row.id)   
-            toast.success('Xóa thành công !')
+            toast.success('Xóa Thành Công !')
             setIsOpenConfirmModal(false)
             setIsUpdated(true)
         } catch (error) {
@@ -48,7 +48,7 @@ export default function FixerAccount() {
     const handleResetPassword = async () => {
         try {
             await AccountApi.resetPassword(selectedRow?.row.id)
-            toast.success('Reset Mat Khau Thanh cong !')
+            toast.success('Reset Mật Khẩu Thành Công !')
             setIsOpenConfirmModelReset(false)
             setIsUpdated(true)
         } catch (error) {
@@ -64,12 +64,12 @@ export default function FixerAccount() {
         },
         {
             field: 'name',
-            headerName: 'Ho va ten',
+            headerName: 'Họ và Tên',
             flex: 1,
         },
         {
             field: 'username',
-            headerName: 'Ten dang nhap',
+            headerName: 'Tên Đăng Nhập',
             flex: 1
         },
         { 
@@ -79,12 +79,12 @@ export default function FixerAccount() {
         },
         { 
             field: 'updateDate', 
-            headerName: 'Ngay cap nhap', 
+            headerName: 'Ngày Cập Nhập', 
             flex: 1 
         },
         {
             field: 'details',
-            headerName: 'THÔNG TIN ĐẦY ĐỦ',
+            headerName: 'Thông Tin Chi Tiết',
             flex: 1,
             renderCell: (params) => {
                 return (
@@ -104,7 +104,7 @@ export default function FixerAccount() {
         },
         { 
             field: 'action', 
-            headerName: '', 
+            headerName: 'Tác Vụ', 
             flex: 1,
             renderCell: (params) => {
                 return (
@@ -151,7 +151,7 @@ export default function FixerAccount() {
             {isOpenAddModal && (
                 <ModelAddStaffAccount
                     isOpen={isOpenAddModal}
-                    title={'Tao Tai khoan'}
+                    title={'Tạo Tài Khoản'}
                     handleClose={() => setIsOpenAddModal(false)}
                     handleConfirm={() => setIsUpdated(true)}
                     isEdit={isEdit}
@@ -160,7 +160,7 @@ export default function FixerAccount() {
             {isOpenUpdateModal && (
                 <ModelUpdateAccount
                     isOpen={isOpenUpdateModal}
-                    title={'Cập nhật Tai Khoan'}
+                    title={'Cập nhật Tài Khoản'}
                     handleClose={() => setIsOpenUpdateModal(false)}
                     handleConfirm={() => setIsUpdated(true)}
                     selectedData={selectedRow.row}
@@ -169,7 +169,7 @@ export default function FixerAccount() {
             )}
             <ConfirmModal
                 isOpen={isOpenConfirmModal}
-                title="Xác nhận"
+                title="Xác nhận Xóa"
                 content={`Bạn có muốn xóa ${selectedRow?.row?.name}?`}
                 handleClose={() => setIsOpenConfirmModal(false)}
                 handleConfirm={() => handleDelete()}
@@ -177,26 +177,26 @@ export default function FixerAccount() {
 
             <ConfirmModal 
                 isOpen={isOpenConfirmModelReset}
-                title="Xac Nhan"
-                content={`Ban co muon reset mat khau cho ${selectedRow?.row.name}?`}
+                title="Xác Nhận Reset"
+                content={`Bạn có muốn reset mật khẩu cho ${selectedRow?.row.name}?`}
                 handleClose={() => setIsOpenConfirmModelReset(false)}
                 handleConfirm={() => handleResetPassword()}
             />
-            <h2>Quản lý Tai Khoan Nhan Vien Sua chua</h2>
+            <h2>Quản lý Tài Khoản Nhân Viên Sửa Chữa</h2>
             <Box sx={{ mb: 2, mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
                 <Button sx={{mr: 2}}
                     variant="contained"
                     onClick={() => {
                         
                     }}>
-                    Xoa ban ghi da chon
+                    Xóa bản ghi đã chọn
                 </Button>
                 <Button 
                     variant="contained"
                     onClick={() => {
                         setIsOpenAddModal(true)
                     }}>
-                    Tao tai khoan
+                    Tạo tài khoản
                 </Button>
             </Box>
             <DataTable columns={columns} rows={listFixerAccount} />

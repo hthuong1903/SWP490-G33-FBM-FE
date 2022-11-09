@@ -20,9 +20,6 @@ function CreateAccount() {
     const [selectedWard, setSelectedWard] = useState(1)
     const [gender, setGender] = useState(null)
 
-    // const [formValue, setFormValue] = useState({firstName: "", middleName: "", username: "", email: "", lastName: "", phone: "", address: "",
-    //     province: "", district: "", ward: "", role: "", gender: ""
-    // })
     const roleList = [
         {
             id: 1,
@@ -45,7 +42,7 @@ function CreateAccount() {
     const genderList = [
         {
             id: 0,
-            name: "Nu",
+            name: "Nữ",
             value: true
         },
         {
@@ -83,7 +80,7 @@ function CreateAccount() {
             .createAccount(dataSubmit)
             .then((res) => {
                 console.log(res) 
-                toast.success('Them Tai Khoan Thanh Cong')
+                toast.success('Thêm Tài Khoản Thành Công')
                 handleClearData()
             })
             .catch((error) => {
@@ -151,40 +148,40 @@ function CreateAccount() {
             }}
             >   
                 <FormGroup sx={{p: 2}}>
-                    <h2>Create Account Page</h2>
+                    <h2>TẠO TÀI KHOẢN</h2>
                     <Box sx={{ mt: 2, display: 'flex', gap: '20px'}}>
                         <TextField
                             fullWidth
                             size="small"
                             id="outlined-basic"
-                            label="Ho"
+                            label="Họ"
                             variant="outlined"
                             {...register('firstName')}
                             error={errors.name ? true:false}
                             helperText={errors.firstName?.message}
-                            placeholder="Nhap Ho"
+                            placeholder="Nhập Họ"
                         />
                         <TextField
                             fullWidth
                             size="small"
                             id="outlined-basic"
-                            label="Ten Dem"
+                            label="Tên Đệm"
                             variant="outlined"
                             {...register('middleName')}
                             error={errors.middleName ? true : false}
                             helperText={errors.middleName?.message}
-                            placeholder="Nhập Ten dem"
+                            placeholder="Nhập Tên Đệm"
                         />
                         <TextField
                             fullWidth
                             size="small"
                             id="outlined-basic"
-                            label="Ten"
+                            label="Tên"
                             variant="outlined"
                             {...register('lastName')}
                             error={errors.lastName ? true : false}
                             helperText={errors.lastName?.message}
-                            placeholder="Nhập Ten"
+                            placeholder="Nhập Tên"
                         />
                     </Box>
                     <Box sx={{ mt: 2}}>
@@ -192,12 +189,12 @@ function CreateAccount() {
                             fullWidth
                             size="small"
                             id="outlined-basic"
-                            label="Ten dang nhap"
+                            label="Tên Đăng Nhập"
                             variant="outlined"
                             {...register('username')}
                             error={errors.username ? true : false}
                             helperText={errors.username?.message}
-                            placeholder="Ten Dang Nhap"
+                            placeholder="Tên Đăng Nhập"
                         />
                     </Box>
                     <Box sx={{ mt: 2 }}>
@@ -210,7 +207,7 @@ function CreateAccount() {
                             {...register('email')}
                             error={errors.email ? true : false}
                             helperText={errors.email?.message}
-                            placeholder="Email"
+                            placeholder="Nhập Email"
                         />
                     </Box>
                     <Box sx={{ mt: 2, display: 'flex', gap: '20px' }}>
@@ -218,19 +215,19 @@ function CreateAccount() {
                             fullWidth
                             size="small"
                             id="outlined-basic"
-                            label="So dien thoai"
+                            label="Số Điện Thoại"
                             variant="outlined"
                             {...register('phone')}
                             error={errors.phone ? true : false}
                             helperText={errors.phone?.message}
-                            placeholder="So dien thoai"
+                            placeholder="Nhập Số Điện Thoại"
                         />
                         <TextField
                             fullWidth
                             id="outlined-basic"
                             select
                             size="small"
-                            label="Gioi tinh"
+                            label="Giới Tính"
                             value={gender}
                             onChange={(event) => {
                                 console.log(event.target.value)
@@ -252,7 +249,7 @@ function CreateAccount() {
                             id="outlined-basic"
                             select
                             size="small"
-                            label="Chuc vu"
+                            label="Chức vụ"
                             value={role}
                             onChange={(event) => {
                                 console.log(event.target.value)
@@ -385,11 +382,11 @@ function CreateAccount() {
             <Box sx={{display: 'flex', justifyContent: 'center'}}>
                 <Button 
                     onClick={handleClearData}>
-                    Huy Bo
+                    Hủy Bỏ
                 </Button>
                 <Button sx={{ml: 15}} onClick= {handleSubmit(onSubmit)}
                 >
-                    Dong y
+                    Đồng Ý
                 </Button>
             </Box>
 

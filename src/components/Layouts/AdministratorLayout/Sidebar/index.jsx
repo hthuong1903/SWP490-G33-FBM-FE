@@ -29,11 +29,11 @@ function Sidebar() {
         setOpen(!open)
     }
     const items = [
-        { name: 'Tai Khoan Nhan Vien Ban Hang', href: '/administrator' },
-        { name: 'Tai Khoan Nhan Vien Quan Li', href: '/administrator/manager' },
-        { name: 'Tai Khoan Nhan Vien Sua Chua', href: '/administrator/fixer' },
-        { name: 'Tai Khoan Khach Hang', href: '/administrator/customer' },
-        { name: 'Tao Tai Khoan', href: '/administrator/createAccount' },
+        { name: 'Tài Khoản Nhân Viên Bán Hàng', href: '/administrator' },
+        { name: 'Tài Khoản Nhân Viên Quản Lí', href: '/administrator/manager' },
+        { name: 'Tài Khoản Nhân Viên Sửa Chữa', href: '/administrator/fixer' },
+        { name: 'Tài Khoản Khách Hàng', href: '/administrator/customer' },
+        { name: 'Tạo Tài Khoản', href: '/administrator/createAccount' },
     ]
     return (
         <div>
