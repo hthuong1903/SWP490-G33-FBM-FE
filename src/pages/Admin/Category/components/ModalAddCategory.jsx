@@ -24,10 +24,14 @@ export default function ModalAddCategory({ title, isOpen, handleClose, handleCon
         categoryApi
             .createCategory(data)
             .then((res) => {
-                console.log(res)
-                toast.success('Thêm thành công danh mục')
-                handleConfirm && handleConfirm(true)
-                handleClose && handleClose()
+                console.log('data',res.data.data.length)
+                if (res.data.data.length) {
+                    toast.success(res.data.message)
+                    handleConfirm && handleConfirm(true)
+                    handleClose && handleClose()
+                } else {
+                    toast.error(res.data.message)
+                }
             })
             .catch((error) => {
                 console.log(error)

@@ -79,6 +79,7 @@ export default function ModalUpdateProduct({
                         console.log(res)
                         toast.success('Cập nhật sản phẩm thành công')
                         handleConfirm && handleConfirm(true)
+                        handleClose && handleClose()
                     })
                     .catch((error) => console.log(error))
 
