@@ -34,6 +34,7 @@ import { ROLES } from './constants'
 import useAuth from './hooks/useAuth'
 import { useEffect } from 'react'
 import RequireAuth from './auth'
+import DataCustomer from './pages/Admin/DataCustomer'
 
 function App() {
     const { auth, setAuth } = useAuth()
@@ -86,6 +87,7 @@ function App() {
                         <Route path="orders" element={<Order />} />
                         <Route path="orders/details/:orderId" element={<OrderDetails />} />
                         <Route path="orders/createOrder" element={<CreateOrder />} />
+                        <Route path="dataCustomer" element={<DataCustomer />} />
                     </Route>
                 </Route>
 
