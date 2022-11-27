@@ -79,8 +79,10 @@ function ModalOvertime({ title, content, isOpen, handleClose, handleConfirm, emp
                 </Grid>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>Hủy bỏ</Button>
-                <Button onClick={handleSubmit(onSubmit)} autoFocus>
+                <Button variant="outlined" onClick={handleClose}>
+                    Hủy bỏ
+                </Button>
+                <Button variant="contained" onClick={handleSubmit(onSubmit)} autoFocus>
                     Đồng ý
                 </Button>
             </DialogActions>

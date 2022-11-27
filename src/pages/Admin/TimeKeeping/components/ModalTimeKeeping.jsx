@@ -24,18 +24,9 @@ import moment from 'moment'
 import { schemaTimeKeeping } from '../validation'
 import { useState } from 'react'
 import TimeKeepingApi from '@/api/TimeKeepingApi'
-import axios from 'axios'
 // import { toast } from 'react-toastify'
 
-function ModalTimeKeeping({
-    title,
-    content,
-    isOpen,
-    handleClose,
-    handleConfirm,
-    employee,
-    timeSheetDetail
-}) {
+function ModalTimeKeeping({ title, isOpen, handleClose, employee }) {
     const [value, setValue] = useState(1)
 
     const {
@@ -166,7 +157,7 @@ function ModalTimeKeeping({
                                             <FormControlLabel
                                                 value="2"
                                                 control={<Radio />}
-                                                label="Ngày cuối tuần"
+                                                label="Nửa ngày"
                                             />
                                             <FormControlLabel
                                                 value="3"
@@ -180,17 +171,18 @@ function ModalTimeKeeping({
                                                 sx={{ display: 'block' }}>
                                                 Nghỉ
                                             </FormLabel>
-
-                                            <FormControlLabel
-                                                value="4"
-                                                control={<Radio />}
-                                                label="Có phép"
-                                            />
-                                            <FormControlLabel
-                                                value="5"
-                                                control={<Radio />}
-                                                label="Không phép"
-                                            />
+                                            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                                <FormControlLabel
+                                                    value="4"
+                                                    control={<Radio />}
+                                                    label="Có phép"
+                                                />
+                                                <FormControlLabel
+                                                    value="5"
+                                                    control={<Radio />}
+                                                    label="Không phép"
+                                                />
+                                            </Box>
                                         </Grid>
                                     </Grid>
                                 </RadioGroup>
@@ -200,8 +192,10 @@ function ModalTimeKeeping({
                 </Box>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>Hủy bỏ</Button>
-                <Button onClick={handleSubmit(onSubmit)} autoFocus>
+                <Button variant="outlined" onClick={handleClose}>
+                    Hủy bỏ
+                </Button>
+                <Button variant="contained" onClick={handleSubmit(onSubmit)} autoFocus>
                     Đồng ý
                 </Button>
             </DialogActions>

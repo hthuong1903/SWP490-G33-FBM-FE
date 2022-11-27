@@ -23,21 +23,26 @@ const orderApi = {
         const url = '/orders/quote'
         return axiosClient.put(url, null, { params: { orderId } })
     },
-    createOrderT:(data)=>{
+    createOrderT: (data) => {
         const url = `/orders`
         return axios.post(`${BASE_URL}` + url, data)
     },
-    deleteOrderT:(orderId)=>{
+    deleteOrderT: (orderId) => {
         const url = `/orders?orderId=${orderId}`
         return axios.delete(`${BASE_URL}` + url)
     },
-    createQuoteT:(orderId, data)=>{
+    createQuoteT: (orderId, data) => {
         const url = `/orders/quote?orderId=${orderId}`
         return axios.put(`${BASE_URL}` + url, data)
     },
-    deleteOrder:(orderId)=>{
+    deleteOrder: (orderId) => {
         const url = `/orders?orderId=${orderId}`
         return axiosClient.delete(url)
+    },
+
+    convert: (number) => {
+        const url = `http://forum.vdevs.net/nossl/mtw.php?number=${number}`
+        return axiosClient.get(url)
     }
 
 }

@@ -3,6 +3,7 @@ import DataTable from '@/components/Common/DataTable'
 import { Button, Tooltip } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import ModalTimeKeeping from './components/ModalTimeKeeping'
 
 function TimeKeepingTab({ value, index, periodCode }) {
@@ -27,6 +28,20 @@ function TimeKeepingTab({ value, index, periodCode }) {
             console.log(error)
         }
     }
+
+    const sendEmail = async (periodCode) => {
+        try {
+            const response = await TimeKeepingApi.sendEmailTimeSheetDetail(periodCode)
+            toast.success(response.message)
+        } catch (error) {
+            console.log('Failed when send email')
+        }
+    }
+
+    const handleSendEmail = () => {
+        sendEmail(periodCode)
+    }
+
     useEffect(() => {
         getTimeSheetDetail(periodCode)
     }, [periodCode])
@@ -93,7 +108,8 @@ function TimeKeepingTab({ value, index, periodCode }) {
         container['weekendWorking'] = item.weekendWorking
         container['workingDay'] = item.workingDay
         container['employee'] = item.employee
-        container['name'] = item.employee.name
+        container['name'] =
+            item.employee.firstName + ' ' + item.employee.middleName + ' ' + item.employee.lastName
         container['roles'] = item.employee.roles[0].name
         return container
     })
@@ -126,6 +142,9 @@ function TimeKeepingTab({ value, index, periodCode }) {
                         p: 1
                     }
                 }}>
+                <Button variant="contained" onClick={() => handleSendEmail()} autoFocus>
+                    Gửi chấm công
+                </Button>
                 <DataTable columns={columns} rows={rows} />
             </Box>
         </div>
