@@ -21,6 +21,7 @@
     "@types/date-fns": "^2.6.0",
     "axios": "^1.0.0",
     "bootstrap": "^5.2.2",
+    "clsx": "^1.2.1",
     "date-fns": "^2.29.3",
     "moment": "^2.29.4",
     "query-string": "^7.1.1",

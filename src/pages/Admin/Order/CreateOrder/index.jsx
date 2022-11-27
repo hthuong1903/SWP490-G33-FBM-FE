@@ -169,7 +169,7 @@ export default function CreateOrder() {
                     alignItems: 'center'
                 }}>
                 <Typography sx={{ fontWeight: 'bold' }}>
-                    Thông tin chi tiết đơn hàng {location.state[0]?.customer.email}
+                    Thông tin chi tiết đơn hàng {location.state[0]?.orderCode}
                 </Typography>
                 <Box sx={{ display: 'flex', gap: '12px' }}>
                     <Button variant="contained" onClick={() => navigate(-1)}>

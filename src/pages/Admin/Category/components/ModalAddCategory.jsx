@@ -24,7 +24,7 @@ export default function ModalAddCategory({ title, isOpen, handleClose, handleCon
         categoryApi
             .createCategory(data)
             .then((res) => {
-                console.log('data',res.data.data.length)
+                console.log('data', res.data.data)
                 if (res.data.data.length) {
                     toast.success(res.data.message)
                     handleConfirm && handleConfirm(true)

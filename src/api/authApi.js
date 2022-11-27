@@ -7,6 +7,10 @@ const authApi = {
         const url = `/user`
         return axiosClient.get(url)
     },
+    getUserInternal:()=>{
+        const url = `/user_internal`
+        return axiosClient.get(url)
+    },
     signUpCustomer: (data) => {
         const url = `${BASE_URL}/signup_customer`
         return axios.post(url, data)

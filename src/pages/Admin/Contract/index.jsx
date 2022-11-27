@@ -52,7 +52,15 @@ export default function Contract() {
             headerName: 'TÊN',
             flex: 1,
             renderCell: (params) => {
-                return <Typography sx={{ fontWeight: 'bold' }}>{params.value}</Typography>
+                return (
+                    <Typography sx={{ fontWeight: 'bold' }}>
+                        {params.row.employee.firstName +
+                            ' ' +
+                            params.row.employee.middleName +
+                            ' ' +
+                            params.row.employee.lastName}
+                    </Typography>
+                )
             }
         },
         {

@@ -96,7 +96,7 @@ export default function ModalUpdateContract({
     useEffect(() => {
         const getAllUser = async () => {
             try {
-                const response = await authApi.getAllUser()
+                const response = await authApi.getUserInternal()
                 setUserList(response.data)
             } catch (error) {
                 console.log('fail at getAllUser', error)
@@ -128,7 +128,9 @@ export default function ModalUpdateContract({
                         <Autocomplete
                             id="tags-outlined"
                             options={userList}
-                            getOptionLabel={(option) => option.name}
+                            getOptionLabel={(option) =>
+                                `${option.id} - ${option.firstName} ${option.middleName} ${option.lastName}`
+                            }
                             onChange={handleChange}
                             fullWidth
                             defaultValue={selectedData?.row.employee}

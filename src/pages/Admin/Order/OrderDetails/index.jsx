@@ -78,7 +78,7 @@ export default function OrderDetails() {
                         alignItems: 'center'
                     }}>
                     <Typography sx={{ fontWeight: 'bold' }}>
-                        Thông tin chi tiết đơn hàng {orderId}
+                        Thông tin chi tiết đơn hàng {orderDetail[0]?.orderCode}
                     </Typography>
                     <Box sx={{ display: 'flex', gap: '12px' }}>
                         <Button variant="contained">Xem báo giá</Button>

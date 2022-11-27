@@ -82,15 +82,16 @@ export default function ModalAddContract({ title, isOpen, handleClose, handleCon
     }
 
     useEffect(() => {
-        const getAllUser = async () => {
+        const getUserInternal = async () => {
             try {
-                const response = await authApi.getAllUser()
+                const response = await authApi.getUserInternal()
+                console.log('getUserInternal', response.data)
                 setUserList(response.data)
             } catch (error) {
-                console.log('fail at getAllUser', error)
+                console.log('fail at getUserInternal', error)
             }
         }
-        getAllUser()
+        getUserInternal()
     }, [])
 
     useEffect(() => {
@@ -116,7 +117,9 @@ export default function ModalAddContract({ title, isOpen, handleClose, handleCon
                         <Autocomplete
                             id="tags-outlined"
                             options={userList}
-                            getOptionLabel={(option) => option.name}
+                            getOptionLabel={(option) =>
+                                `${option.id} - ${option.firstName} ${option.middleName} ${option.lastName}`
+                            }
                             onChange={handleChange}
                             filterSelectedOptions
                             fullWidth
