@@ -1,24 +1,21 @@
 import authApi from '@/api/authApi'
+import useAuth from '@/hooks/useAuth'
 import { yupResolver } from '@hookform/resolvers/yup'
+import LoadingButton from '@mui/lab/LoadingButton'
 import {
-    Box,
-    Button,
-    Checkbox,
+    Box, Checkbox,
     FormControlLabel,
     Grid,
     Paper,
     TextField,
     Typography
 } from '@mui/material'
-import Grow from '@mui/material/Grow'
 import { Container } from '@mui/system'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import schema from './validation'
-import LoadingButton from '@mui/lab/LoadingButton'
-import useAuth from '@/hooks/useAuth'
 
 export default function Login() {
     const [rememberMe, setRememberMe] = useState(false)
@@ -61,6 +58,9 @@ export default function Login() {
             }
             if (roles[0] === 'CUSTOMER') {
                 toast.error('Sai thông tin đăng nhập!')
+            }
+            if (roles[0] === 'FIXER') {
+                toast.error('Bạn không được phép truy cập vào hệ thống!')
             }
         } catch (error) {
             console.log(error)
