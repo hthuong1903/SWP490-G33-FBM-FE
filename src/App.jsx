@@ -4,6 +4,7 @@ import './App.css'
 import NotFoundPage from './components/Common/NotFoundPage'
 import UnAuthorized from './components/Common/UnAuthorized'
 import AdminLayout from './components/Layouts/AdminLayout'
+import AdministratorLayout from './components/Layouts/AdministratorLayout'
 import UserLayout from './components/Layouts/UserLayout'
 import Category from './pages/Admin/Category'
 import Contract from './pages/Admin/Contract'
@@ -22,6 +23,11 @@ import Income from './pages/Admin/Statistical/Income'
 import ProductSale from './pages/Admin/Statistical/Product'
 import TimeKeeping from './pages/Admin/TimeKeeping'
 import Login from './pages/Login'
+import StaffAccount from './pages/Administrator/Staff'
+import ManagerAccount from './pages/Administrator/Manager'
+import CustomerAccount from './pages/Administrator/Customer'
+import FixerAccount from './pages/Administrator/Fixer'
+import CreateAccount from './pages/Administrator/CreateAccount'
 import Registor from './pages/Registor'
 import ConfirmEmailCode from './pages/Registor/components/ConfirmEmailCode'
 import { ROLES } from './constants'
@@ -48,7 +54,7 @@ function App() {
                 navigate('/admin/orders')
             }
             if (roles[0] === 'ADMIN') {
-                navigate('/admin')
+                navigate('/administrator')
             }
         } else {
             navigate('/')
@@ -89,6 +95,14 @@ function App() {
                     <Route path="registor/confirm" element={<ConfirmEmailCode />} />
                 </Route>
                 <Route path="*" element={<NotFoundPage />} />
+
+                <Route path="/administrator" element={<AdministratorLayout />}>
+                    <Route index element={<StaffAccount />} />
+                    <Route path="manager" element={<ManagerAccount />} />
+                    <Route path="customer" element={<CustomerAccount />} />
+                    <Route path="fixer" element={<FixerAccount />} />
+                    <Route path="createAccount" element={<CreateAccount />} />
+                </Route>              
                 <Route path="/unauthorized" element={<UnAuthorized />} />
             </Routes>
         </div>

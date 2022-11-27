@@ -12,14 +12,16 @@ import {
     Tooltip
 } from '@mui/material'
 import { Box } from '@mui/system'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { Context } from '../contexts/contexts'
 
 function ModalBonusDetail({ title, isOpen, handleClose, employee, periodCode }) {
     const [bonusDetail, setBonusDetail] = useState([])
     const [isRender, setIsRender] = useState(true)
     const [selectedRow, setSelectedRow] = useState(null)
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
+    const [state, dispatch] = useContext(Context)
 
     const getBonusDetail = async (period_code, employeeId) => {
         try {
@@ -45,6 +47,7 @@ function ModalBonusDetail({ title, isOpen, handleClose, employee, periodCode }) 
             toast.success('Xóa thành công !')
             setIsOpenConfirmModal(false)
             setIsRender(true)
+            dispatch({ type: 'render' })
         } catch (error) {
             console.log(error)
         }

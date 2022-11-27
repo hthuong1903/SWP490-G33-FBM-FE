@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DataTable from '@/components/Common/DataTable'
-import { Box } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import SalaryApi from '@/api/SalaryApi'
+import { toast } from 'react-toastify'
+
+import { Context } from './contexts/contexts'
 
 function Salary({ value, index, periodCode }) {
     const [salary, setSalary] = useState([])
     const [isRender, setIsRender] = useState(true)
+    const [state, dispatch] = useContext(Context)
 
     const getSalary = async (period_code) => {
         try {
@@ -16,14 +20,33 @@ function Salary({ value, index, periodCode }) {
             console.warn('Failed to get salary ', error)
         }
     }
+
+    const sendEmail = async (periodCode) => {
+        try {
+            const response = await SalaryApi.sendEmailSalary(periodCode)
+            toast.success(response.message)
+        } catch (error) {
+            console.log('Failed when send email')
+        }
+    }
+
+    const handleSendEmail = () => {
+        sendEmail(periodCode)
+    }
+
+    console.log(state)
     useEffect(() => {
         getSalary(periodCode)
-    }, [periodCode])
+    }, [state])
+
+    useEffect(() => {
+        getSalary(periodCode)
+    }, [periodCode, state])
 
     useEffect(() => {
         isRender && getSalary(periodCode)
         setIsRender(false)
-    }, [salary, isRender])
+    }, [salary, isRender, state])
 
     const columns = [
         { field: 'employeeName', headerName: 'TÊN', flex: 1 },
@@ -76,6 +99,9 @@ function Salary({ value, index, periodCode }) {
                         p: 1
                     }
                 }}>
+                <Button variant="contained" onClick={() => handleSendEmail()} autoFocus>
+                    Gửi lương
+                </Button>
                 <DataTable columns={columns} rows={rows} />
             </Box>
         </div>
