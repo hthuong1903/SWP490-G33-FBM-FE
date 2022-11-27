@@ -78,7 +78,8 @@ function OvertimeTab({ value, index, periodCode }) {
         container['item'] = item
         container['id'] = index + 1
         container['details'] = item.content
-        container['name'] = item.employee.name
+        container['name'] =
+            item.employee.firstName + ' ' + item.employee.middleName + ' ' + item.employee.lastNames
         container['totalTime'] = item.hour
         container['totalAmount'] = item.moneyPerHour * item.hour
         container['roles'] = item.employee.roles[0].name

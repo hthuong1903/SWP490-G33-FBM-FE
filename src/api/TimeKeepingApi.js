@@ -57,6 +57,10 @@ const TimeKeepingApi = {
         const url = `/timesheetperiods/${period_code}`
         return axiosClient.get(url)
     },
+    sendEmailTimeSheetDetail: (period_code) => {
+        const url = '/send_email/time_sheet_detail'
+        return axiosClient.get(url, { params: { period_code } })
+    }
 
 }
 

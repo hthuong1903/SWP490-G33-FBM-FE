@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Bonus from './Bonus'
 import Salary from './Salary'
 import Allowance from './Allowance'
+import { Provider } from './contexts/contexts'
 
 function a11yProps(index) {
     return {
@@ -69,7 +70,7 @@ function Payroll() {
             <Divider sx={{ mb: 2 }} />
 
             {/* {timeSheetPeriods.length > 0 && ( */}
-            <>
+            <Provider>
                 <Box sx={{ mb: 1 }}>
                     <Tabs
                         value={value}
@@ -92,7 +93,7 @@ function Payroll() {
                 <Salary value={value} index={0} periodCode={month + '' + year} />
                 <Allowance value={value} index={1} periodCode={month + '' + year} />
                 <Bonus value={value} index={2} periodCode={month + '' + year} />
-            </>
+            </Provider>
             {/* )} */}
         </>
     )

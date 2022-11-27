@@ -12,9 +12,10 @@ import {
 } from '@mui/material'
 import { Box } from '@mui/system'
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
+import { Context } from '../contexts/contexts'
 import { schemaSubsidize } from '../validation'
 
 function ModalAllowance({
@@ -28,6 +29,7 @@ function ModalAllowance({
     periodCode
 }) {
     const [type, setType] = useState(1)
+    const [state, dispatch] = useContext(Context)
 
     const {
         register,
@@ -56,6 +58,7 @@ function ModalAllowance({
                     toast.success(res.data.message)
                 })
             handleClose && handleClose()
+            dispatch({ type: 'render' })
         } catch (error) {
             console.log(error)
         }
