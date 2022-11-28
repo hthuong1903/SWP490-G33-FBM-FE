@@ -1,0 +1,5 @@
+.table.MuiDataGrid-root.MuiDataGrid-root--densityStandard.css-hegig9-MuiDataGrid-root
+    > div:first-child {
+    background: rgba(230, 134, 86, 0.3);
+    padding: 10px;
+}

@@ -1,5 +1,5 @@
 import { Paper } from '@mui/material'
-import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+import { DataGrid, GridToolbar, GridToolbarQuickFilter } from '@mui/x-data-grid'
 import clsx from 'clsx'
 import { useState } from 'react'
 import CustomNoRowsOverlay from './CustomNoRowsOverLay'
@@ -17,8 +17,7 @@ function DataTable({ columns, rows }) {
                         },
                         '& .MuiDataGrid-toolbarContainer': {
                             backgroundColor: 'rgba(230, 134, 86, 0.3)'
-                        },
-                        'button.MuiButton-sizeSmall': { display: 'none !important' }
+                        }
                     }}
                     className={clsx('table')}
                     disableColumnFilter
@@ -33,14 +32,8 @@ function DataTable({ columns, rows }) {
                     onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
                     rowsPerPageOptions={[15, 30, 50]}
                     components={{
-                        Toolbar: GridToolbar,
+                        Toolbar: GridToolbarQuickFilter,
                         NoRowsOverlay: CustomNoRowsOverlay
-                    }}
-                    componentsProps={{
-                        toolbar: {
-                            showQuickFilter: true,
-                            quickFilterProps: { debounceMs: 500 }
-                        }
                     }}
                 />
             </div>
