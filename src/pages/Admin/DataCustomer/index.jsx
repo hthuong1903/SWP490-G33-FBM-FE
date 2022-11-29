@@ -75,11 +75,6 @@ export default function DataCustomer() {
                 )
             }
         },
-        // {
-        //     field: 'updateDate',
-        //     headerName: 'Ngày Cập Nhâp',
-        //     flex: 1
-        // },
         {
             field: 'details',
             headerName: 'Thông Tin Chi Tiết',
@@ -165,13 +160,6 @@ export default function DataCustomer() {
             />
             <h2>Quản Lí Thông Tin Khách Hàng</h2>
             <Box sx={{ mb: 2, mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
-                {/* <Button sx={{mr: 2}}
-                    variant="contained"
-                    onClick={() => {
-                        
-                    }}>
-                    Xóa Bản Ghi Đã Chọn
-                </Button> */}
                 <Button 
                     variant="contained"
                     onClick={() => {

@@ -316,8 +316,8 @@ export default function ModelAddCustomer({title, isOpen, handleClose, handleConf
                         placeholder="Tòa nhà, tên đường ..."
                         variant="outlined"
                         {...register('address')}
-                        error={errors.address ? true : false}
-                        helperText={errors.address?.message}
+                        error={errors.addressDetail ? true : false}
+                        helperText={errors.addressDetail?.message}
                     />
                 </Box>
         </DialogContent>

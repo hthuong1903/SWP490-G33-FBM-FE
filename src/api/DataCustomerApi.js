@@ -11,6 +11,10 @@ const DataCustomerApi = {
         const url = `${BASE_URL}/signup_customer_at_shop`
         return axios.post(url, params)
     },
+    updateDataCustomer: (params) => {
+        const url = `${BASE_URL}/update_customer_at_shop`
+        return axios.put(url, params)
+    },
     deleteAccount: (userId) => {
         const url = `/delete?userId=${userId}`
         return axiosClient.put(url)

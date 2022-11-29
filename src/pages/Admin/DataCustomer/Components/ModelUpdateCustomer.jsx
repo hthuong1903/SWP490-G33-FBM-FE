@@ -11,7 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
-// import schema from '../Validation'
+import schema from '../Validation'
 
 export default function ModelUpdateCustomer({ title, isOpen, handleClose, handleConfirm, isEdit , selectedData}) {
     const [provinceList, setProvinceList] = useState([])
@@ -44,7 +44,7 @@ export default function ModelUpdateCustomer({ title, isOpen, handleClose, handle
         formState: { errors }
     } = useForm({
         mode: 'onChange',
-        // resolver: yupResolver(schema)
+        resolver: yupResolver(schema)
     })
 
     const onSubmit = async (data) => {
@@ -61,7 +61,7 @@ export default function ModelUpdateCustomer({ title, isOpen, handleClose, handle
             roles: ['CUSTOMER']
         }
         DataCustomerApi
-            .createDataCustomer(dataSubmit)
+            .updateDataCustomer(dataSubmit)
             .then((res) => {
                 console.log(res)
                 toast.success('Cập nhật thành công thông tin khách hàng')
@@ -84,7 +84,7 @@ export default function ModelUpdateCustomer({ title, isOpen, handleClose, handle
                 roles: ['CUSTOMER']
             }
             DataCustomerApi
-                .createDataCustomer(dataSubmit)
+                .updateDataCustomer(dataSubmit)
                 .then((res) => {
                     console.log(res)
                     toast.success('Cập nhật thành công thông tin khách hàng')
@@ -345,9 +345,9 @@ export default function ModelUpdateCustomer({ title, isOpen, handleClose, handle
                         placeholder="Tòa nhà, tên đường ..."
                         variant="outlined"
                         defaultValue={selectedData?.address}
-                        {...register('addressDetail')}
-                        error={errors.address ? true : false}
-                        helperText={errors.address?.message}
+                        {...register('address')}
+                        error={errors.addressDetail ? true : false}
+                        helperText={errors.addressDetail?.message}
                     />
                 </Box>
             
