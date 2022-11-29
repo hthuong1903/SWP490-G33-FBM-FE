@@ -83,7 +83,7 @@ export default function DataCustomer() {
                 return (
                     <Box sx={{ display: 'flex', justifyContent: 'center', width: '80%' }}>
                         <Button
-                            variant="outlined"
+                            variant="contained"
                             onClick={() => {
                                 setSelectedRow(params)
                                 setIsEdit(false)
@@ -103,7 +103,7 @@ export default function DataCustomer() {
                 return (
                     <>
                         <Button
-                            variant="outlined"
+                            variant="contained"
                             onClick={() => {
                                 setIsEdit(true)
                                 setSelectedRow(params)
@@ -115,7 +115,7 @@ export default function DataCustomer() {
                         </Button>
                         <Button
                             sx={{m: 1}}
-                            variant="outlined"
+                            variant="contained"
                             onClick={() => {
                                 setSelectedRow(params)
                                 setIsEdit(false)

@@ -125,7 +125,7 @@ export default function Provider() {
             {isOpenUpdateModal && (
                 <ModalUpdateProvider
                     isOpen={isOpenUpdateModal}
-                    title={'Cập nhật sản phẩm'}
+                    title={'Cập nhật thông tin nhà cung cấp'}
                     handleClose={() => setIsOpenUpdateModal(false)}
                     handleConfirm={() => setIsUpdated(true)}
                     selectedData={selectedRow.row}
