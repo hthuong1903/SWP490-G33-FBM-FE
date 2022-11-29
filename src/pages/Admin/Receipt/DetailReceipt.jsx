@@ -72,17 +72,13 @@ function DetailReceipt() {
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
-                <Typography sx={{ fontWeight: 'bold' }}>
-                    Thông tin chi tiết hóa đơn {receiptId}
-                </Typography>
-                {/* <Box sx={{ display: 'flex', gap: '12px' }}>
-                    <Button variant="contained">Xem báo giá</Button>
-                    <Button
-                        variant="contained"
-                        onClick={() => navigate('../orders/createOrder', { state: receiptDetail })}>
-                        Tạo báo giá
-                    </Button>
-                </Box> */}
+                {receiptDetail &&
+                    <>
+                        <Typography sx={{ fontWeight: 'bold' }}>
+                            Thông tin chi tiết hóa đơn {receiptDetail.orderCode}
+                        </Typography>
+                    </>
+                }
             </Box>
             {receiptDetail && (
                 <>
@@ -121,7 +117,7 @@ function DetailReceipt() {
                                                             {row?.product.name}
                                                         </Typography>
                                                         <Typography variant="button">
-                                                            SKU: {row?.product.productCode}
+                                                           Mã sản phẩm : {row?.product.productCode}
                                                         </Typography>
                                                     </Box>
                                                 </Box>
