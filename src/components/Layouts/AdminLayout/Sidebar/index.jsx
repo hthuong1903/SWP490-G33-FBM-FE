@@ -47,6 +47,7 @@ function Sidebar() {
         { name: 'Chấm công', href: '/admin/timekeeping', path: '/timekeeping', allow: ['MANAGER'] },
         { name: 'Bảng lương', href: '/admin/payrolls', path: '/payrolls', allow: ['MANAGER'] },
         { name: 'Đơn hàng', href: '/admin/orders', path: '/orders', allow: ['MANAGER', 'SELLER'] },
+        { name: 'Thông Tin Khách Hàng', href: '/admin/dataCustomer', path: '/dataCustomer', allow: ['MANAGER', 'SELLER'] },
         {
             name: 'Quản lý phụ cấp',
             href: '/admin/manager/allowance',
