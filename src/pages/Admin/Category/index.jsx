@@ -34,8 +34,13 @@ export default function Category() {
 
     const handleDelete = async () => {
         try {
-            await categoryApi.deleteCategory(selectedRow?.row.id)
-            toast.success('Xóa thành công !')
+            const response = await categoryApi.deleteCategory(selectedRow?.row.id)
+            if (response.message == 'Xóa thất bại'){
+                toast.error('Danh mục có chứa sản phẩm, không thể xóa !')
+            }
+            else{
+                toast.success('Xóa thành công !')
+            }
             setIsOpenConfirmModal(false)
             setIsUpdated(true)
         } catch (error) {
