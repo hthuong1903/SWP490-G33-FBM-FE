@@ -50,7 +50,7 @@ export default function Contract() {
         {
             field: 'content',
             headerName: 'TÊN',
-            flex: 1,
+            flex: 1.5,
             renderCell: (params) => {
                 return (
                     <Typography sx={{ fontWeight: 'bold' }}>
@@ -90,7 +90,7 @@ export default function Contract() {
         {
             field: 'contractTerm',
             headerName: 'THỜI HẠN',
-            flex: 1,
+            flex: 0.5,
             valueFormatter: (params) => {
                 if (params.value == null) {
                     return ''
@@ -98,12 +98,12 @@ export default function Contract() {
                 return `${params.value} tháng`
             }
         },
-        {
-            field: 'signTimes',
-            headerName: 'SỐ LẦN KÝ',
-            flex: 1,
-            type: 'number'
-        },
+        // {
+        //     field: 'signTimes',
+        //     headerName: 'SỐ LẦN KÝ',
+        //     flex: 1,
+        //     type: 'number'
+        // },
         {
             field: 'salary',
             headerName: 'LƯƠNG CƠ BẢN',
@@ -122,7 +122,7 @@ export default function Contract() {
             flex: 1,
             renderCell: (params) => {
                 return (
-                    <>
+                    <>         
                         <Tooltip title="Xóa">
                             <IconButton
                                 aria-label="delete"
@@ -157,7 +157,7 @@ export default function Contract() {
             {isOpenAddModal && (
                 <ModalAddContract
                     isOpen={isOpenAddModal}
-                    title={'Thêm hợp đồng'}
+                    title={'Thêm nhân viên'}
                     handleClose={() => setIsOpenAddModal(false)}
                     handleConfirm={() => setIsUpdated(true)}
                     isEdit={isEdit}
@@ -166,7 +166,7 @@ export default function Contract() {
             {isOpenUpdateModal && (
                 <ModalUpdateContract
                     isOpen={isOpenUpdateModal}
-                    title={'Cập nhật hợp đồng'}
+                    title={'Cập nhật nhân viên'}
                     handleClose={() => setIsOpenUpdateModal(false)}
                     handleConfirm={() => setIsUpdated(true)}
                     selectedData={selectedRow}
@@ -180,7 +180,7 @@ export default function Contract() {
                 handleClose={() => setIsOpenConfirmModal(false)}
                 handleConfirm={() => handleDelete()}
             />
-            <h2>Quản lý hợp đồng</h2>
+            <h2>Quản lý hợp nhân viên</h2>
             <Box sx={{ mb: 2, mt: 3, display: 'flex', justifyContent: 'space-between' }}>
                 <TextField
                     id="outlined-select-currency"
@@ -200,7 +200,7 @@ export default function Contract() {
                     onClick={() => {
                         setIsOpenAddModal(true)
                     }}>
-                    Thêm hợp đồng
+                    Thêm nhân viên
                 </Button>
             </Box>
             <DataTable columns={columns} rows={listContract} />

@@ -147,7 +147,7 @@ export default function ModalUpdateContract({
                             )}
                         />
                     )}
-                    <TextField
+                    {/* <TextField
                         fullWidth
                         size="small"
                         id="outlined-basic"
@@ -158,7 +158,7 @@ export default function ModalUpdateContract({
                         {...register('signTimes')}
                         error={errors.signTimes ? true : false}
                         helperText={errors.signTimes?.message}
-                    />
+                    /> */}
                     <Controller
                         name="salary"
                         variant="outlined"

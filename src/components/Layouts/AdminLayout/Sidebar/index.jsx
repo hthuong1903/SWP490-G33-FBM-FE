@@ -60,7 +60,7 @@ function Sidebar() {
             path: '/bonus',
             allow: ['MANAGER']
         },
-        { name: 'Hợp đồng', href: '/admin/contracts', path: '/contracts', allow: ['MANAGER'] },
+        { name: 'Nhân Viên', href: '/admin/contracts', path: '/contracts', allow: ['MANAGER'] },
         {
             name: 'Thống kê',
             href: '/admin/statisticals',
