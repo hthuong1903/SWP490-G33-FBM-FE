@@ -180,7 +180,7 @@ export default function Contract() {
                 handleClose={() => setIsOpenConfirmModal(false)}
                 handleConfirm={() => handleDelete()}
             />
-            <h2>Quản lý hợp nhân viên</h2>
+            <h2>Quản lý thông tin nhân viên</h2>
             <Box sx={{ mb: 2, mt: 3, display: 'flex', justifyContent: 'space-between' }}>
                 <TextField
                     id="outlined-select-currency"
