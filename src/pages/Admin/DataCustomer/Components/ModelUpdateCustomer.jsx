@@ -231,7 +231,7 @@ export default function ModelUpdateCustomer({ title, isOpen, handleClose, handle
                         label="Email"
                         variant="outlined"
                         defaultValue={selectedData?.email}
-                        disabled={disabled}
+                        // disabled={disabled}
                         {...register('email')}
                         error={errors.email ? true : false}
                         helperText={errors.email?.message}
@@ -346,8 +346,8 @@ export default function ModelUpdateCustomer({ title, isOpen, handleClose, handle
                         variant="outlined"
                         defaultValue={selectedData?.address}
                         {...register('address')}
-                        error={errors.addressDetail ? true : false}
-                        helperText={errors.addressDetail?.message}
+                        error={errors.address ? true : false}
+                        helperText={errors.address?.message}
                     />
                 </Box>
             
