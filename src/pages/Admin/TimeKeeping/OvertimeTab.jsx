@@ -20,12 +20,7 @@ function OvertimeTab({ value, index, periodCode }) {
         try {
             const response = await OvertimeApi.getOvertimeByPeriodCode(period_code)
             console.log(response)
-            if (response.data.length > 0) {
-                setListOvertime(response.data)
-            } else {
-                const res = await OvertimeApi.createOvertime(period_code)
-                setListOvertime(res.data)
-            }
+            setListOvertime(response.data)
         } catch (error) {
             console.warn('Failed to get overtime by periodCode ', error)
         }
@@ -50,7 +45,6 @@ function OvertimeTab({ value, index, periodCode }) {
             cellClassName: 'roles'
         },
         { field: 'totalTime', headerName: 'TỔNG SỐ GIỜ', flex: 1 },
-        { field: 'details', headerName: 'NỘI DUNG', flex: 1 },
         { field: 'totalAmount', headerName: 'TỔNG SỐ TIỀN', flex: 1 },
         {
             field: 'actions',
@@ -64,7 +58,6 @@ function OvertimeTab({ value, index, periodCode }) {
                                 variant="contained"
                                 size="small"
                                 onClick={() => handleAction(params.row.item)}>
-                                {/* <EditRounded fontSize="inherit" /> */}
                                 Làm thêm
                             </Button>
                         </Tooltip>
@@ -77,7 +70,6 @@ function OvertimeTab({ value, index, periodCode }) {
         const container = {}
         container['item'] = item
         container['id'] = index + 1
-        container['details'] = item.content
         container['name'] =
             (item.employee.firstName  || '') +' '+(item.employee.middleName || '') + ' '+ (item.employee.lastName || '')
         container['totalTime'] = item.hour

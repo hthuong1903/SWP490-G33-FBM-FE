@@ -1,17 +1,13 @@
 import axiosClient from './axiosClient'
 
 const OvertimeApi = {
-    createOvertime: (period_code) => {
-        const url = `/overtime`
-        return axiosClient.post(url, null, { params: { period_code } })
-    },
     updateOvertime: (data) => {
         const url = '/overtime'
         return axiosClient.put(url, data)
     },
     getOvertimeByPeriodCode: (period_code) => {
-        const url = '/overtime'
-        return axiosClient.post(url, null, { params: { period_code } })
+        const url = `/overtime?period_code=${period_code}`
+        return axiosClient.get(url)
     },
     getOvertimeByPeriodCodeAndEmployee: (period_code, employee_id) => {
         const url = '/overtime/period/employee'

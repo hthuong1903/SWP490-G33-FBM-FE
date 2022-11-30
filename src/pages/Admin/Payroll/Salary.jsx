@@ -53,7 +53,7 @@ function Salary({ value, index, periodCode }) {
         { field: 'allowedDay', headerName: 'NGHỈ PHÉP', flex: 1 },
         { field: 'absentDay', headerName: 'VẮNG', flex: 1 },
         { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 1 },
-        { field: 'weekendWorking', headerName: 'CÔNG CUỐI TUẦN', flex: 1 },
+        { field: 'haftDayWorking', headerName: 'CÔNG NỬA NGÀY', flex: 1 },
         { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', flex: 1 },
         { field: 'totalOvertimeMoney', headerName: 'TỔNG TIỀN LÀM THÊM', flex: 1 },
         { field: 'totalAllowanceMoney', headerName: 'TỔNG PHỤ CẤP', flex: 1 },
@@ -69,7 +69,7 @@ function Salary({ value, index, periodCode }) {
         container['holidaysWorking'] = item.holidaysWorking
         container['totalDayWorking'] = item.totalDayWorking
         container['totalSalary'] = item.totalSalary
-        container['weekendWorking'] = item.weekendWorking
+        container['haftDayWorking'] = item.haftDayWorking
         container['totalOvertimeMoney'] = item.totalOvertimeMoney
         container['totalBonusMoney'] = item.totalBonusMoney
         container['employeeName'] = item.employeeName

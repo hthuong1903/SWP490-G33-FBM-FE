@@ -73,7 +73,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
         },
         { field: 'absentDay', headerName: 'VẮNG', flex: 1 },
         { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 1 },
-        { field: 'weekendWorking', headerName: 'CÔNG CUỐI TUẦN', flex: 1 },
+        { field: 'haftDayWorking', headerName: 'CÔNG NỬA NGÀY', flex: 1 },
         // { field: 'workingDay', headerName: 'NGÀY THƯỜNG', flex: 1 },
         { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', flex: 1 },
         {
@@ -105,7 +105,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
         container['holidaysWorking'] = item.holidaysWorking
         container['periodCode'] = item.periodCode
         container['totalDayWorking'] = item.totalDayWorking
-        container['weekendWorking'] = item.weekendWorking
+        container['haftDayWorking'] = item.haftDayWorking
         container['workingDay'] = item.workingDay
         container['employee'] = item.employee
         container['name'] =
