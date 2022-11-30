@@ -11,6 +11,7 @@ import { toast } from 'react-toastify'
 import moment from 'moment/moment'
 import { useReactToPrint } from 'react-to-print'
 import ReceiptPrint from './components/ReceiptPrint'
+// import CancelReceipt from './CancelReceipt'
 
 function Receipt() {
     const navigate = useNavigate()
@@ -20,6 +21,7 @@ function Receipt() {
     const [listProducts, setListProducts] = useState([])
     const [isRender, setIsRender] = useState(true)
     const componentRef = useRef()
+    // const [isCancelModel, setIsCancelModel] = useState(false)
 
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -166,6 +168,14 @@ function Receipt() {
                 handleClose={() => setIsOpenConfirmModal(false)}
                 handleConfirm={() => handleDelete()}
             />
+            {/* {isCancelModel && (
+                <CancelReceipt 
+                    isOpen={isCancelModel}
+                    title={'Hủy Hóa Đơn'}
+                    handleClose={() => setIsCancelModel(false)}
+                    handleConfirm={() => setIsRender(true)}
+                />
+            )} */}
             <ConfirmModal
                 isOpen={isOpenPrintModal}
                 title="Xác nhận"
