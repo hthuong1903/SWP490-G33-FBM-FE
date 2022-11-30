@@ -109,7 +109,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
         container['workingDay'] = item.workingDay
         container['employee'] = item.employee
         container['name'] =
-            item.employee.firstName + ' ' + item.employee.middleName + ' ' + item.employee.lastName
+            (item.employee.firstName  || '') +' '+(item.employee.middleName || '') + ' '+ (item.employee.lastName || '')
         container['roles'] = item.employee.roles[0].name
         return container
     })

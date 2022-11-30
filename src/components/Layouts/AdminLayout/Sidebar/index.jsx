@@ -24,7 +24,7 @@ function Sidebar() {
     let navigate = useNavigate()
     const { auth, setAuth } = useAuth()
     console.log(auth)
-
+    console.log(user)
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [isOpenConfirmDialog, setIsOpenConfirmDialog] = useState(false)
     const [open, setOpen] = useState(false)
@@ -103,7 +103,7 @@ function Sidebar() {
                                             '& .MuiTypography-root': { fontWeight: '500' }
                                         }}
                                         primary={user.username}
-                                        secondary="abc@gmail.com"
+                                        secondary={user.name}
                                     />
                                 </ListItem>
                             </Box>

@@ -50,12 +50,6 @@ function Salary({ value, index, periodCode }) {
 
     const columns = [
         { field: 'employeeName', headerName: 'TÊN', flex: 1 },
-        // {
-        //     field: 'roles',
-        //     headerName: 'VAI TRÒ',
-        //     flex: 1,
-        //     cellClassName: 'roles'
-        // },
         { field: 'allowedDay', headerName: 'NGHỈ PHÉP', flex: 1 },
         { field: 'absentDay', headerName: 'VẮNG', flex: 1 },
         { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 1 },
@@ -79,7 +73,6 @@ function Salary({ value, index, periodCode }) {
         container['totalOvertimeMoney'] = item.totalOvertimeMoney
         container['totalBonusMoney'] = item.totalBonusMoney
         container['employeeName'] = item.employeeName
-        // container['roles'] = item.overTime.employee.roles[0].name
         container['totalAllowanceMoney'] = item.totalAllowanceMoney
         container['basicSalary'] = item.basicSalary
         return container
