@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 import moment from 'moment/moment'
 import { useReactToPrint } from 'react-to-print'
 import ReceiptPrint from './components/ReceiptPrint'
-// import CancelReceipt from './CancelReceipt'
+import CancelReceipt from './CancelReceipt'
 
 function Receipt() {
     const navigate = useNavigate()
@@ -21,7 +21,7 @@ function Receipt() {
     const [listProducts, setListProducts] = useState([])
     const [isRender, setIsRender] = useState(true)
     const componentRef = useRef()
-    // const [isCancelModel, setIsCancelModel] = useState(false)
+    const [isCancelModel, setIsCancelModel] = useState(false)
 
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -133,7 +133,8 @@ function Receipt() {
                                 size="small"
                                 onClick={() => {
                                     setSelectedRow(params.row)
-                                    setIsOpenConfirmModal(true)
+                                    // setIsOpenConfirmModal(true)
+                                    setIsCancelModel(true)
                                 }}>
                                 HỦY
                                 <ClearRoundedIcon fontSize="inherit" />
@@ -161,21 +162,22 @@ function Receipt() {
     ]
     return (
         <>
-            <ConfirmModal
+            {/* <ConfirmModal
                 isOpen={isOpenConfirmModal}
                 title="Xác nhận"
                 content={`Bạn có muốn xóa hóa đơn này không?`}
                 handleClose={() => setIsOpenConfirmModal(false)}
                 handleConfirm={() => handleDelete()}
-            />
-            {/* {isCancelModel && (
+            /> */}
+            {isCancelModel && (
                 <CancelReceipt 
                     isOpen={isCancelModel}
                     title={'Hủy Hóa Đơn'}
                     handleClose={() => setIsCancelModel(false)}
                     handleConfirm={() => setIsRender(true)}
+                    selectedData={selectedRow.row}
                 />
-            )} */}
+            )}
             <ConfirmModal
                 isOpen={isOpenPrintModal}
                 title="Xác nhận"

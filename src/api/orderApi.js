@@ -43,6 +43,11 @@ const orderApi = {
     convert: (number) => {
         const url = `http://forum.vdevs.net/nossl/mtw.php?number=${number}`
         return axiosClient.get(url)
+    },
+
+    createCancelOrder: (data) => {
+        const url = 'orders/cancel'
+        return axiosClient.post(url, data)
     }
 
 }
