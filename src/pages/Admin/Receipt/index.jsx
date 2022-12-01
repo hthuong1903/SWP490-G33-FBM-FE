@@ -119,7 +119,7 @@ function Receipt() {
                                 variant="contained"
                                 size="small"
                                 onClick={() => {
-                                    navigate(`/admin/receipts/details/${params.row.id}`)
+                                    navigate(`/manager/admin/receipts/details/${params.row.id}`)
                                 }}>
                                 Xem
                             </Button>

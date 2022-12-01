@@ -142,7 +142,7 @@ export default function Login() {
 											/>
 										}
 									/>
-									<Typography component={Link} to="/admin">
+									<Typography component={Link} to="/manager/admin">
 										Quên mật khẩu?
 									</Typography>
 								</Box>

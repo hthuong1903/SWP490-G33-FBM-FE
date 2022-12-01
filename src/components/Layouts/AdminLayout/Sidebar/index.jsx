@@ -36,7 +36,7 @@ function Sidebar() {
 	};
 	const location = useLocation();
 	const items = [
-		{ name: "Danh mục", href: "/admin", path: "/admin", allow: ["MANAGER"] },
+		{ name: "Danh mục", href: "/manager/admin", path: "/manager/admin", allow: ["MANAGER"] },
 		{
 			name: "Sản phẩm",
 			href: "/manager/admin/products",
