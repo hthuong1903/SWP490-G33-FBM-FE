@@ -40,7 +40,7 @@ export default function CancelReceipt({title, isOpen, handleClose, handleConfirm
             .createCancelOrder(dataSubmit)
             .then((res) => {
                 console.log(res)
-                toast.success('Thêm Tai Khoan Thanh Cong')
+                toast.success('Hủy hóa đơn thành công')
                 handleConfirm && handleConfirm(true)
                 handleClose && handleClose()
             })
