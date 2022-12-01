@@ -46,8 +46,8 @@ const orderApi = {
     },
 
     createCancelOrder: (data) => {
-        const url = 'orders/cancel'
-        return axiosClient.post(url, data)
+        const url = `/orders/cancel`
+        return axios.post(`${BASE_URL}` + url, data)
     }
 
 }

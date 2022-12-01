@@ -121,7 +121,7 @@ function Receipt() {
                                 variant="contained"
                                 size="small"
                                 onClick={() => {
-                                    navigate(`/admin/receipts/details/${params.row.id}`)
+                                    navigate(`/manager/admin/receipts/details/${params.row.id}`)
                                 }}>
                                 Xem
                             </Button>
@@ -149,7 +149,7 @@ function Receipt() {
                                     setSelectedRow(params.row)
                                     setIsOpenPrintModal(true)
                                     // handlePrint()
-                                    // console.log(params)
+                                    console.log("rowwwwww",params.row)
                                 }}>
                                 Xuất
                                 <EditRounded fontSize="inherit" />
@@ -172,16 +172,16 @@ function Receipt() {
             {isCancelModel && (
                 <CancelReceipt 
                     isOpen={isCancelModel}
-                    title={'Hủy Hóa Đơn'}
+                    title={`Bạn có muốn hủy hóa đơn ${selectedRow?.orderCode}?`}
+                    orderId={selectedRow?.id}
                     handleClose={() => setIsCancelModel(false)}
                     handleConfirm={() => setIsRender(true)}
-                    selectedData={selectedRow.row}
                 />
             )}
             <ConfirmModal
                 isOpen={isOpenPrintModal}
                 title="Xác nhận"
-                content={`Bạn có muốn in hóa đơn này không?`}
+                content={`Bạn có muốn in hóa đơn ${selectedRow?.orderCode} không?`}
                 handleClose={() => setIsOpenPrintModal(false)}
                 handleConfirm={() => {
                     handlePrint()

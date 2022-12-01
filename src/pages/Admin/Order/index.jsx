@@ -117,7 +117,7 @@ export default function Order() {
                                 aria-label="view"
                                 size="small"
                                 onClick={() => {
-                                    navigate(`/admin/orders/details/${params.row.id}`)
+                                    navigate(`/manager/admin/orders/details/${params.row.id}`)
                                 }}>
                                 <VisibilityIcon fontSize="inherit" />
                             </IconButton>

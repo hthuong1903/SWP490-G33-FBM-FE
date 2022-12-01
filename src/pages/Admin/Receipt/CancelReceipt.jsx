@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form'
 import orderApi from '@/api/orderApi'
 import { toast } from 'react-toastify'
 
-export default function CancelReceipt({title, isOpen, handleClose, handleConfirm, isEdit, receipt}) {
+export default function CancelReceipt({title, isOpen, handleClose, handleConfirm, isEdit, orderId}) {
     const [reason, setReason] = useState(null)
     
     const [value, setValue] = useState(1)
@@ -31,10 +31,9 @@ export default function CancelReceipt({title, isOpen, handleClose, handleConfirm
 
     const onSubmit = async (data) => {
         console.log(data)
-
         const dataSubmit = {
             ...data,
-            orderId: selectedRow?.row.id,
+            orderId: orderId,
             contentCancelType: value
         }
         orderApi
