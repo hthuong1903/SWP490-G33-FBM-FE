@@ -13,8 +13,8 @@ const OvertimeApi = {
         const url = '/overtime/period/employee'
         return axiosClient.get(url, { params: { period_code, employee_id } })
     },
-    deleteOvertime: (id) => {
-        const url = `/overtime/${id}`
+    deleteOvertime: (overtime_id) => {
+        const url = `/overtime/${overtime_id}`
         return axiosClient.delete(url)
     },
 }
