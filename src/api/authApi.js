@@ -7,6 +7,10 @@ const authApi = {
         const url = `/user`
         return axiosClient.get(url)
     },
+    getAllCustomer: () => {
+        const url = `/all_customer`
+        return axiosClient.get(url)
+    },
     getUserInternal:()=>{
         const url = `/user_internal`
         return axiosClient.get(url)

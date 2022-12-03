@@ -224,7 +224,7 @@ export default function CreateOrder() {
                                                         {row.product.name}
                                                     </Typography>
                                                     <Typography variant="button">
-                                                        SKU: {row.product.productCode}
+                                                        Mã sản phẩm<marquee behavior="" direction=""></marquee>: {row.product.productCode}
                                                     </Typography>
                                                 </Box>
                                             </Box>

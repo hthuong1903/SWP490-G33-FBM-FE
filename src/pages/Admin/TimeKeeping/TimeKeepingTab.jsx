@@ -80,6 +80,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
         { field: 'absentDay', headerName: 'VẮNG', flex: 0.75 },
         { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 0.75 },
         { field: 'haftDayWorking', headerName: 'CÔNG NỬA NGÀY', flex: 1 },
+        { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', flex: 1 },
         // { field: 'workingDay', headerName: 'NGÀY THƯỜNG', flex: 1 },
         { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', flex: 1.25 },
         {
@@ -94,7 +95,6 @@ function TimeKeepingTab({ value, index, periodCode }) {
                                 variant="contained"
                                 size="small"
                                 onClick={() => handleAction(params.row)}>
-                                {/* <EditRounded fontSize="inherit" /> */}
                                 Chấm công
                             </Button>
 
