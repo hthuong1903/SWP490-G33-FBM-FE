@@ -81,8 +81,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
         { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 0.75 },
         { field: 'haftDayWorking', headerName: 'CÔNG NỬA NGÀY', flex: 1 },
         { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', flex: 1 },
-        // { field: 'workingDay', headerName: 'NGÀY THƯỜNG', flex: 1 },
-        { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', flex: 1.25 },
+        { field: 'workingDay', headerName: 'NGÀY THƯỜNG', flex: 1 },
         {
             field: 'actions',
             headerName: 'TÁC VỤ',
