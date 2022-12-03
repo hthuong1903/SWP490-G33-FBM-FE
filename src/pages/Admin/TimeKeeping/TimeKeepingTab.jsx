@@ -5,12 +5,13 @@ import { Box } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import ModalTimeKeeping from './components/ModalTimeKeeping'
-
+import ModelDetailTimeKeeping from './components/ModelDetailTimeKeeping'
 function TimeKeepingTab({ value, index, periodCode }) {
     const [isOpenTimeKeepingModal, setIsOpenTimeKeepingModal] = useState(false)
     const [timeSheetDetail, setTimeSheetDetail] = useState([])
     const [employee, setEmployee] = useState({})
     const [isRender, setIsRender] = useState(true)
+    const [isDetail, setIsDetail] = useState(false)
 
     const getTimeSheetDetail = async (period_code) => {
         try {
@@ -56,6 +57,11 @@ function TimeKeepingTab({ value, index, periodCode }) {
         setIsOpenTimeKeepingModal(true)
     }
 
+    const handleActionDetail = (params) => {
+        setEmployee(params)
+        setIsDetail(true)
+    }
+
     const columns = [
         { field: 'employee', headerName: 'Số thứ tự', flex: 0.5, hide: true },
         { field: 'id', headerName: 'Số thứ tự', flex: 0.5 },
@@ -69,16 +75,18 @@ function TimeKeepingTab({ value, index, periodCode }) {
         {
             field: 'allowedDay',
             headerName: 'NGHỈ PHÉP',
-            flex: 1
+            flex: 0.75
         },
-        { field: 'absentDay', headerName: 'VẮNG', flex: 1 },
-        { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 1 },
+        { field: 'absentDay', headerName: 'VẮNG', flex: 0.75 },
+        { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 0.75 },
         { field: 'haftDayWorking', headerName: 'CÔNG NỬA NGÀY', flex: 1 },
         { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', flex: 1 },
+        // { field: 'workingDay', headerName: 'NGÀY THƯỜNG', flex: 1 },
+        { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', flex: 1.25 },
         {
             field: 'actions',
             headerName: 'TÁC VỤ',
-            flex: 1,
+            flex: 1.5,
             renderCell: (params) => {
                 return (
                     <>
@@ -88,6 +96,16 @@ function TimeKeepingTab({ value, index, periodCode }) {
                                 size="small"
                                 onClick={() => handleAction(params.row)}>
                                 Chấm công
+                            </Button>
+
+                        </Tooltip>
+                        <Tooltip title="Làm thêm" sx={{ml: 1.5}}>
+                            <Button
+                                variant="contained"
+                                size="small"
+                                onClick={() => handleActionDetail(params.row)}
+                                >
+                                Xem chi tiết
                             </Button>
                         </Tooltip>
                     </>
@@ -131,6 +149,19 @@ function TimeKeepingTab({ value, index, periodCode }) {
                 />
             )}
 
+            {isDetail && employee && (
+                <ModelDetailTimeKeeping 
+                    isOpen={isDetail}
+                    title={'Xem chi tiết chấm công'}
+                    handleClose={() => {
+                        setIsDetail(false)
+                        setIsRender(true)
+                    }}
+                    employee={employee}
+                    periodCode={periodCode}
+                    timeSheetDetail={timeSheetDetail}
+                />
+            )}
             <Box
                 sx={{
                     height: '65vh',

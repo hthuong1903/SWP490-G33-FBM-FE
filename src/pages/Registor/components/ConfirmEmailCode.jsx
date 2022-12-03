@@ -17,7 +17,7 @@ function ConfirmEmailCode() {
             console.log('verifyEmail', response)
             if (response.data.length) {
                 toast.success(response.message)
-                navigate('/login')
+                navigate('/')
             } else {
                 toast.error(response.message)
             }

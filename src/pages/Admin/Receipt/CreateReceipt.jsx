@@ -71,7 +71,7 @@ function CreateReceipt() {
 
         const getAllUser = async () => {
             try {
-                const response = await authApi.getAllUser()
+                const response = await authApi.getAllCustomer()
                 console.log(response.data)
                 setUserList(response.data)
             } catch (error) {

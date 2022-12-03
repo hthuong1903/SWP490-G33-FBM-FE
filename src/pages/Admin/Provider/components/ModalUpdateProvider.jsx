@@ -82,6 +82,7 @@ export default function ModalUpdateProvider({
                 const wardName = await provincesApi.getWardsById(Number(data.ward))
                 const dataSubmit = {
                     ...data,
+                    id: selectedData?.id,
                     province: { id: Number(data.province), name: provinceName },
                     district: { id: Number(data.district), name: districtName },
                     ward: { id: Number(data.ward), name: wardName },
@@ -92,6 +93,8 @@ export default function ModalUpdateProvider({
                     .then((res) => {
                         console.log(res)
                         toast.success('Cập nhật thành công nhà cung cấp')
+                        handleConfirm && handleConfirm(true)
+                        handleClose && handleClose()
                     })
                     .catch((error) => {
                         console.log(error)

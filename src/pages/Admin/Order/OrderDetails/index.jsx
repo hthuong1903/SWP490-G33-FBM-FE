@@ -142,7 +142,7 @@ export default function OrderDetails() {
                                                         {row?.product.name}
                                                     </Typography>
                                                     <Typography variant="button">
-                                                        SKU: {row?.product.productCode}
+                                                        Mã sản phẩm: {row?.product.productCode}
                                                     </Typography>
                                                 </Box>
                                             </Box>

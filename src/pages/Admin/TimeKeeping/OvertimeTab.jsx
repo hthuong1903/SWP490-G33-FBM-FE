@@ -4,22 +4,27 @@ import { Box } from '@mui/system'
 import DataTable from '@/components/Common/DataTable'
 import ModalOvertime from './components/ModalOvertime'
 import OvertimeApi from '@/api/OvertimeApi'
-
+import ModelDetailOverTime from './components/ModelDetailOverTime'
 function OvertimeTab({ value, index, periodCode }) {
     const [isOpenOvertimeModal, setIsOpenOvertimeModal] = useState(false)
     const [employee, setEmployee] = useState({})
     const [listOvertime, setListOvertime] = useState([])
     const [isRender, setIsRender] = useState(true)
-
+    const [isDetail, setIsDetail] = useState(false)
     const handleAction = (params) => {
         setEmployee(params)
         setIsOpenOvertimeModal(true)
     }
 
+    const handleActionDetail = (params) => {
+        setEmployee(params)
+        setIsDetail(true)
+    }
+
     const getOvertimeByPeriodCode = async (period_code) => {
         try {
             const response = await OvertimeApi.getOvertimeByPeriodCode(period_code)
-            console.log(response)
+            console.log("employee", response.data)
             setListOvertime(response.data)
         } catch (error) {
             console.warn('Failed to get overtime by periodCode ', error)
@@ -61,6 +66,16 @@ function OvertimeTab({ value, index, periodCode }) {
                                 Làm thêm
                             </Button>
                         </Tooltip>
+
+                        <Tooltip title="Làm thêm" sx={{ml: 3}}>
+                            <Button
+                                variant="contained"
+                                size="small"
+                                onClick={() => handleActionDetail(params.row)}
+                                >
+                                Xem chi tiết
+                            </Button>
+                        </Tooltip>
                     </>
                 )
             }
@@ -87,12 +102,25 @@ function OvertimeTab({ value, index, periodCode }) {
             {isOpenOvertimeModal && employee && (
                 <ModalOvertime
                     isOpen={isOpenOvertimeModal}
-                    title={'Thêm sản phẩm'}
+                    title={`Thêm giờ làm thêm `}
                     handleClose={() => {
                         setIsOpenOvertimeModal(false)
                         setIsRender(true)
                     }}
                     employee={employee}
+                />
+            )}
+            {isDetail && employee && (
+                <ModelDetailOverTime 
+                    isOpen={isDetail}
+                    title={'Xem chi tiết thời gian làm thêm giờ'}
+                    handleClose={() => {
+                        setIsDetail(false)
+                        setIsRender(true)
+                    }}
+                    employee={employee}
+                    periodCode={periodCode}
+                    listOvertime={listOvertime}
                 />
             )}
             <Box
