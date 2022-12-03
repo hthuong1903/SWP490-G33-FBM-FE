@@ -82,12 +82,17 @@ export default function CancelReceipt({title, isOpen, handleClose, handleConfirm
                         <FormControlLabel value="4" control={<Radio />} label="Lí do khác" />
                         </RadioGroup>
                     </Grid>
-                    <Grid item sx={6}>
+                    <Grid item sx={{ml: 6}}>
+                        <FormLabel 
+                            id="demo-radio-buttons-group-label"
+                            sx={{ display: 'block'}}
+                        >
+                            Lí do chi tiết
+                        </FormLabel>
                         <TextareaAutosize
                             aria-label="minimum height"
                             minRows={3}
-                            placeholder="Nhập lí do chi tiết"
-                            style={{ width: 190, height: 200 }}
+                            style={{ width: 190, height: 175 }}
                             {...register('content')}
                         />
                     </Grid>
