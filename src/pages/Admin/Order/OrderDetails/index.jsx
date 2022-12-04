@@ -65,7 +65,10 @@ export default function OrderDetails() {
     const totalAmount =
         orderDetail[0] &&
         orderDetail[0].orderProductDtos.reduce(
-            (result, value) => result + value.quantity * value.product.priceOut,
+            (result, value) =>
+                result +
+                value?.product.priceOut -
+                (value?.product.priceOut * value?.product.discount) / 100,
             0
         )
 
@@ -213,7 +216,12 @@ export default function OrderDetails() {
                                         <b>Tổng tiền</b>
                                     </td>
                                     <td>
-                                        <b>{totalAmountAfter?.toLocaleString('vi-VN')} VND</b>
+                                        <b>
+                                            {(
+                                                totalAmount - orderDetail[0]?.totalOrderPriceAfter
+                                            ).toLocaleString('vi-VN')}{' '}
+                                            VND
+                                        </b>
                                     </td>
                                 </tr>
                             </table>
