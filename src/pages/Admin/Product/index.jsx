@@ -10,7 +10,7 @@ import { toast } from 'react-toastify'
 import FilterTable from './components/FilterTable'
 import ModalAddProduct from './components/ModalAddProduct'
 import ModalUpdateProduct from './components/ModalUpdateProduct'
-
+import useAuth from '../../../hooks/useAuth'
 export default function Product() {
     const [isOpenAddModal, setIsOpenAddModal] = useState(false)
     const [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false)
@@ -22,7 +22,7 @@ export default function Product() {
     const [isExisted, setIsExisted] = useState(-1)
     const [isUpdated, setIsUpdated] = useState(false)
     const [isEdit, setIsEdit] = useState(true)
-
+    const {auth} = useAuth()
     const handleDelete = async () => {
         try {
             await productApi.deleteProduct(selectedRow?.row.id)
@@ -34,7 +34,7 @@ export default function Product() {
         }
 
     }
-
+    console.log(auth)
     useEffect(() => {
         const getAllProducts = async (categoryId, providerId, isExist) => {
             try {
@@ -160,7 +160,21 @@ export default function Product() {
                 )
             }
         }
+
+        
     ]
+
+    if (!auth?.roles.includes("MANAGER")) {
+        for( var i = 0; i < columns.length; i++){ 
+    
+            if ( columns[i].field == "priceIn" || columns[i].field == "actions") { 
+                
+                columns.splice(i, 1); 
+            }
+        
+        }
+        
+    }
     return (
         <>
             {isOpenAddModal && (
@@ -198,14 +212,18 @@ export default function Product() {
                     chooseProvider={(provider) => setProvider(provider)}
                     chooseIsExisted={(isExisted) => setIsExisted(isExisted)}
                 />
-                <Button
-                    variant="contained"
-                    onClick={() => {
-                        setIsEdit(true)
-                        setIsOpenAddModal(true)
-                    }}>
-                    Thêm sản phẩm
-                </Button>
+
+                <>
+                    {auth?.roles.includes("MANAGER") && <Button
+                        variant="contained"
+                        onClick={() => {
+                            setIsEdit(true)
+                            setIsOpenAddModal(true)
+                        }}>
+                        Thêm sản phẩm
+                    </Button>}
+                </>
+                
             </Box>
             <DataTable columns={columns} rows={listProducts} />
         </>
