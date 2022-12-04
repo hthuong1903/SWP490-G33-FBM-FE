@@ -21,7 +21,15 @@ const schema = yup.object().shape({
     .required('Vui lòng điền vào trường này.')
     .min(1000, 'Vui lòng nhập giá trị lớn hơn 1000')
     .typeError('Vui lòng nhập giá trị lớn hơn 1000')
-    .max(100000000, 'Giá trị không hợp lệ'),
+    .max(100000000, 'Giá trị không hợp lệ')
+    .when('priceIn', (priceIn) => {
+      if (priceIn) {
+          return yup.number()
+              .min(priceIn, 'Giá bán phải lớn hơn giá nhập')
+              .typeError('Vui lòng nhập giá trị lớn hơn 1000')
+
+      }
+  }),
   color: yup.string().required('Không bỏ trống').trim(),
   material: yup.string().required('Không bỏ trống').trim(),
   size: yup.string().required('Vui lòng không bỏ trống trường này.').trim()
