@@ -41,14 +41,14 @@ export default function Login() {
 			console.log(response.data.data[0]);
 			localStorage.setItem("fbm-user", JSON.stringify(response.data.data[0]));
 			const username = JSON.parse(localStorage.getItem("fbm-user")).username;
+			const userId = JSON.parse(localStorage.getItem("fbm-user")).userId;
 			const pwd = JSON.parse(localStorage.getItem("fbm-user")).pwd;
 			const roles = [
 				JSON.parse(localStorage.getItem("fbm-user")).roles[0].authority,
 			];
 			const accessToken = JSON.parse(localStorage.getItem("fbm-user")).token;
-			console.log(roles);
 
-			setAuth({ username, pwd, roles, accessToken });
+			setAuth({ username, pwd, roles, accessToken, userId });
 			setIsLoading(false);
 			if (roles[0] === "MANAGER") {
 				navigate("/manager/admin");

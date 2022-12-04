@@ -3,6 +3,7 @@ import orderApi from '@/api/orderApi'
 import productApi from '@/api/productApi'
 import StyledTableCell from '@/components/Common/Table/StyledTableCell'
 import StyledTableRow from '@/components/Common/Table/StyledTableRow'
+import useAuth from '@/hooks/useAuth'
 import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
 import RemoveIcon from '@mui/icons-material/Remove'
@@ -37,10 +38,12 @@ export default function CreateOrder() {
     const [selectedEmployee, setSelectedEmployee] = useState(null)
     const [selectedProduct, setSelectedProduct] = useState([])
     const [rows, setRows] = useState([])
+    const { auth } = useAuth()
     let navigate = useNavigate()
     const location = useLocation()
     let { orderId } = useParams()
 
+    console.log(location)
     const min = 1
     const max = 10
 
@@ -98,10 +101,7 @@ export default function CreateOrder() {
         }
     }
 
-    const totalDiscount = useMemo(
-        () => rows.reduce((result, value) => result + value.changedPrice, 0),
-        [rows]
-    )
+    const totalDiscount = rows.reduce((result, value) => result + value.changedPrice, 0)
 
     const totalPriceOut = useMemo(
         () => rows.reduce((result, value) => result + value.product.priceOut, 0),
@@ -113,7 +113,10 @@ export default function CreateOrder() {
     )
 
     const totalAmount = rows.reduce(
-        (result, value) => result + value.quantity * value.product.priceOut,
+        (result, value) =>
+            result +
+            value?.product.priceOut -
+            (value?.product.priceOut * value?.product.discount) / 100,
         0
     )
     const totalAmountAfter = rows.reduce(
@@ -130,7 +133,7 @@ export default function CreateOrder() {
             customerId: location.state[0]?.customer.id,
             dateCreated: moment(new Date()).format('YYYY-MM-DD'),
             dateRequired: moment(new Date()).format('YYYY-MM-DD'),
-            employeeSaleId: 2,
+            employeeSaleId: auth.userId,
             id: location.state[0]?.id,
             numberOfProducts: rows.length,
             orderProductDtos: rows,
@@ -207,30 +210,28 @@ export default function CreateOrder() {
                                                     gap: '15px',
                                                     alignItems: 'center'
                                                 }}>
-                                                <Box
-                                                    sx={{
-                                                        width: '200px',
-                                                        height: '150px',
-                                                        aspectRatio: '3/2'
-                                                    }}>
-                                                    <img
-                                                        src={`http://api.dinhtruong.live/api/storage_server/download/${row?.product.photoMain}`}
-                                                        alt="123"
-                                                        width="200px"
-                                                    />
-                                                </Box>
+                                                <img
+                                                    src={`http://api.dinhtruong.live/api/storage_server/download/${row?.product.photoMain}`}
+                                                    alt="123"
+                                                    width="200px"
+                                                />
                                                 <Box>
                                                     <Typography sx={{ fontWeight: 'bold' }}>
                                                         {row.product.name}
                                                     </Typography>
                                                     <Typography variant="button">
-                                                        Mã sản phẩm<marquee behavior="" direction=""></marquee>: {row.product.productCode}
+                                                        Mã sản phẩm: {row.product.productCode}
                                                     </Typography>
                                                 </Box>
                                             </Box>
                                         </StyledTableCell>
                                         <StyledTableCell align="left">
-                                            {row?.product.priceOut.toLocaleString('vi-vn')} VND
+                                            {(
+                                                row?.product.priceOut -
+                                                (row?.product.priceOut * row?.product.discount) /
+                                                    100
+                                            ).toLocaleString('vi-VN')}{' '}
+                                            VND
                                         </StyledTableCell>
                                         <StyledTableCell align="center">
                                             <Box>
@@ -331,7 +332,9 @@ export default function CreateOrder() {
                                                     let newQuantity = Number(row.changedPrice)
                                                     setRows((oldRow) => {
                                                         return oldRow.map((item) => {
-                                                            if (item.id === row.id) {
+                                                            console.log(item)
+                                                            console.log(row)
+                                                            if (item.productId === row.productId) {
                                                                 return {
                                                                     ...item,
                                                                     changedPrice: newQuantity
@@ -346,8 +349,12 @@ export default function CreateOrder() {
                                         <StyledTableCell align="left">
                                             <b>
                                                 {(
-                                                    row?.product.priceOut * row.quantity -
-                                                    row.changedPrice
+                                                    (row?.product.priceOut -
+                                                        (row?.product.priceOut *
+                                                            row?.product.discount) /
+                                                            100) *
+                                                        row?.quantity -
+                                                    row?.changedPrice
                                                 ).toLocaleString('vi-VN')}{' '}
                                                 VND
                                             </b>
@@ -474,7 +481,9 @@ export default function CreateOrder() {
                                     <b>Tổng tiền</b>
                                 </td>
                                 <td>
-                                    <b>{totalAmountAfter.toLocaleString('vi-VN')} VND</b>
+                                    <b>
+                                        {(totalAmount - totalDiscount).toLocaleString('vi-VN')} VND
+                                    </b>
                                 </td>
                             </tr>
                         </table>

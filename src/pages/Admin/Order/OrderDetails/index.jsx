@@ -81,7 +81,7 @@ export default function OrderDetails() {
         console.log(isLoading)
     }, [isLoading])
 
-    console.log("orderDetail", orderDetail)
+    console.log('orderDetail', orderDetail)
     if (isLoading) return <Loading />
     else
         return (
@@ -148,9 +148,11 @@ export default function OrderDetails() {
                                             </Box>
                                         </StyledTableCell>
                                         <StyledTableCell align="left">
-                                            {(row?.product.priceOut -
+                                            {(
+                                                row?.product.priceOut -
                                                 (row?.product.priceOut * row?.product.discount) /
-                                                    100).toLocaleString('vi-VN')}{' '}
+                                                    100
+                                            ).toLocaleString('vi-VN')}{' '}
                                             VND
                                         </StyledTableCell>
                                         <StyledTableCell align="left">
@@ -162,7 +164,11 @@ export default function OrderDetails() {
                                         <StyledTableCell align="left">
                                             <b>
                                                 {(
-                                                    row?.product.priceOut * row?.quantity -
+                                                    (row?.product.priceOut -
+                                                        (row?.product.priceOut *
+                                                            row?.product.discount) /
+                                                            100) *
+                                                        row?.quantity -
                                                     row?.changedPrice
                                                 ).toLocaleString('vi-VN')}{' '}
                                                 VND
@@ -179,39 +185,38 @@ export default function OrderDetails() {
                             my: 2,
                             pt: 1
                         }}>
-                        <Grid 
-                        sx={{ display: 'flex',
-                        pt: 2,
-                        pl: 2,
-                        justifyContent: 'flex-start'}}
-                        >
-                            {orderDetail[0].status == 4 ? <Typography variant="subtitle1">
-                            <b>Lí do hủy hóa đơn: </b>{orderDetail[0]?.cancelContent} - {orderDetail[0]?.cancelDetail}
-                            </Typography>: null}
+                        <Grid sx={{ display: 'flex', pt: 2, pl: 2, justifyContent: 'flex-start' }}>
+                            {orderDetail[0].status == 4 ? (
+                                <Typography variant="subtitle1">
+                                    <b>Lí do hủy hóa đơn: </b>
+                                    {orderDetail[0]?.cancelContent} - {orderDetail[0]?.cancelDetail}
+                                </Typography>
+                            ) : null}
                         </Grid>
-                        <Grid sx={{ display: 'flex',
-                        justifyContent: 'flex-end'}}>
-                        <table>
-                            <tr>
-                                <td className="td">Tổng</td>
-                                <td>{totalAmount?.toLocaleString('vi-VN')} VND</td>
-                            </tr>
-                            <tr>
-                                <td>Tổng tiền chiết khấu</td>
-                                <td>
-                                    {orderDetail[0]?.totalOrderPriceAfter.toLocaleString('vi-VN')}{' '}
-                                    VND
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <b>Tổng tiền</b>
-                                </td>
-                                <td>
-                                    <b>{totalAmountAfter?.toLocaleString('vi-VN')} VND</b>
-                                </td>
-                            </tr>
-                        </table>
+                        <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            <table>
+                                <tr>
+                                    <td className="td">Tổng</td>
+                                    <td>{totalAmount?.toLocaleString('vi-VN')} VND</td>
+                                </tr>
+                                <tr>
+                                    <td>Tổng tiền chiết khấu</td>
+                                    <td>
+                                        {orderDetail[0]?.totalOrderPriceAfter.toLocaleString(
+                                            'vi-VN'
+                                        )}{' '}
+                                        VND
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Tổng tiền</b>
+                                    </td>
+                                    <td>
+                                        <b>{totalAmountAfter?.toLocaleString('vi-VN')} VND</b>
+                                    </td>
+                                </tr>
+                            </table>
                         </Grid>
                     </Box>
                     <Divider />

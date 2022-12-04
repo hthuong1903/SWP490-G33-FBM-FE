@@ -33,6 +33,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import './style.css'
 import moment from 'moment/moment'
+import useAuth from '@/hooks/useAuth'
 
 function CreateReceipt() {
     const [checkedProduct, setCheckedProduct] = useState(false)
@@ -43,6 +44,7 @@ function CreateReceipt() {
     const [selectedProduct, setSelectedProduct] = useState([])
     const [rows, setRows] = useState([])
     const [value, setValue] = useState(1)
+    const { auth } = useAuth()
     let navigate = useNavigate()
 
     const handleSelect = (event) => {
@@ -140,7 +142,7 @@ function CreateReceipt() {
             customerId: selectedEmployee.id,
             dateCreated: moment(new Date()).format('YYYY-MM-DD'),
             dateRequired: moment(new Date()).format('YYYY-MM-DD'),
-            employeeSaleId: 2,
+            employeeSaleId: auth.userId,
             id: null,
             numberOfProducts: rows.length,
             orderProductDtos: rows,
