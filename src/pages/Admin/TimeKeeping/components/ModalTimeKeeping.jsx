@@ -26,9 +26,20 @@ import { useState } from 'react'
 import TimeKeepingApi from '@/api/TimeKeepingApi'
 // import { toast } from 'react-toastify'
 
+function disablePrevDates(startDate) {
+    const startSeconds = Date.parse(startDate)
+    return (date) => {
+        return Date.parse(date) < startSeconds
+    }
+}
+function getFirstDayOfMonth(year, month) {
+    return new Date(year, month, 1)
+}
+
 function ModalTimeKeeping({ title, isOpen, handleClose, employee }) {
     const [value, setValue] = useState(1)
-
+    var today = new Date()
+    const firstDayCurrentMonth = getFirstDayOfMonth(today.getFullYear(), today.getMonth())
     const {
         handleSubmit,
         control,
@@ -102,7 +113,10 @@ function ModalTimeKeeping({ title, isOpen, handleClose, employee }) {
                                         }) => (
                                             <DatePicker
                                                 label="Chọn ngày công"
-                                                // disablePast
+                                                disableFuture
+                                                shouldDisableDate={disablePrevDates(
+                                                    firstDayCurrentMonth
+                                                )}
                                                 ampm={false}
                                                 value={value}
                                                 // onChange={(value) => onChange(value)}

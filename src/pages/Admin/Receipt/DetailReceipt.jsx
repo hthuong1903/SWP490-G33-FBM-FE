@@ -72,13 +72,13 @@ function DetailReceipt() {
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
-                {receiptDetail &&
+                {receiptDetail && (
                     <>
                         <Typography sx={{ fontWeight: 'bold' }}>
                             Thông tin chi tiết hóa đơn {receiptDetail.orderCode}
                         </Typography>
                     </>
-                }
+                )}
             </Box>
             {receiptDetail && (
                 <>
@@ -117,15 +117,16 @@ function DetailReceipt() {
                                                             {row?.product.name}
                                                         </Typography>
                                                         <Typography variant="button">
-                                                        Mã sản phẩm : {row?.product.productCode}
+                                                            Mã sản phẩm : {row?.product.productCode}
                                                         </Typography>
                                                     </Box>
                                                 </Box>
                                             </StyledTableCell>
                                             <StyledTableCell align="left">
                                                 {(
+                                                    row.product.priceOut -
                                                     row.product.priceOut *
-                                                    (row.product.discount / 100)
+                                                        (row.product.discount / 100)
                                                 ).toLocaleString('vi-vn')}{' '}
                                                 VND
                                             </StyledTableCell>

@@ -142,33 +142,89 @@ function Sidebar() {
                             </Box>
                             <Box sx={{ overflow: 'auto', height: '75vh' }}>
                                 <Divider />
-                                {items.map((item, index) => (
-                                    <ListItem
-                                        key={index}
-                                        sx={{
-                                            p: 0,
-                                            ...(item.allow.find((i) => i.includes(auth.roles))
-                                                ? null
-                                                : { display: 'none' })
-                                        }}
-                                        selected={new RegExp(item.path).test(
-                                            location.pathname.slice(6) || location.pathname
-                                        )}>
-                                        <ListItemButton
-                                            sx={{ py: 2 }}
-                                            component={Link}
-                                            to={item.href}>
-                                            <ListItemText
-                                                sx={{
-                                                    '& .MuiTypography-root': {
-                                                        fontWeight: '500'
-                                                    }
-                                                }}>
-                                                {item.name}
-                                            </ListItemText>
-                                        </ListItemButton>
-                                    </ListItem>
-                                ))}
+                                {items.map((item, index) =>
+                                    item.name == 'Thống kê' ? (
+                                        <Box key={index}>
+                                            <ListItem button onClick={handleClick}>
+                                                <ListItemText
+                                                    sx={{
+                                                        '& .MuiTypography-root': {
+                                                            fontWeight: '500'
+                                                        }
+                                                    }}>
+                                                    {item.name}
+                                                </ListItemText>
+                                                {open ? <ExpandLess /> : <ExpandMore />}
+                                            </ListItem>
+                                            <Collapse in={open} timeout="auto" unmountOnExit>
+                                                <List component="div" disablePadding>
+                                                    <ListItem
+                                                        button
+                                                        sx={{ pl: 4 }}
+                                                        component={Link}
+                                                        to="/manager/admin/statisticals/income"
+                                                        selected={selectedIndex === 91}
+                                                        onClick={(event) =>
+                                                            handleListItemClick(event, 91)
+                                                        }>
+                                                        <ListItemText
+                                                            sx={{
+                                                                '& .MuiTypography-root': {
+                                                                    fontWeight: '500'
+                                                                }
+                                                            }}>
+                                                            Doanh thu và doanh số
+                                                        </ListItemText>
+                                                    </ListItem>
+                                                    <ListItem
+                                                        button
+                                                        sx={{ pl: 4 }}
+                                                        component={Link}
+                                                        to="/manager/admin/statisticals/product"
+                                                        selected={selectedIndex === 92}
+                                                        onClick={(event) =>
+                                                            handleListItemClick(event, 92)
+                                                        }>
+                                                        <ListItemText
+                                                            sx={{
+                                                                '& .MuiTypography-root': {
+                                                                    fontWeight: '500'
+                                                                }
+                                                            }}>
+                                                            Sản phẩm
+                                                        </ListItemText>
+                                                    </ListItem>
+                                                </List>
+                                            </Collapse>
+                                        </Box>
+                                    ) : (
+                                        <ListItem
+                                            key={index}
+                                            sx={{
+                                                p: 0,
+                                                ...(item.allow.find((i) => i.includes(auth.roles))
+                                                    ? null
+                                                    : { display: 'none' })
+                                            }}
+                                            selected={new RegExp(item.path).test(
+                                                location.pathname.slice(6) || location.pathname
+                                            )}>
+                                            <ListItemButton
+                                                sx={{ py: 2 }}
+                                                component={Link}
+                                                to={item.href}>
+                                                <ListItemText
+                                                    sx={{
+                                                        '& .MuiTypography-root': {
+                                                            fontWeight: '500'
+                                                        }
+                                                    }}>
+                                                    {item.name}
+                                                </ListItemText>
+                                            </ListItemButton>
+                                        </ListItem>
+                                    )
+                                )}
                             </Box>
                         </Box>
                         <Box>

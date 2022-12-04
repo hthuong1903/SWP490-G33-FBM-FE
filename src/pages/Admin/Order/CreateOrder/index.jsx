@@ -111,7 +111,12 @@ export default function CreateOrder() {
         }
     }
 
-    const totalDiscount = rows.reduce((result, value) => result + value.changedPrice, 0)
+    // const totalDiscount = rows.reduce((result, value) => result + value.changedPrice, 0)
+
+    const totalDiscount = useMemo(
+        () => rows.reduce((result, value) => result + value.changedPrice, 0),
+        [rows]
+    )
 
     const totalPriceOut = useMemo(
         () => rows.reduce((result, value) => result + value.product.priceOut, 0),

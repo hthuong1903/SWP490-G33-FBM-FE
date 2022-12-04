@@ -325,7 +325,7 @@ function CreateReceipt() {
                                                     let newQuantity = Number(row.changedPrice)
                                                     setRows((oldRow) => {
                                                         return oldRow.map((item) => {
-                                                            if (item.id === row.id) {
+                                                            if (item.productId === row.productId) {
                                                                 return {
                                                                     ...item,
                                                                     changedPrice: newQuantity
