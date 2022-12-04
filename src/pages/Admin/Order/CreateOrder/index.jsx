@@ -72,22 +72,32 @@ export default function CreateOrder() {
         console.log(location.state[0])
     }, [location])
 
-    const formatProductList = productList.map((i) => {
+    const formatProductList2 = productList.filter(
+        ({ id: id1 }) => !rows.some(({ productId: id2 }) => id2 === id1)
+    )
+
+    const formatProductList = formatProductList2.map((i) => {
         return {
             productId: i.id,
             product: {
                 photoMain: i.productPhoto.photoMainName,
                 name: i.name,
                 productCode: i.productCode,
-                priceOut: i.priceOut
+                priceOut: i.priceOut,
+                discount: i.discount
             },
             quantity: i.quantity,
+            discount: i.discount,
             changedPrice: i.discount
         }
     })
+
     useEffect(() => {
         console.log('rows', rows)
-    }, [rows])
+        console.log('formatProductList', formatProductList)
+        console.log('ádasdasd', productList)
+    }, [rows, productList])
+
     const handleSelectedProduct = (event, value) => {
         const createdValue = {
             ...value,
