@@ -85,6 +85,7 @@ function App() {
 							<RequireAuth allowedRoles={[ROLES.MANAGER, ROLES.SELLER]} />
 						}
 					>
+						<Route path="products" element={<Product />} />
 						<Route path="receipts" element={<Receipt />} />
 						<Route
 							path="receipts/details/:receiptId"

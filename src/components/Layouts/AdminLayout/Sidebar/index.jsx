@@ -41,7 +41,7 @@ function Sidebar() {
 			name: "Sản phẩm",
 			href: "/manager/admin/products",
 			path: "/products",
-			allow: ["MANAGER"],
+			allow: ["MANAGER", "SELLER"],
 		},
 		{
 			name: "Hóa đơn",
@@ -113,7 +113,7 @@ function Sidebar() {
 				handleClose={() => setIsOpenConfirmDialog(false)}
 				handleConfirm={() => {
 					localStorage.removeItem("fbm-user");
-					navigate("/");
+					navigate("/manager");
 					setAuth(null);
 				}}
 			/>
