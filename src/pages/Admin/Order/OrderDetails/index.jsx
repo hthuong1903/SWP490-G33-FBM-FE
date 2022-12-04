@@ -131,7 +131,10 @@ export default function OrderDetails() {
                                             </Box>
                                         </StyledTableCell>
                                         <StyledTableCell align="left">
-                                            {row?.product.priceOut.toLocaleString('vi-vn')} VND
+                                            {(row?.product.priceOut -
+                                                (row?.product.priceOut * row?.product.discount) /
+                                                    100).toLocaleString('vi-VN')}{' '}
+                                            VND
                                         </StyledTableCell>
                                         <StyledTableCell align="left">
                                             {row?.quantity}

@@ -113,7 +113,7 @@ function Sidebar() {
 				handleClose={() => setIsOpenConfirmDialog(false)}
 				handleConfirm={() => {
 					localStorage.removeItem("fbm-user");
-					navigate("/");
+					navigate("/manager");
 					setAuth(null);
 				}}
 			/>

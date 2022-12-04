@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import NotFoundPage from "./components/Common/NotFoundPage";
@@ -40,6 +40,7 @@ function App() {
 	const { auth, setAuth } = useAuth();
 	let navigate = useNavigate();
 	const userAuthen = JSON.parse(localStorage.getItem("fbm-user"));
+	let {pathname} = useLocation()
 
 	useEffect(() => {
 		if (userAuthen !== null) {
@@ -49,16 +50,16 @@ function App() {
 			const accessToken = userAuthen.token;
 			setAuth({ username, pwd, roles, accessToken });
 			if (roles[0] === "MANAGER") {
-				navigate("/manager/admin");
+				navigate(pathname);
 			}
 			if (roles[0] === "SELLER") {
-				navigate("/manager/admin/orders");
+				navigate(pathname);
 			}
 			if (roles[0] === "ADMIN") {
-				navigate("/manager/administrator");
+				navigate(pathname);
 			}
 		} else {
-			navigate("/manager");
+			navigate(pathname);
 		}
 		console.log(auth);
 	}, []);
