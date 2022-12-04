@@ -38,11 +38,11 @@ function Sidebar() {
     const location = useLocation()
 
     const items = [
-        { name: 'Tài Khoản Nhân Viên Bán Hàng', href: '/administrator' },
-        { name: 'Tài Khoản Nhân Viên Quản Lí', href: '/administrator/manager' },
-        { name: 'Tài Khoản Nhân Viên Sửa Chữa', href: '/administrator/fixer' },
-        { name: 'Tài Khoản Khách Hàng', href: '/administrator/customer' },
-        { name: 'Tạo Tài Khoản', href: '/administrator/createAccount' },
+        { name: 'Tài Khoản Nhân Viên Bán Hàng', href: '/manager/administrator' },
+        { name: 'Tài Khoản Nhân Viên Quản Lí', href: '/manager/administrator/manager' },
+        { name: 'Tài Khoản Nhân Viên Sửa Chữa', href: '/manager/administrator/fixer' },
+        { name: 'Tài Khoản Khách Hàng', href: '/manager/administrator/customer' },
+        { name: 'Tạo Tài Khoản', href: '/manager/administrator/createAccount' },
     ]
     return (
         <div>

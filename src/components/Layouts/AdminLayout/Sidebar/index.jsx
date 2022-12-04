@@ -41,7 +41,7 @@ function Sidebar() {
 			name: "Sản phẩm",
 			href: "/manager/admin/products",
 			path: "/products",
-			allow: ["MANAGER"],
+			allow: ["MANAGER", "SELLER"],
 		},
 		{
 			name: "Hóa đơn",

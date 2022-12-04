@@ -13,7 +13,7 @@ import NumberFormat from 'react-number-format'
 import { toast } from 'react-toastify'
 import schema from '../validation'
 import ImageUpload from './ImageUpload'
-
+import useAuth from '../../../../hooks/useAuth'
 export default function ModalUpdateProduct({
     title,
     selectedData,
@@ -29,7 +29,7 @@ export default function ModalUpdateProduct({
     const [discountValue, setDiscountValue] = useState(null)
     const [priceOut, setPriceOut] = useState(0)
     const [imageData, setImageData] = useState(null)
-
+    const {auth} = useAuth()
     const {
         register,
         handleSubmit,
@@ -200,7 +200,7 @@ export default function ModalUpdateProduct({
                         </Box>
 
                         <Box sx={{ display: 'flex', gap: '20px' }}>
-                            <Controller
+                            {auth?.roles.includes("MANAGER") && <Controller
                                 name="priceIn"
                                 variant="outlined"
                                 defaultValue={selectedData?.row.priceIn}
@@ -229,7 +229,7 @@ export default function ModalUpdateProduct({
                                         fullWidth
                                     />
                                 )}
-                            />
+                            />}
                             <Controller
                                 name="priceOut"
                                 variant="outlined"

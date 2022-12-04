@@ -145,7 +145,7 @@ export default function Order() {
             <ConfirmModal
                 isOpen={isOpenConfirmModal}
                 title="Xác nhận"
-                content={`Bạn có muốn xóa đơn hàng này?`}
+                content={`Bạn có muốn xóa đơn hàng này ${selectedRow?.row.orderCode}?`}
                 handleClose={() => setIsOpenConfirmModal(false)}
                 handleConfirm={() => handleDelete()}
             />

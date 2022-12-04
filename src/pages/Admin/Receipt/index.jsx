@@ -11,6 +11,7 @@ import { toast } from 'react-toastify'
 import moment from 'moment/moment'
 import { useReactToPrint } from 'react-to-print'
 import ReceiptPrint from './components/ReceiptPrint'
+import CancelReceipt from './CancelReceipt'
 
 function Receipt() {
     const navigate = useNavigate()
@@ -20,6 +21,7 @@ function Receipt() {
     const [listProducts, setListProducts] = useState([])
     const [isRender, setIsRender] = useState(true)
     const componentRef = useRef()
+    const [isCancelModel, setIsCancelModel] = useState(false)
 
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -131,7 +133,8 @@ function Receipt() {
                                 size="small"
                                 onClick={() => {
                                     setSelectedRow(params.row)
-                                    setIsOpenConfirmModal(true)
+                                    // setIsOpenConfirmModal(true)
+                                    setIsCancelModel(true)
                                 }}>
                                 HỦY
                                 <ClearRoundedIcon fontSize="inherit" />
@@ -146,7 +149,7 @@ function Receipt() {
                                     setSelectedRow(params.row)
                                     setIsOpenPrintModal(true)
                                     // handlePrint()
-                                    // console.log(params)
+                                    console.log("rowwwwww",params.row)
                                 }}>
                                 Xuất
                                 <EditRounded fontSize="inherit" />
@@ -159,17 +162,26 @@ function Receipt() {
     ]
     return (
         <>
-            <ConfirmModal
+            {/* <ConfirmModal
                 isOpen={isOpenConfirmModal}
                 title="Xác nhận"
                 content={`Bạn có muốn xóa hóa đơn này không?`}
                 handleClose={() => setIsOpenConfirmModal(false)}
                 handleConfirm={() => handleDelete()}
-            />
+            /> */}
+            {isCancelModel && (
+                <CancelReceipt 
+                    isOpen={isCancelModel}
+                    title={`Bạn có muốn hủy hóa đơn ${selectedRow?.orderCode}?`}
+                    orderId={selectedRow?.id}
+                    handleClose={() => setIsCancelModel(false)}
+                    handleConfirm={() => setIsRender(true)}
+                />
+            )}
             <ConfirmModal
                 isOpen={isOpenPrintModal}
                 title="Xác nhận"
-                content={`Bạn có muốn in hóa đơn này không?`}
+                content={`Bạn có muốn in hóa đơn ${selectedRow?.orderCode} không?`}
                 handleClose={() => setIsOpenPrintModal(false)}
                 handleConfirm={() => {
                     handlePrint()

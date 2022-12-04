@@ -1,4 +1,4 @@
-import { Chip, Divider, Grid, Typography } from '@mui/material'
+import { Chip, Divider, Grid, TextField, Typography } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -117,7 +117,7 @@ function DetailReceipt() {
                                                             {row?.product.name}
                                                         </Typography>
                                                         <Typography variant="button">
-                                                           Mã sản phẩm : {row?.product.productCode}
+                                                        Mã sản phẩm : {row?.product.productCode}
                                                         </Typography>
                                                     </Box>
                                                 </Box>
@@ -152,6 +152,14 @@ function DetailReceipt() {
                         </Table>
                     </TableContainer>
                     <Paper>
+                        {/* <Box 
+                        sx={{
+                            display: 'flex',
+                            my: 2,
+                            pt: 1
+                        }}>
+                            <p>Lí do hủy hóa đơn</p>
+                        </Box> */}
                         <Box
                             sx={{
                                 display: 'flex',

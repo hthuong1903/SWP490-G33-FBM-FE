@@ -22,6 +22,8 @@ export default function OrderDetails() {
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(true)
 
+    // const [listOrder, setListOrder] = useState([])
+
     useEffect(() => {
         const getOrderById = async (orderId) => {
             try {
@@ -36,6 +38,20 @@ export default function OrderDetails() {
         }
         getOrderById(orderId)
     }, [])
+
+    // useEffect(() => {
+    //     const getAllProduct = async (status) => {
+    //         try {
+    //             const response = await orderApi.getAllOrder(status)
+    //             setListProducts(response.data)
+    //         } catch (error) {
+    //             console.log('fail when getAllProduct', error)
+    //         }
+    //     }
+    //     getAllProduct(status)
+    //     setIsUpdated(false)
+    // }, [isUpdated, status])
+
     const addressDetails = () =>
         orderDetail[0]?.customer.address
             ? `${orderDetail[0]?.customer.address}, ${orderDetail[0]?.customer.districtName}, ${orderDetail[0]?.customer.wardName}, ${orderDetail[0]?.customer.provinceName}`
@@ -65,6 +81,7 @@ export default function OrderDetails() {
         console.log(isLoading)
     }, [isLoading])
 
+    console.log("orderDetail", orderDetail)
     if (isLoading) return <Loading />
     else
         return (
@@ -125,7 +142,7 @@ export default function OrderDetails() {
                                                         {row?.product.name}
                                                     </Typography>
                                                     <Typography variant="button">
-                                                        SKU: {row?.product.productCode}
+                                                        Mã sản phẩm: {row?.product.productCode}
                                                     </Typography>
                                                 </Box>
                                             </Box>
@@ -159,11 +176,21 @@ export default function OrderDetails() {
                 <Paper>
                     <Box
                         sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
                             my: 2,
                             pt: 1
                         }}>
+                        <Grid 
+                        sx={{ display: 'flex',
+                        pt: 2,
+                        pl: 2,
+                        justifyContent: 'flex-start'}}
+                        >
+                            {orderDetail[0].status == 4 ? <Typography variant="subtitle1">
+                            <b>Lí do hủy hóa đơn: </b>{orderDetail[0]?.cancelContent} - {orderDetail[0]?.cancelDetail}
+                            </Typography>: null}
+                        </Grid>
+                        <Grid sx={{ display: 'flex',
+                        justifyContent: 'flex-end'}}>
                         <table>
                             <tr>
                                 <td className="td">Tổng</td>
@@ -185,6 +212,7 @@ export default function OrderDetails() {
                                 </td>
                             </tr>
                         </table>
+                        </Grid>
                     </Box>
                     <Divider />
                     <Grid container sx={{ px: 4, py: 2 }}>
