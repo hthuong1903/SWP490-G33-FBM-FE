@@ -26,6 +26,7 @@ function TimeKeeping() {
     const [timeSheetPeriods, setTimeSheetPeriods] = useState([])
     const [isRender, setIsRender] = useState(true)
 
+
     const getTimeSheetPeriods = async (period_code) => {
         try {
             const response = await TimeKeepingApi.getTimeSheetPeriods(period_code)
@@ -59,11 +60,18 @@ function TimeKeeping() {
         setValue(newValue)
     }
 
-    const handleDelete = () => {
-        toast.success('Xóa thành công !')
-        setIsOpenConfirmModal(false)
+    const handleDelete = async() => {
+        try {
+            const response = await TimeKeepingApi.deleteTimeSheetPeriods(month + '' + year)
+            setTimeSheetPeriods(response.data)
+            toast.success('Xóa thành công !')
+            setIsOpenConfirmModal(false)
+            setIsRender(true)
+        } catch(error) {
+            console.log(error)
+        }
     }
-
+    console.log("hihihihihihi", month + '' + year)
     return (
         <>
             <ConfirmModal
@@ -127,9 +135,10 @@ function TimeKeeping() {
                     <Button
                         variant="contained"
                         onClick={() => {
-                            // setIsOpenAddModal(true)
+                            setIsOpenConfirmModal(true)
                         }}
-                        disabled={timeSheetPeriods.length == 0}>
+                        disabled={timeSheetPeriods.length == 0}
+                        >
                         Xóa kì công
                     </Button>
                 </Box>
