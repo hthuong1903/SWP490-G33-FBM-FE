@@ -55,7 +55,7 @@ const TimeKeepingApi = {
 
     deleteTimeSheetPeriods: (period_code) => {
         const url = `/timesheetperiods/${period_code}`
-        return axiosClient.get(url)
+        return axiosClient.delete(url)
     },
     sendEmailTimeSheetDetail: (period_code) => {
         const url = '/send_email/time_sheet_detail'
