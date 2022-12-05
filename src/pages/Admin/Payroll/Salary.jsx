@@ -49,17 +49,17 @@ function Salary({ value, index, periodCode }) {
     }, [salary, isRender, state])
 
     const columns = [
-        { field: 'employeeName', headerName: 'TÊN', flex: 1 },
-        { field: 'allowedDay', headerName: 'NGHỈ PHÉP', flex: 1 },
-        { field: 'absentDay', headerName: 'VẮNG', flex: 1 },
-        { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 1 },
-        { field: 'haftDayWorking', headerName: 'CÔNG NỬA NGÀY', flex: 1 },
-        { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', flex: 1 },
-        { field: 'totalOvertimeMoney', headerName: 'TỔNG TIỀN LÀM THÊM', flex: 1 },
-        { field: 'totalAllowanceMoney', headerName: 'TỔNG PHỤ CẤP', flex: 1 },
-        { field: 'totalBonusMoney', headerName: 'TỔNG THƯỞNG', flex: 1 },
-        { field: 'basicSalary', headerName: 'LƯƠNG CƠ BẢN', flex: 1 },
-        { field: 'totalSalary', headerName: 'TỔNG THỰC LÃNH', flex: 1 }
+        { field: 'employeeName', headerName: 'TÊN NHÂN VIÊN', flex: 1.5 },
+        { field: 'allowedDay', headerName: 'NGHỈ PHÉP', flex: 0.75, headerAlign: 'center',align: 'center' },
+        { field: 'absentDay', headerName: 'VẮNG', flex: 0.75, headerAlign: 'center',align: 'center' },
+        { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 1, headerAlign: 'center',align: 'center' },
+        { field: 'haftDayWorking', headerName: 'CÔNG NỬA NGÀY', flex: 1, headerAlign: 'center',align: 'center' },
+        { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', flex: 1, headerAlign: 'center',align: 'center' },
+        { field: 'totalOvertimeMoney', headerName: 'TỔNG TIỀN LÀM THÊM', flex: 1, headerAlign: 'center',align: 'center' },
+        { field: 'totalAllowanceMoney', headerName: 'TỔNG PHỤ CẤP', flex: 1, headerAlign: 'center',align: 'center' },
+        { field: 'totalBonusMoney', headerName: 'TỔNG THƯỞNG', flex: 1, headerAlign: 'center',align: 'center' },
+        { field: 'basicSalary', headerName: 'LƯƠNG CƠ BẢN', flex: 1, headerAlign: 'center',align: 'center' },
+        { field: 'totalSalary', headerName: 'TỔNG THỰC LÃNH', flex: 1, headerAlign: 'center',align: 'center' }
     ]
     const rows = salary.map((item, index) => {
         const container = {}

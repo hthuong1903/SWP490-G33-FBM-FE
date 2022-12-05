@@ -49,8 +49,8 @@ export default function Contract() {
     const columns = [
         {
             field: 'content',
-            headerName: 'TÊN',
-            flex: 1.5,
+            headerName: 'TÊN NHÂN VIÊN',
+            flex: 1,
             renderCell: (params) => {
                 return (
                     <Typography sx={{ fontWeight: 'bold' }}>
@@ -67,6 +67,8 @@ export default function Contract() {
             field: 'role',
             headerName: 'VAI TRÒ',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => {
                 return <Chip label={params.row.employee.roles[0].name} color="primary" />
             }
@@ -75,6 +77,8 @@ export default function Contract() {
             field: 'startDate',
             headerName: 'NGÀY BẮT ĐẦU',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => {
                 return moment(params.row.startDate).format('DD/MM/YYYY')
             }
@@ -83,6 +87,8 @@ export default function Contract() {
             field: 'endDate',
             headerName: 'NGÀY KẾT THÚC',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => {
                 return moment(params.row.endDate).format('DD/MM/YYYY')
             }
@@ -91,6 +97,8 @@ export default function Contract() {
             field: 'contractTerm',
             headerName: 'THỜI HẠN',
             flex: 0.5,
+            headerAlign: 'center',
+            align: 'center',
             valueFormatter: (params) => {
                 if (params.value == null) {
                     return ''
@@ -108,6 +116,8 @@ export default function Contract() {
             field: 'salary',
             headerName: 'LƯƠNG CƠ BẢN',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             type: 'number',
             valueFormatter: (params) => {
                 if (params.value == null) {
@@ -120,6 +130,8 @@ export default function Contract() {
             field: 'action',
             headerName: 'TÁC VỤ',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => {
                 return (
                     <>         
@@ -186,11 +198,13 @@ export default function Contract() {
                     id="outlined-select-currency"
                     select
                     size="small"
-                    label="Tình trạng"
+                    label="Tình trạng hợp đồng"
                     value={expired}
                     onChange={(event) => {
                         setExpired(event.target.value)
-                    }}>
+                    }}
+                    sx={{width: '20vh'}}
+                    >
                     <MenuItem value={-1}>Tất cả</MenuItem>
                     <MenuItem value={1}>Chưa hết hạn</MenuItem>
                     <MenuItem value={2}>Hết hạn</MenuItem>

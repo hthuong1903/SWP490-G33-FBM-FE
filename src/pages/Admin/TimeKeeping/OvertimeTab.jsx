@@ -42,19 +42,25 @@ function OvertimeTab({ value, index, periodCode }) {
 
     const columns = [
         { field: 'item', headerName: 'TÊN', flex: 1, hide: true },
-        { field: 'name', headerName: 'TÊN', flex: 1 },
+        { field: 'name', headerName: 'TÊN NHÂN VIÊN', flex: 1},
         {
             field: 'roles',
             headerName: 'VAI TRÒ',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             cellClassName: 'roles'
         },
-        { field: 'totalTime', headerName: 'TỔNG SỐ GIỜ', flex: 1 },
-        { field: 'totalAmount', headerName: 'TỔNG SỐ TIỀN', flex: 1 },
+        { field: 'totalTime', headerName: 'TỔNG SỐ GIỜ LÀM THÊM', flex: 1, headerAlign: 'center',
+        align: 'center' },
+        { field: 'totalAmount', headerName: 'TỔNG SỐ TIỀN', flex: 1, headerAlign: 'center',
+        align: 'center' },
         {
             field: 'actions',
             headerName: 'TÁC VỤ',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => {
                 return (
                     <>
@@ -125,7 +131,7 @@ function OvertimeTab({ value, index, periodCode }) {
             )}
             <Box
                 sx={{
-                    height: '65vh',
+                    height: '76vh',
                     '& .roles .MuiDataGrid-cellContent': {
                         backgroundColor: '#DEE1E6FF',
                         borderRadius: 2,

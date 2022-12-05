@@ -59,17 +59,21 @@ function Allowance({ value, index, periodCode }) {
     }, [isRender, allowance])
 
     const columns = [
-        { field: 'employeeName', headerName: 'TÊN', flex: 1 },
+        { field: 'employeeName', headerName: 'TÊN NHÂN VIÊN', flex: 1},
         {
             field: 'role',
             headerName: 'VAI TRÒ',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             cellClassName: 'roles'
         },
-        { field: 'totalMoney', headerName: 'TỔNG TIỀN PHỤ CẤP', flex: 1 },
+        { field: 'totalMoney', headerName: 'TỔNG TIỀN PHỤ CẤP', flex: 1, headerAlign: 'center',align: 'center' },
         {
             field: 'actions',
             headerName: 'TÁC VỤ',
+            headerAlign: 'center',
+            align: 'center',
             flex: 1,
             renderCell: (params) => {
                 return (

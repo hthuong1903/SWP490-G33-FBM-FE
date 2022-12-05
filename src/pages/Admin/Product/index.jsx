@@ -53,8 +53,8 @@ export default function Product() {
     const columns = [
         {
             field: 'photoMainURl',
-            headerName: 'ẢNH',
-            flex: 1,
+            headerName: 'ẢNH SẢN PHẨM',
+            flex: 1.25,
             renderCell: (params) => {
                 return (
                     <Box sx={{ display: 'flex' }}>
@@ -66,13 +66,19 @@ export default function Product() {
                 )
             }
         },
-        { field: 'productCode', headerName: 'MÃ SẢN PHẨM', flex: 1 },
-        { field: 'name', headerName: 'TÊN', flex: 1 },
-        { field: 'quantity', headerName: 'SỐ LƯỢNG', flex: 1 },
+        { field: 'productCode', headerName: 'MÃ SẢN PHẨM', flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        { field: 'name', headerName: 'TÊN SẢN PHẨM', flex: 1, headerAlign: 'center',},
+        { field: 'quantity', headerName: 'SỐ LƯỢNG', flex: 0.75, headerAlign: 'center',
+        align: 'center'},
         {
             field: 'priceIn',
             headerName: 'GIÁ NHẬP',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             type: 'number',
             valueFormatter: (params) => {
                 if (params.value == null) {
@@ -85,6 +91,8 @@ export default function Product() {
             field: 'priceOut',
             headerName: 'GIÁ BÁN',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             type: 'number',
             valueFormatter: (params) => {
                 if (params.value == null) {
@@ -96,7 +104,9 @@ export default function Product() {
         {
             field: 'discount',
             headerName: 'GIẢM GIÁ',
-            flex: 1,
+            flex: 0.75,
+            headerAlign: 'center',
+            align: 'center',
             type: 'number',
             valueFormatter: (params) => {
                 if (params.value == null) {
@@ -129,6 +139,8 @@ export default function Product() {
             field: 'actions',
             headerName: 'TÁC VỤ',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => {
                 return (
                     <>

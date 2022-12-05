@@ -49,22 +49,24 @@ export default function DataCustomer() {
     const columns = [
         {
             field: 'name',
-            headerName: 'Tên Khách Hàng',
+            headerName: 'TÊN KHÁCH HÀNG',
             flex: 1
         },
         {
             field: 'phone',
-            headerName: 'Số Điện Thoại',
+            headerName: 'SỐ ĐIỆN THOẠI',
             flex: 0.75
         },
         {
             field: 'email',
-            headerName: 'Email',
+            headerName: 'EMAIL',
+            headerAlign: 'center',
             flex: 1.25
         },
         {
             field: 'address',
-            headerName: 'Địa Chỉ',
+            headerName: 'ĐỊA CHỈ',
+            headerAlign: 'center',
             flex: 2,
             renderCell: (params) => {
                 return (
@@ -77,7 +79,7 @@ export default function DataCustomer() {
         },
         {
             field: 'details',
-            headerName: 'Thông Tin Chi Tiết',
+            headerName: 'THÔNG TIN CHI TIẾT',
             flex: 1,
             renderCell: (params) => {
                 return (
@@ -97,8 +99,10 @@ export default function DataCustomer() {
         },
         {
             field: 'action',
-            headerName: 'Tác Vụ',
+            headerName: 'TÁC VỤ',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => {
                 return (
                     <>
@@ -135,7 +139,7 @@ export default function DataCustomer() {
             {isOpenAddModal && (
                 <ModelAddCustomer 
                     isOpen={isOpenAddModal}
-                    title={"Thêm Khách Hàng"}
+                    title={"Thêm  Thông Tin Khách Hàng"}
                     handleClose={() => setIsOpenAddModal(false)}
                     handleConfirm={() => setIsUpdated(true)}
                     isEdit={isEdit}
@@ -165,7 +169,7 @@ export default function DataCustomer() {
                     onClick={() => {
                         setIsOpenAddModal(true)
                     }}>
-                    Thêm Khách Hàng 
+                    Thêm Thông Tin Khách Hàng 
                 </Button>
             </Box>
             <DataTable columns={columns} rows={listDataCustomer}></DataTable>

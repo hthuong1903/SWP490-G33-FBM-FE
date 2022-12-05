@@ -3,7 +3,7 @@ import DataTable from '@/components/Common/DataTable'
 import ConfirmModal from '@/components/Common/Modal/ConfirmModal'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
 import VisibilityIcon from '@mui/icons-material/Visibility'
-import { Chip, IconButton, MenuItem, TextField, Tooltip } from '@mui/material'
+import { Chip, IconButton, MenuItem, TextField, Tooltip, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import moment from 'moment/moment'
 import { useEffect, useState } from 'react'
@@ -50,17 +50,23 @@ export default function Order() {
             flex: 1,
             renderCell: (params) => {
                 return (
-                    params.row.customer.firstName +
-                    ' ' +
-                    params.row.customer.middleName +
-                    ' ' +
-                    params.row.customer.lastName
+                    <Typography sx={{ fontWeight: 'bold' }}>
+                        {
+                            params.row.customer.firstName +
+                            ' ' +
+                            params.row.customer.middleName +
+                            ' ' +
+                            params.row.customer.lastName
+                        }
+                    </Typography>
                 )
             }
         },
         {
             field: 'phone',
             headerName: 'SỐ ĐIỆN THOẠI',
+            headerAlign: 'center',
+            align: 'center',
             flex: 1,
             renderCell: (params) => {
                 return params.row.customer.phone
@@ -69,6 +75,8 @@ export default function Order() {
         {
             field: 'totalOrderPrice',
             headerName: 'TỔNG HÓA ĐƠN',
+            headerAlign: 'center',
+            align: 'center',
             flex: 1,
             valueFormatter: (params) => {
                 if (params.value == null) {
@@ -80,6 +88,8 @@ export default function Order() {
         {
             field: 'dateCreated',
             headerName: 'NGÀY TẠO',
+            headerAlign: 'center',
+            align: 'center',
             flex: 1,
             type: 'number',
             valueFormatter: (params) => {
@@ -92,6 +102,8 @@ export default function Order() {
         {
             field: 'status',
             headerName: 'TRẠNG THÁI',
+            headerAlign: 'center',
+            align: 'center',
             flex: 1,
             renderCell: (params) => {
                 return (
@@ -108,6 +120,8 @@ export default function Order() {
         {
             field: 'actions',
             headerName: 'TÁC VỤ',
+            headerAlign: 'center',
+            align: 'center',
             flex: 1,
             renderCell: (params) => {
                 return (

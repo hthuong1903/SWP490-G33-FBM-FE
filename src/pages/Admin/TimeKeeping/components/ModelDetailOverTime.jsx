@@ -50,13 +50,18 @@ export default function ModelDetailOverTime({title, isOpen, handleClose, periodC
     const columns = [
         { field: 'id', headerName: 'STT', flex: 1, hide: true },
         { field: 'date', headerName: 'Ngày tháng', flex: 1},
-        { field: 'totalTime', headerName: 'Số giờ làm thêm', flex: 1},
-        { field: 'content', headerName: 'Nội dung', flex: 1},
-        { field: 'totalAmount', headerName: 'Số tiền làm thêm', flex: 1},
+        { field: 'totalTime', headerName: 'Số giờ làm thêm', flex: 1, headerAlign: 'center',
+        align: 'center'},
+        { field: 'content', headerName: 'Nội dung', flex: 1, headerAlign: 'center',
+        align: 'center'},
+        { field: 'totalAmount', headerName: 'Số tiền làm thêm', flex: 1, headerAlign: 'center',
+        align: 'center'},
         {
             field: 'actions',
             headerName: 'Tác vụ',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => {
                 return (
                     <>

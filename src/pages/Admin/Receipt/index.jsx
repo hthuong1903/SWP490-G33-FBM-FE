@@ -3,7 +3,7 @@ import DataTable from '@/components/Common/DataTable'
 import ConfirmModal from '@/components/Common/Modal/ConfirmModal'
 import { EditRounded } from '@mui/icons-material'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
-import { Button, Tooltip } from '@mui/material'
+import { Button, Tooltip, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -61,17 +61,21 @@ function Receipt() {
             flex: 1,
             renderCell: (params) => {
                 return (
+                    <Typography sx={{ fontWeight: 'bold' }}>{
                     params.row.customer.firstName +
                     ' ' +
                     params.row.customer.middleName +
                     ' ' +
-                    params.row.customer.lastName
+                    params.row.customer.lastName}
+                    </Typography>
                 )
             }
         },
         {
             field: 'phone',
             headerName: 'SỐ ĐIỆN THOẠI',
+            headerAlign: 'center',
+            align: 'center',
             flex: 1,
             renderCell: (params) => {
                 return params.row.customer.phone
@@ -80,6 +84,8 @@ function Receipt() {
         {
             field: 'createdBy',
             headerName: 'NGƯỜI TẠO',
+            headerAlign: 'center',
+            align: 'center',
             flex: 1,
             renderCell: (params) => {
                 return params.row.employeeSale.username
@@ -88,6 +94,8 @@ function Receipt() {
         {
             field: 'totalOrderPrice',
             headerName: 'TỔNG HÓA ĐƠN',
+            headerAlign: 'center',
+            align: 'center',
             flex: 1,
             valueFormatter: (params) => {
                 if (params.value == null) {
@@ -99,6 +107,8 @@ function Receipt() {
         {
             field: 'dateCreated',
             headerName: 'NGÀY TẠO',
+            headerAlign: 'center',
+            align: 'center',
             flex: 1,
             type: 'number',
             valueFormatter: (params) => {
@@ -113,6 +123,8 @@ function Receipt() {
             field: 'actions',
             headerName: 'TÁC VỤ',
             flex: 1.5,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => {
                 return (
                     <>
@@ -194,7 +206,8 @@ function Receipt() {
                     mb: 2,
                     mt: 3,
                     display: 'flex',
-                    justifyContent: 'space-between'
+                    // justifyContent: 'space-between',
+                    justifyContent: 'flex-end'
                 }}>
                 <Button
                     variant="contained"
