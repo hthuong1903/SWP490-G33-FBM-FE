@@ -22,10 +22,16 @@ export default function Contract() {
     const [isEdit, setIsEdit] = useState(true)
     const [expired, setExpired] = useState(-1)
 
+    const ROLES = [
+        { id: 1, name: 'Nhân Viên Sửa Chữa', color:'#decd59' },
+        { id: 2, name: 'Nhân Viên Bán Hàng', color:'#7cd992' }
+    ]
+
     useEffect(() => {
         const getAllContracts = async (expired) => {
             try {
                 const response = await contractApi.getAllContracts(expired)
+                console.log("-------", response.data)
                 setContractList(response.data)
             } catch (error) {
                 console.log('fail at getAllContracts', error)
@@ -45,7 +51,6 @@ export default function Contract() {
             console.log(error)
         }
     }
-
     const columns = [
         {
             field: 'content',
@@ -69,8 +74,16 @@ export default function Contract() {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
+            // renderCell: (params) => {
+            //     return <Chip label={params.row.employee.roles[0].id - 2} color="primary" />
+            // }
+
             renderCell: (params) => {
-                return <Chip label={params.row.employee.roles[0].name} color="primary" />
+                return <Chip label={ROLES[params.row.employee.roles[0].id - 2].name}
+                    sx={{color: `${ROLES[params.row.employee.roles[0].id - 2].color}`,
+                    border: `1px solid ${ROLES[params.row.employee.roles[0].id - 2].color}`
+                }}
+                />
             }
         },
         {
