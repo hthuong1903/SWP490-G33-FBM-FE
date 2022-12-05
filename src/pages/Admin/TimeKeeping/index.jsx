@@ -71,7 +71,6 @@ function TimeKeeping() {
             console.log(error)
         }
     }
-    console.log("hihihihihihi", month + '' + year)
     return (
         <>
             <ConfirmModal

@@ -1,6 +1,6 @@
 import TimeKeepingApi from '@/api/TimeKeepingApi'
 import DataTable from '@/components/Common/DataTable'
-import { Button, Tooltip } from '@mui/material'
+import { Button, Tooltip, Chip } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -12,6 +12,11 @@ function TimeKeepingTab({ value, index, periodCode }) {
     const [employee, setEmployee] = useState({})
     const [isRender, setIsRender] = useState(true)
     const [isDetail, setIsDetail] = useState(false)
+
+    const ROLES = [
+        { id: 1, name: 'Nhân Viên Sửa Chữa', color:'#decd59' },
+        { id: 2, name: 'Nhân Viên Bán Hàng', color:'#7cd992' }
+    ]
 
     const getTimeSheetDetail = async (period_code) => {
         try {
@@ -64,15 +69,21 @@ function TimeKeepingTab({ value, index, periodCode }) {
 
     const columns = [
         { field: 'employee', headerName: 'Số thứ tự', flex: 0.5, hide: true },
-        { field: 'id', headerName: 'SỐ THỨ TỰ', flex: 0.75, align: 'center'},
-        { field: 'name', headerName: 'TÊN NHÂN VIÊN', flex: 1, headerAlign: 'center'},
+        { field: 'id', headerName: 'SỐ THỨ TỰ', flex: 0.75, align: 'center', hide: true},
+        { field: 'name', headerName: 'TÊN NHÂN VIÊN', flex: 1},
         {
             field: 'roles',
             headerName: 'VAI TRÒ',
-            flex: 1,
+            flex: 1.25,
             headerAlign: 'center',
             align: 'center',
-            cellClassName: 'roles'
+            renderCell: (params) => {
+                return <Chip label={ROLES[params.row.employee.roles[0].id - 2].name}
+                    sx={{color: `${ROLES[params.row.employee.roles[0].id - 2].color}`,
+                    border: `1px solid ${ROLES[params.row.employee.roles[0].id - 2].color}`
+                }}
+                />
+            }
         },
         {
             field: 'allowedDay',

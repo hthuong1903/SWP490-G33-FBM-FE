@@ -74,10 +74,6 @@ export default function Contract() {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            // renderCell: (params) => {
-            //     return <Chip label={params.row.employee.roles[0].id - 2} color="primary" />
-            // }
-
             renderCell: (params) => {
                 return <Chip label={ROLES[params.row.employee.roles[0].id - 2].name}
                     sx={{color: `${ROLES[params.row.employee.roles[0].id - 2].color}`,

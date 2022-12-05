@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Tooltip } from '@mui/material'
+import { Button, Tooltip, Chip } from '@mui/material'
 import { Box } from '@mui/system'
 import DataTable from '@/components/Common/DataTable'
 import ModalOvertime from './components/ModalOvertime'
@@ -11,6 +11,7 @@ function OvertimeTab({ value, index, periodCode }) {
     const [listOvertime, setListOvertime] = useState([])
     const [isRender, setIsRender] = useState(true)
     const [isDetail, setIsDetail] = useState(false)
+    
     const handleAction = (params) => {
         setEmployee(params)
         setIsOpenOvertimeModal(true)
