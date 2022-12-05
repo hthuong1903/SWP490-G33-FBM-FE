@@ -52,12 +52,15 @@ function Allowance() {
     const columns = [
         { field: 'id', headerName: 'MÃ SẢN PHẨM', flex: 1, hide: true },
         { field: 'typeOfAllowance', headerName: 'NỘI DUNG', flex: 1 },
-        { field: 'money', headerName: 'SỐ TIỀN', flex: 1 },
-        { field: 'content', headerName: 'NỘI DUNG', flex: 1 },
+        { field: 'money', headerName: 'SỐ TIỀN', flex: 1, headerAlign: 'center',
+        align: 'center', },
+        { field: 'content', headerName: 'NỘI DUNG CHI TIẾT', flex: 1.5},
         {
             field: 'actions',
             headerName: 'TÁC VỤ',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => {
                 return (
                     <>
@@ -124,7 +127,7 @@ function Allowance() {
                 />
             )}
             <h2>Quản lý phụ cấp</h2>
-            <Box sx={{ mb: 2, mt: 3, display: 'flex' }}>
+            <Box sx={{ mb: 2, mt: 3, display: 'flex', justifyContent: 'flex-end'}}>
                 <Button
                     variant="contained"
                     onClick={() => {

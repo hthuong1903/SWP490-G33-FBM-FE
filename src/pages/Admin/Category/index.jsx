@@ -51,30 +51,36 @@ export default function Category() {
     const columns = [
         {
             field: 'name',
-            headerName: 'TÊN',
+            headerName: 'TÊN DANH MỤC',
             flex: 1,
+            // renderCell: (params) => {
+            //     return <Typography sx={{ fontWeight: 'bold' }}>{params.value}</Typography>
+            // }
             renderCell: (params) => {
-                return <Typography sx={{ fontWeight: 'bold' }}>{params.value}</Typography>
+                return (
+                    <Typography sx={{ fontWeight: 'bold' }}>
+                        {params.value}
+                    </Typography>
+                )
             }
         },
         {
-            field: 'phone',
-            headerName: '',
-            flex: 1
-        },
-        {
             field: 'description',
-            headerName: 'MÔ TẢ',
+            headerName: 'MÔ TẢ DANH MỤC',
             flex: 1
         },
         {
             field: 'quantity',
             headerName: 'SỐ SẢN PHẨM',
-            flex: 1
+            flex: 0.75,
+            headerAlign: 'center',
+            align: 'center'
         },
         {
             field: 'view',
             headerName: 'THAO TÁC',
+            headerAlign: 'center',
+            align: 'center',
             flex: 1,
             renderCell: (params) => {
                 return (

@@ -45,7 +45,7 @@ export default function Provider() {
     const columns = [
         {
             field: 'name',
-            headerName: 'TÊN',
+            headerName: 'TÊN NHÀ CUNG CẤP',
             flex: 1,
             renderCell: (params) => {
                 return <Typography sx={{ fontWeight: 'bold' }}>{params.value}</Typography>
@@ -54,13 +54,16 @@ export default function Provider() {
         {
             field: 'phone',
             headerName: 'SỐ ĐIỆN THOẠI',
+            headerAlign: 'center',
+            align: 'center',
             flex: 1
         },
-        { field: 'email', headerName: 'EMAIL', flex: 1 },
+        { field: 'email', headerName: 'EMAIL', flex: 1.5, headerAlign: 'center',align: 'center' },
         {
             field: 'content',
             headerName: 'ĐỊA CHỈ',
-            flex: 3,
+            headerAlign: 'center',
+            flex: 2.5,
             renderCell: (params) => {
                 return (
                     <p>
@@ -73,7 +76,9 @@ export default function Provider() {
         {
             field: 'details',
             headerName: 'CHI TIẾT',
-            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
+            flex: 0.75,
             renderCell: (params) => {
                 return (
                     // <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
@@ -94,6 +99,8 @@ export default function Provider() {
         {
             field: 'delete',
             headerName: 'XÓA NHÀ CUNG CẤP',
+            headerAlign: 'center',
+            align: 'center',
             flex: 1,
             renderCell: (params) => {
                 return (

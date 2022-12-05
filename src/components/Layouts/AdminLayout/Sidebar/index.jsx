@@ -115,14 +115,14 @@ function Sidebar() {
                     setAuth(null)
                 }}
             />
-            <Box sx={{ p: 2 }}>
-                <Paper elevation={2} sx={{ height: '100%' }}>
+            <Box>
+                <Paper elevation={2} sx={{ overflow: 'auto', height: '96vh' }}>
                     <List
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            height: '100%'
+                            justifyContent: 'space-between'
+                            // height: '100%'
                         }}>
                         <Box>
                             <Box>
@@ -140,7 +140,7 @@ function Sidebar() {
                                     />
                                 </ListItem>
                             </Box>
-                            <Box sx={{ overflow: 'auto', height: '75vh' }}>
+                            <Box sx={{ overflow: 'auto'}}>
                                 <Divider />
                                 {items.map((item, index) =>
                                     item.name == 'Thống kê' ? (

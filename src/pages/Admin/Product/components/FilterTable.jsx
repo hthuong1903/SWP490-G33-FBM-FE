@@ -45,7 +45,7 @@ function FilterTable({ chooseProvider, chooseCategory, chooseIsExisted }) {
             setProvider(event.target.value)
             chooseProvider(event.target.value)
           }}
-          sx={{ mr: 2 }}>
+          sx={{ mr: 2, width: '13vh'}}>
           <MenuItem value={-1}>Tất cả</MenuItem>
           {providerList.map((provider) => {
             return (
@@ -65,7 +65,7 @@ function FilterTable({ chooseProvider, chooseCategory, chooseIsExisted }) {
             setCategory(event.target.value)
             chooseCategory(event.target.value)
           }}
-          sx={{ mr: 2 }}>
+          sx={{ mr: 2, width: '13vh' }}>
           <MenuItem value={-1}>Tất cả</MenuItem>
           {categoryList.map((category) => {
             return (
@@ -85,6 +85,7 @@ function FilterTable({ chooseProvider, chooseCategory, chooseIsExisted }) {
             setIsExisted(event.target.value)
             chooseIsExisted(event.target.value)
           }}
+          sx={{width: '13vh'}}
           >
           <MenuItem value={0}>Tất cả</MenuItem>
           <MenuItem value={-1}>Còn hàng</MenuItem>

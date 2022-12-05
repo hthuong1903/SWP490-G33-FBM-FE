@@ -32,12 +32,12 @@ export default function ModelDetailTimeKeeping({title, isOpen, handleClose, peri
 
     const columns = [
         { field: 'id', headerName: 'STT', flex: 1, hide: true },
-        { field: 'date', headerName: 'Ngày tháng năm', flex: 1},
-        { field: 'allowedDay', headerName: 'Nghỉ phép', flex: 0.75},
-        { field: 'absentDay', headerName: 'Nghỉ không phép', flex: 0.75},
-        { field: 'holidaysWorking', headerName: 'Công lễ', flex: 0.75},
-        { field: 'haftDayWorking', headerName: 'Công nửa ngày', flex: 1},
-        { field: 'workingDay', headerName: 'Công ngày bình thường', flex: 1.25}
+        { field: 'date', headerName: 'Ngày tháng năm', flex: 1, headerAlign: 'center',align: 'center'},
+        { field: 'allowedDay', headerName: 'Nghỉ phép', flex: 0.65, headerAlign: 'center',align: 'center'},
+        { field: 'absentDay', headerName: 'Nghỉ không phép', flex: 1, headerAlign: 'center',align: 'center'},
+        { field: 'holidaysWorking', headerName: 'Công lễ', flex: 0.65, headerAlign: 'center',align: 'center'},
+        { field: 'haftDayWorking', headerName: 'Công nửa ngày', flex: 1, headerAlign: 'center',align: 'center'},
+        { field: 'workingDay', headerName: 'Công ngày bình thường', flex: 1.25, headerAlign: 'center',align: 'center'}
     ]
 
     console.log("time sheet detail", timeSheetDetail)

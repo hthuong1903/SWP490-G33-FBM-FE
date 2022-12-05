@@ -64,28 +64,33 @@ function TimeKeepingTab({ value, index, periodCode }) {
 
     const columns = [
         { field: 'employee', headerName: 'Số thứ tự', flex: 0.5, hide: true },
-        { field: 'id', headerName: 'Số thứ tự', flex: 0.5 },
-        { field: 'name', headerName: 'TÊN', flex: 1 },
+        { field: 'id', headerName: 'SỐ THỨ TỰ', flex: 0.75, align: 'center'},
+        { field: 'name', headerName: 'TÊN NHÂN VIÊN', flex: 1, headerAlign: 'center'},
         {
             field: 'roles',
             headerName: 'VAI TRÒ',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             cellClassName: 'roles'
         },
         {
             field: 'allowedDay',
             headerName: 'NGHỈ PHÉP',
-            flex: 0.75
+            flex: 0.75,
+            align: 'center'
         },
-        { field: 'absentDay', headerName: 'VẮNG', flex: 0.75 },
-        { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 0.75 },
-        { field: 'haftDayWorking', headerName: 'CÔNG NỬA NGÀY', flex: 1 },
-        { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', flex: 1 },
-        { field: 'workingDay', headerName: 'NGÀY THƯỜNG', flex: 1 },
+        { field: 'absentDay', headerName: 'VẮNG', flex: 0.5, headerAlign: 'center', align: 'center' },
+        { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 0.65 , headerAlign: 'center', align: 'center'},
+        { field: 'haftDayWorking', headerName: 'CÔNG NỬA NGÀY', flex: 1, headerAlign: 'center', align: 'center' },
+        { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', headerAlign: 'center', flex: 1.4, align: 'center' },
+        { field: 'workingDay', headerName: 'NGÀY THƯỜNG', flex: 1, headerAlign: 'center', align: 'center' },
         {
             field: 'actions',
             headerName: 'TÁC VỤ',
             flex: 1.5,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => {
                 return (
                     <>
@@ -163,7 +168,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
             )}
             <Box
                 sx={{
-                    height: '65vh',
+                    height: '76vh',
                     '& .roles .MuiDataGrid-cellContent': {
                         backgroundColor: '#DEE1E6FF',
                         borderRadius: 2,
