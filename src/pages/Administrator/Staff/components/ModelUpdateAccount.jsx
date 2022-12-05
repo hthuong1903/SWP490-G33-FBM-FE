@@ -46,7 +46,7 @@ export default function ModelUpdateAccount({ title, isOpen, handleClose, handleC
     const genderList = [
         {
             id: 0,
-            name: "Nu",
+            name: "Nữ",
             value: true
         },
         {
@@ -83,7 +83,7 @@ export default function ModelUpdateAccount({ title, isOpen, handleClose, handleC
             .createAccount(dataSubmit)
             .then((res) => {
                 console.log(res)
-                toast.success('Cap nhap thanh công Tai Khoan')
+                toast.success('Cập Nhập Tài Khoản Thành Công !')
                 handleConfirm && handleConfirm(true)
                 handleClose && handleClose()
             })
@@ -106,7 +106,7 @@ export default function ModelUpdateAccount({ title, isOpen, handleClose, handleC
                 .createAccount(dataSubmit)
                 .then((res) => {
                     console.log(res)
-                    toast.success('Cập nhật thành công nhà cung cấp')
+                    toast.success('Cập Nhập Tài Khoản Thành Công !')
                 })
                 .catch((error) => {
                     console.log(error)
@@ -178,7 +178,7 @@ export default function ModelUpdateAccount({ title, isOpen, handleClose, handleC
                         fullWidth
                         size="small"
                         id="outlined-basic"
-                        label="Ho"
+                        label="Họ"
                         variant="outlined"
                         defaultValue={selectedData?.firstName}
                         {...register('firstName')}
@@ -189,7 +189,7 @@ export default function ModelUpdateAccount({ title, isOpen, handleClose, handleC
                         fullWidth
                         size="small"
                         id="outlined-basic"
-                        label="Ten Dem"
+                        label="Tên Đệm"
                         variant="outlined"
                         defaultValue={selectedData?.middleName}
                         {...register('middleName')}
@@ -200,7 +200,7 @@ export default function ModelUpdateAccount({ title, isOpen, handleClose, handleC
                         fullWidth
                         size="small"
                         id="outlined-basic"
-                        label="Ten"
+                        label="Tên"
                         variant="outlined"
                         defaultValue={selectedData?.lastName}
                         {...register('lastName')}
@@ -213,14 +213,14 @@ export default function ModelUpdateAccount({ title, isOpen, handleClose, handleC
                         fullWidth
                         size="small"
                         id="outlined-basic"
-                        label="Ten dang nhap"
+                        label="Tên Đăng Nhập"
                         variant="outlined"
                         defaultValue={selectedData?.username}
                         disabled={disabled}
                         {...register('username')}
                         error={errors.username ? true : false}
                         helperText={errors.username?.message}
-                        placeholder="Ten Dang Nhap"
+                        placeholder="Nhập Tên Đăng Nhập"
                     />
                 </Box>
                 <Box sx={{ mt: 2}}>
@@ -255,7 +255,7 @@ export default function ModelUpdateAccount({ title, isOpen, handleClose, handleC
                         id="outlined-basic"
                         select
                         size="small"
-                        label="Gioi tinh"
+                        label="Giới Tính"
                         defaultValue={selectedData?.gender}
                         value={gender}
                         onChange={(event) => {

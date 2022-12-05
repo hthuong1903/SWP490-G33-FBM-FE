@@ -59,7 +59,7 @@ function Sidebar() {
                 }
             />
             <Box sx={{ p: 2 }}>
-                <Paper elevation={2} sx={{ height: '100%' }}>
+                <Paper elevation={2} sx={{ overflow: 'auto', height: '96vh' }}>
                     <List
                         sx={{
                             display: 'flex',

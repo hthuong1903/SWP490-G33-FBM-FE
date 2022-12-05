@@ -64,27 +64,29 @@ export default function CustomerAccount() {
         },
         {
             field: 'name',
-            headerName: 'Họ và Tên',
+            headerName: 'TÊN NHÂN VIÊN',
             flex: 1,
         },
         {
             field: 'username',
-            headerName: 'Tên Đăng Nhập',
+            headerName: 'TÊN ĐĂNG NHẬP',
             flex: 1
         },
         { 
             field: 'email', 
-            headerName: 'Email', 
+            headerName: 'EMAIL', 
             flex: 1 
         },
         { 
             field: 'updateDate', 
-            headerName: 'Ngày Cập Nhập', 
+            headerName: 'NGÀY CẬP NHẬP', 
+            headerAlign: 'center',
+            align: 'center',
             flex: 1 
         },
         {
             field: 'details',
-            headerName: 'Thông Tin Chi Tiết',
+            headerName: 'THÔNG TIN CHI TIẾT',
             flex: 1,
             renderCell: (params) => {
                 return (
@@ -104,8 +106,10 @@ export default function CustomerAccount() {
         },
         { 
             field: 'action', 
-            headerName: 'Tác Vụ', 
+            headerName: 'TÁC VỤ', 
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => {
                 return (
                     <>

@@ -45,7 +45,7 @@ export default function ModelAddStaffAccount({ title, isOpen, handleClose, handl
     const genderList = [
         {
             id: 0,
-            name: "Nu",
+            name: "Nữ",
             value: true
         },
         {
@@ -82,7 +82,7 @@ export default function ModelAddStaffAccount({ title, isOpen, handleClose, handl
             .createAccount(dataSubmit)
             .then((res) => {
                 console.log(res)
-                toast.success('Thêm Tai Khoan Thanh Cong')
+                toast.success('Thêm Tài Khoản Thành Công !')
                 handleConfirm && handleConfirm(true)
                 handleClose && handleClose()
             })
@@ -144,34 +144,34 @@ export default function ModelAddStaffAccount({ title, isOpen, handleClose, handl
                         fullWidth
                         size="small"
                         id="outlined-basic"
-                        label="Ho"
+                        label="Họ"
                         variant="outlined"
                         {...register('firstName')}
                         error={errors.name ? true : false}
                         helperText={errors.firstName?.message}
-                        placeholder="Nhap Ho"
+                        placeholder="Nhập Họ"
                     />
                     <TextField
                         fullWidth
                         size="small"
                         id="outlined-basic"
-                        label="Ten Dem"
+                        label="Tên Đệm"
                         variant="outlined"
                         {...register('middleName')}
                         error={errors.middleName ? true : false}
                         helperText={errors.middleName?.message}
-                        placeholder="Nhập Ten dem"
+                        placeholder="Nhập Tên Đệm"
                     />
                     <TextField
                         fullWidth
                         size="small"
                         id="outlined-basic"
-                        label="Ten"
+                        label="Tên"
                         variant="outlined"
                         {...register('lastName')}
                         error={errors.lastName ? true : false}
                         helperText={errors.lastName?.message}
-                        placeholder="Nhập Ten"
+                        placeholder="Nhập Tên"
                     />
                 </Box>
                 <Box sx={{ mt: 2}}>
@@ -179,12 +179,12 @@ export default function ModelAddStaffAccount({ title, isOpen, handleClose, handl
                         fullWidth
                         size="small"
                         id="outlined-basic"
-                        label="Ten dang nhap"
+                        label="Tên Đăng Nhập"
                         variant="outlined"
                         {...register('username')}
                         error={errors.username ? true : false}
                         helperText={errors.username?.message}
-                        placeholder="Ten Dang Nhap"
+                        placeholder="Nhập Tên Đăng Nhập"
                     />
                 </Box>
                 <Box sx={{ mt: 2 }}>
@@ -197,7 +197,7 @@ export default function ModelAddStaffAccount({ title, isOpen, handleClose, handl
                         {...register('email')}
                         error={errors.email ? true : false}
                         helperText={errors.email?.message}
-                        placeholder="Email"
+                        placeholder="Nhập Email"
                     />
                 </Box>
                 <Box sx={{ mt: 2, display: 'flex', gap: '20px' }}>
@@ -205,19 +205,19 @@ export default function ModelAddStaffAccount({ title, isOpen, handleClose, handl
                         fullWidth
                         size="small"
                         id="outlined-basic"
-                        label="So dien thoai"
+                        label="Số Điện Thoại"
                         variant="outlined"
                         {...register('phone')}
                         error={errors.phone ? true : false}
                         helperText={errors.phone?.message}
-                        placeholder="So dien thoai"
+                        placeholder="Nhập Số Điện Thoại"
                     />
                     <TextField
                         fullWidth
                         id="outlined-basic"
                         select
                         size="small"
-                        label="Gioi tinh"
+                        label="Giới Tính"
                         value={gender}
                         onChange={(event) => {
                             console.log(event.target.value)
@@ -241,7 +241,7 @@ export default function ModelAddStaffAccount({ title, isOpen, handleClose, handl
                         id="outlined-basic"
                         select
                         size="small"
-                        label="Chuc vu"
+                        label="Chức Vụ"
                         value={role}
                         onChange={(event) => {
                             console.log(event.target.value)

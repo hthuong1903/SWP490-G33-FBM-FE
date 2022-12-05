@@ -8,7 +8,7 @@ const AccountApi = {
         return axiosClient.get(url)
     },
     getAllAccountCustomer: () => {
-        const url = `/user`
+        const url = `/customer_online`
         return axiosClient.get(url)
     },
 
