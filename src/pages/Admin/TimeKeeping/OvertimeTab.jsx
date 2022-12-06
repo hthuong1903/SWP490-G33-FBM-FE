@@ -95,11 +95,10 @@ function OvertimeTab({ value, index, periodCode }) {
         container['name'] =
             (item.employee.firstName  || '') +' '+(item.employee.middleName || '') + ' '+ (item.employee.lastName || '')
         container['totalTime'] = item.hour
-        container['totalAmount'] = item.moneyPerHour * item.hour
+        container['totalAmount'] = item.totalMoney
         container['roles'] = item.employee.roles[0].name
         return container
     })
-
     return (
         <div
             role="tabpanel"
@@ -109,7 +108,7 @@ function OvertimeTab({ value, index, periodCode }) {
             {isOpenOvertimeModal && employee && (
                 <ModalOvertime
                     isOpen={isOpenOvertimeModal}
-                    title={`Thêm giờ làm thêm `}
+                    title={`Thêm giờ làm thêm cho ${employee.employee.employeeCode} - ${(employee.employee.firstName  || '') +' '+(employee.employee.middleName || '') + ' '+ (employee.employee.lastName || '')}`}
                     handleClose={() => {
                         setIsOpenOvertimeModal(false)
                         setIsRender(true)
@@ -120,7 +119,7 @@ function OvertimeTab({ value, index, periodCode }) {
             {isDetail && employee && (
                 <ModelDetailOverTime 
                     isOpen={isDetail}
-                    title={'Xem chi tiết thời gian làm thêm giờ'}
+                    title={`Xem chi tiết thời gian làm thêm giờ của ${employee.item.employee.employeeCode} - ${employee.name}`}
                     handleClose={() => {
                         setIsDetail(false)
                         setIsRender(true)

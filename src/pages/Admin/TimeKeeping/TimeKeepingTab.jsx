@@ -154,7 +154,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
             {isOpenTimeKeepingModal && employee && (
                 <ModalTimeKeeping
                     isOpen={isOpenTimeKeepingModal}
-                    title={'Chấm công'}
+                    title={`Chấm công cho ${employee.employee.employeeCode} - ${employee.name}`}
                     handleClose={() => {
                         setIsOpenTimeKeepingModal(false)
                         setIsRender(true)
@@ -167,7 +167,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
             {isDetail && employee && (
                 <ModelDetailTimeKeeping 
                     isOpen={isDetail}
-                    title={'Xem chi tiết chấm công'}
+                    title={`Xem chi tiết chấm công của ${employee.employee.employeeCode} - ${employee.name}`}
                     handleClose={() => {
                         setIsDetail(false)
                         setIsRender(true)
