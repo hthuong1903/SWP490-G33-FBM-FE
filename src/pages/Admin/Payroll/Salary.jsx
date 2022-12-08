@@ -92,7 +92,7 @@ function Salary({ value, index, periodCode }) {
                         p: 1
                     }
                 }}>
-                <Button variant="contained" onClick={() => handleSendEmail()} autoFocus>
+                <Button sx={{mb: 2, ml: 170}} variant="contained" onClick={() => handleSendEmail()} autoFocus>
                     Gửi lương
                 </Button>
                 <DataTable columns={columns} rows={rows} />

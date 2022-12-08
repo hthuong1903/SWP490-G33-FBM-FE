@@ -185,8 +185,11 @@ function TimeKeepingTab({ value, index, periodCode }) {
                         borderRadius: 2,
                         p: 1
                     }
-                }}>
-                <Button variant="contained" onClick={() => handleSendEmail()} autoFocus>
+                }}
+                >
+                <Button 
+                    sx={{mb: 2, ml: 165}}
+                variant="contained" onClick={() => handleSendEmail()} autoFocus>
                     Gửi chấm công
                 </Button>
                 <DataTable columns={columns} rows={rows} />
