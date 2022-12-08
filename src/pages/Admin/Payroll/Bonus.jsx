@@ -83,7 +83,6 @@ function Bonus({ value, index, periodCode }) {
                                 variant="contained"
                                 size="small"
                                 onClick={() => handleAction(params.row)}>
-                                {/* <EditRounded fontSize="inherit" /> */}
                                 Thưởng
                             </Button>
                         </Tooltip>
@@ -92,7 +91,6 @@ function Bonus({ value, index, periodCode }) {
                                 variant="contained"
                                 size="small"
                                 onClick={() => handleView(params.row)}>
-                                {/* <EditRounded fontSize="inherit" /> */}
                                 Xem
                             </Button>
                         </Tooltip>
