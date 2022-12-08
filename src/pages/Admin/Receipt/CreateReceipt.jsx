@@ -219,7 +219,7 @@ function CreateReceipt() {
                                                         {row.product.name}
                                                     </Typography>
                                                     <Typography variant="button">
-                                                        SKU: {row.product.productCode}
+                                                        Mã Sản Phẩm: {row.product.productCode}
                                                     </Typography>
                                                 </Box>
                                             </Box>
