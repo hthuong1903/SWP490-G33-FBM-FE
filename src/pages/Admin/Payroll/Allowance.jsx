@@ -1,6 +1,6 @@
 import AllowanceApi from '@/api/AllowanceApi'
 import DataTable from '@/components/Common/DataTable'
-import { Box, Button, Tooltip } from '@mui/material'
+import { Box, Button, Tooltip, Chip } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 
 import ModalAllowance from './components/ModalAllowance'
@@ -13,6 +13,11 @@ function Allowance({ value, index, periodCode }) {
     const [isRender, setIsRender] = useState(true)
     const [employee, setEmployee] = useState({})
     const [allowanceDetail, setAllowanceDetail] = useState([])
+
+    const ROLES = [
+        { id: 1, name: 'Nhân Viên Sửa Chữa', color:'#decd59' },
+        { id: 2, name: 'Nhân Viên Bán Hàng', color:'#7cd992' }
+    ]
 
     const handleAction = (params) => {
         console.log(params)
@@ -66,7 +71,13 @@ function Allowance({ value, index, periodCode }) {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            cellClassName: 'roles'
+            renderCell: (params) => {
+                return <Chip label={ROLES[params.row.item.role[0].id - 2].name}
+                    sx={{color: `${ROLES[params.row.item.role[0].id - 2].color}`,
+                    border: `1px solid ${ROLES[params.row.item.role[0].id - 2].color}`
+                }}
+                />
+            }
         },
         { field: 'totalMoney', headerName: 'TỔNG TIỀN PHỤ CẤP', flex: 1, headerAlign: 'center',align: 'center' },
         {
@@ -103,6 +114,7 @@ function Allowance({ value, index, periodCode }) {
     ]
     const rows = allowance.map((item) => {
         const container = {}
+        container['item'] = item
         container['id'] = item.employeeId
         container['employeeName'] = item.employeeName
         container['role'] = item.role[0].name
@@ -110,6 +122,7 @@ function Allowance({ value, index, periodCode }) {
         return container
     })
 
+    console.log("rows", rows)
     return (
         <div
             role="tabpanel"

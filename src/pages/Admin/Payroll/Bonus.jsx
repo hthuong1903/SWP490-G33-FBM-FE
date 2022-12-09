@@ -1,6 +1,6 @@
 import BonusApi from '@/api/BonusApi'
 import DataTable from '@/components/Common/DataTable'
-import { Box, Button, Tooltip } from '@mui/material'
+import { Box, Button, Tooltip, Chip } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import ModalBonus from './components/ModalBonus'
 import ModalBonusDetail from './components/ModalBonusDetail'
@@ -12,6 +12,11 @@ function Bonus({ value, index, periodCode }) {
     const [isRender, setIsRender] = useState(true)
     const [employee, setEmployee] = useState({})
     const [bonusDetail, setBonusDetail] = useState([])
+
+    const ROLES = [
+        { id: 1, name: 'Nhân Viên Sửa Chữa', color:'#decd59' },
+        { id: 2, name: 'Nhân Viên Bán Hàng', color:'#7cd992' }
+    ]
 
     const getBonus = async () => {
         try {
@@ -65,7 +70,13 @@ function Bonus({ value, index, periodCode }) {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            cellClassName: 'roles'
+            renderCell: (params) => {
+                return <Chip label={ROLES[params.row.item.role[0].id - 2].name}
+                    sx={{color: `${ROLES[params.row.item.role[0].id - 2].color}`,
+                    border: `1px solid ${ROLES[params.row.item.role[0].id - 2].color}`
+                }}
+                />
+            }
         },
         { field: 'totalMoney', headerName: 'TỔNG SỐ TIỀN THƯỞNG', flex: 1, headerAlign: 'center',
         align: 'center'},
@@ -103,6 +114,7 @@ function Bonus({ value, index, periodCode }) {
     ]
     const rows = bonus.map((item) => {
         const container = {}
+        container['item'] = item
         container['id'] = item.employeeId
         container['employeeName'] = item.employeeName
         container['role'] = item.role[0].name

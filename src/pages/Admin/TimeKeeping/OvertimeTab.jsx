@@ -12,6 +12,11 @@ function OvertimeTab({ value, index, periodCode }) {
     const [isRender, setIsRender] = useState(true)
     const [isDetail, setIsDetail] = useState(false)
     
+    const ROLES = [
+        { id: 1, name: 'Nhân Viên Sửa Chữa', color:'#decd59' },
+        { id: 2, name: 'Nhân Viên Bán Hàng', color:'#7cd992' }
+    ]
+
     const handleAction = (params) => {
         setEmployee(params)
         setIsOpenOvertimeModal(true)
@@ -25,7 +30,7 @@ function OvertimeTab({ value, index, periodCode }) {
     const getOvertimeByPeriodCode = async (period_code) => {
         try {
             const response = await OvertimeApi.getOvertimeByPeriodCode(period_code)
-            console.log("employee", response.data)
+            console.log("employee------------", response.data)
             setListOvertime(response.data)
         } catch (error) {
             console.warn('Failed to get overtime by periodCode ', error)
@@ -42,6 +47,7 @@ function OvertimeTab({ value, index, periodCode }) {
     }, [listOvertime, isRender])
 
     const columns = [
+        { field: 'employee', headerName: 'Số thứ tự', flex: 0.5, hide: true },
         { field: 'item', headerName: 'TÊN', flex: 1, hide: true },
         { field: 'name', headerName: 'TÊN NHÂN VIÊN', flex: 1},
         {
@@ -50,7 +56,13 @@ function OvertimeTab({ value, index, periodCode }) {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            cellClassName: 'roles'
+            renderCell: (params) => {
+                return <Chip label={ROLES[params.row.employee.roles[0].id - 2].name}
+                    sx={{color: `${ROLES[params.row.employee.roles[0].id - 2].color}`,
+                    border: `1px solid ${ROLES[params.row.employee.roles[0].id - 2].color}`
+                }}
+                />
+            }
         },
         { field: 'totalTime', headerName: 'TỔNG SỐ GIỜ LÀM THÊM', flex: 1, headerAlign: 'center',
         align: 'center' },
@@ -96,6 +108,7 @@ function OvertimeTab({ value, index, periodCode }) {
             (item.employee.firstName  || '') +' '+(item.employee.middleName || '') + ' '+ (item.employee.lastName || '')
         container['totalTime'] = item.hour
         container['totalAmount'] = item.totalMoney
+        container['employee'] = item.employee
         container['roles'] = item.employee.roles[0].name
         return container
     })
