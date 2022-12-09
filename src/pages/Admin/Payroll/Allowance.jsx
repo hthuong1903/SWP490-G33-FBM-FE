@@ -132,7 +132,7 @@ function Allowance({ value, index, periodCode }) {
             {isOpenSubsidizeModal && employee && allowanceDetail.length > 0 && (
                 <ModalAllowance
                     isOpen={isOpenSubsidizeModal}
-                    title={'Thêm phụ cấp'}
+                    title={`Thêm phụ cấp cho nhân viên ${employee.employeeName}`}
                     allowanceDetail={allowanceDetail}
                     employee={employee}
                     handleClose={() => {
@@ -146,7 +146,7 @@ function Allowance({ value, index, periodCode }) {
             {isOpenViewAllowanceModal && employee && (
                 <ModalAllowanceDetail
                     isOpen={isOpenViewAllowanceModal}
-                    title={'Xem chi phụ cấp'}
+                    title={`Xem chi phụ cấp nhân viên ${employee.employeeName}`}
                     employee={employee}
                     periodCode={periodCode}
                     handleClose={() => {

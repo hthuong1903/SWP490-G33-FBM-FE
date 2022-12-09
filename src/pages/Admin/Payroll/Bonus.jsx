@@ -112,6 +112,7 @@ function Bonus({ value, index, periodCode }) {
             }
         }
     ]
+    
     const rows = bonus.map((item) => {
         const container = {}
         container['item'] = item
@@ -130,7 +131,7 @@ function Bonus({ value, index, periodCode }) {
             {isOpenBonusModal && employee && bonusDetail.length > 0 && (
                 <ModalBonus
                     isOpen={isOpenBonusModal}
-                    title={'Thêm thưởng'}
+                    title={`Thêm thưởng cho nhân viên ${employee.employeeName}`}
                     employee={employee}
                     bonusDetail={bonusDetail}
                     periodCode={periodCode}
@@ -143,7 +144,7 @@ function Bonus({ value, index, periodCode }) {
             {isOpenViewBonusModal && employee && (
                 <ModalBonusDetail
                     isOpen={isOpenViewBonusModal}
-                    title={'Xem chi tiết thưởng'}
+                    title={`Xem chi tiết thưởng nhân viên ${employee.employeeName}`}
                     employee={employee}
                     periodCode={periodCode}
                     handleClose={() => {
