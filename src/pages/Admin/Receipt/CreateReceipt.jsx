@@ -53,7 +53,7 @@ function CreateReceipt() {
 
     const addressDetails = (selectedEmployee) =>
         selectedEmployee.address
-            ? `${selectedEmployee.address}, ${selectedEmployee.districtName}, ${selectedEmployee.wardName}, ${selectedEmployee.provinceName}`
+            ? `${selectedEmployee.address}, ${selectedEmployee.district.name}, ${selectedEmployee.ward.name}, ${selectedEmployee.province.name}`
             : 'Khách hàng chưa có địa chỉ'
 
     const handleChange = (event, value) => setSelectedEmployee(value)
