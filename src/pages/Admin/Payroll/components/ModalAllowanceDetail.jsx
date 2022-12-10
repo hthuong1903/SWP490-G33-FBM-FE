@@ -55,11 +55,13 @@ function ModalAllowanceDetail({ title, isOpen, handleClose, employee, periodCode
 
     const columns = [
         { field: 'id', headerName: 'STT', flex: 1, hide: true },
-        { field: 'name', headerName: 'TÊN LOẠI THƯỞNG', flex: 1 },
+        { field: 'name', headerName: 'TÊN LOẠI PHỤ CẤP', flex: 1 },
         {
             field: 'quantity',
             headerName: 'SỐ TIỀN',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             type: 'number',
             valueFormatter: (params) => {
                 if (params.value == null) {
@@ -68,17 +70,22 @@ function ModalAllowanceDetail({ title, isOpen, handleClose, employee, periodCode
                 return `${params.value.toLocaleString('vi-VN')} VND`
             }
         },
-        { field: 'date', headerName: 'NGÀY THƯỞNG', flex: 1 },
+        { field: 'date', headerName: 'NGÀY THƯỞNG', flex: 1, headerAlign: 'center',
+        align: 'center'},
         {
             field: 'content',
             headerName: 'NỘI DUNG',
-            flex: 1
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center',
         },
 
         {
             field: 'actions',
             headerName: 'TÁC VỤ',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => {
                 return (
                     <>

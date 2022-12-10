@@ -60,6 +60,8 @@ function ModalBonusDetail({ title, isOpen, handleClose, employee, periodCode }) 
             field: 'quantity',
             headerName: 'SỐ TIỀN',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             type: 'number',
             valueFormatter: (params) => {
                 if (params.value == null) {
@@ -68,17 +70,22 @@ function ModalBonusDetail({ title, isOpen, handleClose, employee, periodCode }) 
                 return `${params.value.toLocaleString('vi-VN')} VND`
             }
         },
-        { field: 'date', headerName: 'NGÀY THƯỞNG', flex: 1 },
+        { field: 'date', headerName: 'NGÀY THƯỞNG', flex: 1, headerAlign: 'center',
+        align: 'center'},
         {
             field: 'content',
             headerName: 'NỘI DUNG',
-            flex: 1
+            flex: 1, 
+            headerAlign: 'center',
+            align: 'center',
         },
 
         {
             field: 'actions',
             headerName: 'TÁC VỤ',
             flex: 1,
+            headerAlign: 'center',
+            align: 'center',
             renderCell: (params) => {
                 return (
                     <>
