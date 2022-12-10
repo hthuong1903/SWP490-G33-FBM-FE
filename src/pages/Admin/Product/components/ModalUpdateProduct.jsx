@@ -61,13 +61,13 @@ export default function ModalUpdateProduct({
         productApi
             .updateImage(formData)
             .then((res) => {
-                console.log('up anh thanh cong', res.data.data[0])
+                console.log('Tải ảnh thành công', res.data.data[0])
                 const dataSubmit = {
                     ...data,
                     id: selectedData?.row.id,
                     provider: { id: provider },
                     category: { id: category },
-                    material: { id: material },
+                    material: material,
                     discount: discountValue,
                     productPhoto: {
                         photoMainName: res.data.data[0].photoMainName,

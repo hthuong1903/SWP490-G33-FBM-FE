@@ -71,6 +71,8 @@ function Receipt() {
                 )
             }
         },
+        { field: 'orderCode', headerName: 'MÃ HÓA ĐƠN', flex: 1, headerAlign: 'center',
+        align: 'center'},
         {
             field: 'phone',
             headerName: 'SỐ ĐIỆN THOẠI',
