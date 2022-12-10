@@ -14,13 +14,15 @@ import schema from '../validation'
 import ImageUpload from './ImageUpload'
 
 export default function ModalAddProduct({ title, isOpen, handleClose, handleConfirm, isEdit }) {
-    const [provider, setProvider] = useState(1)
-    const [category, setCategory] = useState(1)
+    const [provider, setProvider] = useState(null)
+    const [category, setCategory] = useState(null)
     const [providerList, setProviderList] = useState([])
     const [categoryList, setCategoryList] = useState([])
     const [discountValue, setDiscountValue] = useState(30)
     const [priceOut, setPriceOut] = useState(0)
     const [imageData, setImageData] = useState(null)
+    const [material, setMaterial] = useState(null)
+    const [materialList, setMaterialList] = useState([])
 
     const {
         register,
@@ -34,7 +36,6 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
 
     const onSubmit = (data) => {
         console.log(imageData)
-
         const formData = new FormData()
         formData.append('photo_main', imageData?.photoMainName)
         formData.append('photo_once', imageData?.photoOnceName)
@@ -49,6 +50,7 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
                     provider: { id: provider },
                     category: { id: category },
                     discount: discountValue,
+                    material: { id: material}, 
                     productPhoto: {
                         photoMainName: res.data.data[0].photoMainName,
                         photoOnceName: res.data.data[0].photoOnceName,
@@ -72,6 +74,14 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
                 console.log(error)
             })
     }
+    const getAllMaterial = async () => {
+        try {
+            const response = await productApi.getAllMaterial()
+            setMaterialList(response.data)
+        } catch (error) {
+            console.log('Fail when getAllMaterial', error)
+        }
+    }
 
     const getAllCategory = async () => {
         try {
@@ -93,6 +103,7 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
     useEffect(() => {
         getAllCategory()
         getAllProvider()
+        getAllMaterial()
     }, [])
 
     return (
@@ -291,7 +302,7 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
                                 error={errors.color ? true : false}
                                 helperText={errors.color?.message}
                             />
-                            <TextField
+                            {/* <TextField
                                 fullWidth
                                 size="small"
                                 id="outlined-basic"
@@ -300,7 +311,25 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
                                 {...register('material')}
                                 error={errors.material ? true : false}
                                 helperText={errors.material?.message}
-                            />
+                            /> */}
+                            <TextField
+                                fullWidth
+                                id="outlined-select-currency"
+                                select
+                                size="small"
+                                label="Chất liệu"
+                                value={material}
+                                onChange={(event) => {
+                                    setMaterial(event.target.value)
+                                }}>
+                                {materialList.map((material) => {
+                                    return (
+                                        <MenuItem key={material.id} value={material.id}>
+                                            {material.name}
+                                        </MenuItem>
+                                    )
+                                })}
+                            </TextField>
                         </Box>
 
                         <Box>

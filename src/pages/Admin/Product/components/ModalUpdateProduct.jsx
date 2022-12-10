@@ -30,6 +30,8 @@ export default function ModalUpdateProduct({
     const [priceOut, setPriceOut] = useState(0)
     const [imageData, setImageData] = useState(null)
     const {auth} = useAuth()
+    const [material, setMaterial] = useState(1)
+    const [materialList, setMaterialList] = useState([])
     const {
         register,
         handleSubmit,
@@ -65,6 +67,7 @@ export default function ModalUpdateProduct({
                     id: selectedData?.row.id,
                     provider: { id: provider },
                     category: { id: category },
+                    material: { id: material },
                     discount: discountValue,
                     productPhoto: {
                         photoMainName: res.data.data[0].photoMainName,
@@ -90,6 +93,15 @@ export default function ModalUpdateProduct({
             })
     }
 
+    const getAllMaterial = async () => {
+        try {
+            const response = await productApi.getAllMaterial()
+            setMaterialList(response.data)
+        } catch (error) {
+            console.log('Fail when getAllMaterail', error)
+        }
+    }
+
     const getAllCategory = async () => {
         try {
             const response = await productApi.getAllCategory()
@@ -111,6 +123,7 @@ export default function ModalUpdateProduct({
     useEffect(() => {
         getAllCategory()
         getAllProvider()
+        getAllMaterial()
         setProvider(selectedData?.row.provider.id)
         setCategory(selectedData?.row.category.id)
         setDiscountValue(selectedData?.row.discount)
@@ -331,7 +344,7 @@ export default function ModalUpdateProduct({
                                 error={errors.color ? true : false}
                                 helperText={errors.color?.message}
                             />
-                            <TextField
+                            {/* <TextField
                                 disabled={!isEdit}
                                 fullWidth
                                 size="small"
@@ -342,7 +355,26 @@ export default function ModalUpdateProduct({
                                 {...register('material')}
                                 error={errors.material ? true : false}
                                 helperText={errors.material?.message}
-                            />
+                            /> */}
+                            <TextField
+                                fullWidth
+                                id="outlined-select-currency"
+                                select
+                                size="small"
+                                label="Chất liệu"
+                                value={material}
+                                onChange={(event) => {
+                                    setMaterial(event.target.value)
+                                }}
+                                disabled={!isEdit}>
+                                {materialList.map((material) => {
+                                    return (
+                                        <MenuItem key={material.id} value={material.id}>
+                                            {material.name}
+                                        </MenuItem>
+                                    )
+                                })}
+                            </TextField>
                         </Box>
 
                         <Box>

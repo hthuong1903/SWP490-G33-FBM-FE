@@ -34,6 +34,10 @@ const productApi = {
     updateImage: (formdata) => {
         const url = `/storage_server/upload/product_image_by_update`
         return axios.post(`${BASE_URL}` + url, formdata)
+    },
+    getAllMaterial: () => {
+        const url = `/materials`
+        return axiosClient.get(url)
     }
 }
 
