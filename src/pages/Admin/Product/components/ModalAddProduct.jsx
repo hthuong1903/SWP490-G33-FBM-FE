@@ -50,7 +50,7 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
                     provider: { id: provider },
                     category: { id: category },
                     discount: discountValue,
-                    material: { id: material}, 
+                    materialProduct: { id: material}, 
                     productPhoto: {
                         photoMainName: res.data.data[0].photoMainName,
                         photoOnceName: res.data.data[0].photoOnceName,
@@ -96,7 +96,7 @@ export default function ModalAddProduct({ title, isOpen, handleClose, handleConf
             const response = await productApi.getAllProvider()
             setProviderList(response.data)
         } catch (error) {
-            console.log('fail when getAllCategory', error)
+            console.log('fail when getAllProvider', error)
         }
     }
 

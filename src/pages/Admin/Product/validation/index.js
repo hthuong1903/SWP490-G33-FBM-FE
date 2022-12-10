@@ -31,7 +31,7 @@ const schema = yup.object().shape({
       }
   }),
   color: yup.string().required('Không bỏ trống').trim(),
-  material: yup.string().required('Không bỏ trống').trim(),
+  // material: yup.string().required('Không bỏ trống').trim(),
   size: yup.string().required('Vui lòng không bỏ trống trường này.').trim()
 })
 export default schema

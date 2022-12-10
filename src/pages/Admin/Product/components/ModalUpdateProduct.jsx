@@ -67,7 +67,7 @@ export default function ModalUpdateProduct({
                     id: selectedData?.row.id,
                     provider: { id: provider },
                     category: { id: category },
-                    material: material,
+                    materialProduct: { id: material },
                     discount: discountValue,
                     productPhoto: {
                         photoMainName: res.data.data[0].photoMainName,
@@ -86,7 +86,7 @@ export default function ModalUpdateProduct({
                     })
                     .catch((error) => console.log(error))
 
-                console.log(dataSubmit)
+                console.log('dataSubmit', dataSubmit)
             })
             .catch((error) => {
                 console.log(error)
@@ -96,6 +96,7 @@ export default function ModalUpdateProduct({
     const getAllMaterial = async () => {
         try {
             const response = await productApi.getAllMaterial()
+            console.log("------", response.data)
             setMaterialList(response.data)
         } catch (error) {
             console.log('Fail when getAllMaterail', error)
@@ -116,7 +117,7 @@ export default function ModalUpdateProduct({
             const response = await productApi.getAllProvider()
             setProviderList(response.data)
         } catch (error) {
-            console.log('fail when getAllCategory', error)
+            console.log('fail when getAllProvider', error)
         }
     }
 
@@ -128,6 +129,7 @@ export default function ModalUpdateProduct({
         setCategory(selectedData?.row.category.id)
         setDiscountValue(selectedData?.row.discount)
         setPriceOut(selectedData?.row.priceOut)
+        setMaterial(selectedData?.row.materialProduct.id)
     }, [])
 
     return (
