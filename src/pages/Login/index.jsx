@@ -77,7 +77,8 @@ export default function Login() {
 		<Container>
 			<Paper
 				sx={{
-					width: "70vw",
+					bgcolor: 'background.paper',
+					width: "58vw",
 					position: "absolute",
 					top: "50%",
 					left: "50%",
@@ -88,16 +89,16 @@ export default function Login() {
 					<Grid item xs={6}>
 						<Box sx={{ p: 3 }}>
 							<Box sx={{ display: "flex", justifyContent: "space-between" }}>
-								<Box>LOGO</Box>
-								<Box>
+								<Box sx={{ fontWeight: "bold" }}>Nội Thất Hoàng Sơn</Box>
+								{/* <Box>
 									Bạn không có tài khoản?{" "}
 									<Typography component={Link} to="/registor">
 										Đăng ký
 									</Typography>
-								</Box>
+								</Box> */}
 							</Box>
-							<Box sx={{ textAlign: "center", mt: 8, mb: 2 }}>
-								<Typography variant="h6" sx={{ fontWeight: "bold" }}>
+							<Box sx={{ textAlign: "center", mt: 8, mb: 4 }}>
+								<Typography variant="h6" sx={{ fontWeight: "bold"}}>
 									ĐĂNG NHẬP
 								</Typography>
 							</Box>
@@ -113,7 +114,7 @@ export default function Login() {
 										error={errors.username ? true : false}
 										helperText={errors.username?.message}
 									/>
-									<TextField
+									<TextField sx={{mt: 1.5}}
 										label="Password"
 										variant="outlined"
 										size="small"
@@ -131,7 +132,7 @@ export default function Login() {
 										justifyContent: "space-between",
 									}}
 								>
-									<FormControlLabel
+									<FormControlLabel sx={{mt: 2, fontWeight: 'light'}}
 										label="Lưu đăng nhập"
 										checked={rememberMe}
 										control={
@@ -142,7 +143,7 @@ export default function Login() {
 											/>
 										}
 									/>
-									<Typography component={Link} to="/manager/admin">
+									<Typography sx={{mt: 2, color: 'primary.main', fontWeight: 'light', textDecoration: 'none'}} component={Link} to="/manager/admin">
 										Quên mật khẩu?
 									</Typography>
 								</Box>
@@ -151,7 +152,7 @@ export default function Login() {
 										fullWidth
 										loading={isLoading}
 										variant="contained"
-										sx={{ mt: 2 }}
+										sx={{ mt: 2}}
 										onClick={handleSubmit(signIn)}
 									>
 										Đăng nhập
@@ -162,7 +163,7 @@ export default function Login() {
 					</Grid>
 					<Grid item xs={6}>
 						<img
-							src="https://static01.nyt.com/images/2016/09/28/us/28xp-pepefrog/28xp-pepefrog-superJumbo.jpg"
+							src="https://i.pinimg.com/564x/80/f2/b0/80f2b023247cb3bf83f149b96fa8673c.jpg"
 							alt="login image"
 							width="100%"
 							height="100%"
