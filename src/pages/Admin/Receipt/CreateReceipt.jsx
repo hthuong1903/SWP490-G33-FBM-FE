@@ -45,6 +45,7 @@ function CreateReceipt() {
     const [rows, setRows] = useState([])
     const [value, setValue] = useState(1)
     const { auth } = useAuth()
+    const [errorChangedPrice, setErrorChangedPrice] = useState('')
     let navigate = useNavigate()
 
     const handleSelect = (event) => {
@@ -300,15 +301,23 @@ function CreateReceipt() {
                                         </StyledTableCell>
                                         <StyledTableCell align="left">
                                             <TextField
+                                                error
                                                 type="number"
                                                 size="small"
+                                                // id="outlined-error-helper-text"
                                                 id="outlined-basic"
                                                 variant="outlined"
+                                                helperText={errorChangedPrice}
                                                 defaultValue={row?.changedPrice}
+                                                // helperText={errorChangedPrice}
                                                 sx={{ width: '250px' }}
                                                 onChange={(event) => {
-                                                    row.changedPrice = event.target.value
-                                                    // let newQuantity = Number(row.changedPrice)
+                                                    if (event.target.value < 0 || event.target.value >= row.product.priceOut) { setErrorChangedPrice('Chiết khấu không được < 0 hoặc >= giá bán')}
+                                                    else {
+                                                        row.changedPrice = event.target.value
+                                                        setErrorChangedPrice('')
+                                                    }
+                                                    // let newQuantity = Number(row.changedPrice)aoh
                                                     // setRows((oldRow) => {
                                                     //     return oldRow.map((item) => {
                                                     //         if (item.id === row.id) {
