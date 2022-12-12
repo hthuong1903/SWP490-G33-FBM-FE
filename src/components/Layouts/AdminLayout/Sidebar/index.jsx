@@ -42,6 +42,12 @@ function Sidebar() {
             allow: ['MANAGER', 'SELLER']
         },
         {
+            name: 'Đơn hàng',
+            href: '/manager/admin/orders',
+            path: '/orders',
+            allow: ['MANAGER', 'SELLER']
+        },
+        {
             name: 'Hóa đơn',
             href: '/manager/admin/receipts',
             path: '/receipts',
@@ -59,12 +65,12 @@ function Sidebar() {
             path: '/payrolls',
             allow: ['MANAGER']
         },
-        {
-            name: 'Đơn hàng',
-            href: '/manager/admin/orders',
-            path: '/orders',
-            allow: ['MANAGER', 'SELLER']
-        },
+        // {
+        //     name: 'Đơn hàng',
+        //     href: '/manager/admin/orders',
+        //     path: '/orders',
+        //     allow: ['MANAGER', 'SELLER']
+        // },
         {
             name: 'Thông Tin Khách Hàng',
             href: '/manager/admin/dataCustomer',

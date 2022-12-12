@@ -131,8 +131,8 @@ function TimeKeepingTab({ value, index, periodCode }) {
     const rows = timeSheetDetail.map((item, index) => {
         const container = {}
         container['id'] = index + 1
-        container['absentDay'] = item.absentDay
-        container['allowedDay'] = item.allowedAbsentDay
+        container['absentDay'] = item.allowedAbsentDay
+        container['allowedDay'] = item.absentDay
         container['holidaysWorking'] = item.holidaysWorking
         container['periodCode'] = item.periodCode
         container['totalDayWorking'] = item.totalDayWorking
