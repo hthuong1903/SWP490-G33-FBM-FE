@@ -110,7 +110,7 @@ function ModalAllowanceDetail({ title, isOpen, handleClose, employee, periodCode
         const container = {}
         container['id'] = item.id
         container['name'] = item.allowance.typeOfAllowance
-        container['quantity'] = item.allowance.money
+        container['quantity'] = item.moneyAllowance
         container['content'] = item.content
         container['date'] = item.date
         return container

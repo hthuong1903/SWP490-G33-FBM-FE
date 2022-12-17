@@ -110,7 +110,7 @@ function ModalBonusDetail({ title, isOpen, handleClose, employee, periodCode }) 
         const container = {}
         container['id'] = item.id
         container['name'] = item.bonus.typeOfBonus
-        container['quantity'] = item.bonus.money
+        container['quantity'] = item.moneyBonus
         container['content'] = item.content
         container['date'] = item.date
         return container
