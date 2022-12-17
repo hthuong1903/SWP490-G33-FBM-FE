@@ -42,7 +42,7 @@ export default function CreateOrder() {
     let navigate = useNavigate()
     const location = useLocation()
     let { orderId } = useParams()
-
+    const [errorChangedPrice, setErrorChangedPrice] = useState('')
     console.log(location)
     const min = 1
     const max = 10
@@ -327,14 +327,21 @@ export default function CreateOrder() {
                                         </StyledTableCell>
                                         <StyledTableCell align="left">
                                             <TextField
+                                                error
                                                 type="number"
                                                 size="small"
                                                 id="outlined-basic"
                                                 variant="outlined"
+                                                helperText={errorChangedPrice}
                                                 defaultValue={row?.changedPrice}
                                                 sx={{ width: '250px' }}
                                                 onChange={(event) => {
-                                                    row.changedPrice = event.target.value
+                                                    // row.changedPrice = event.target.value
+                                                    if (event.target.value < 0 || event.target.value >= row.product.priceOut) { setErrorChangedPrice('Chiết khấu không được < 0 hoặc >= giá bán')}
+                                                    else {
+                                                        row.changedPrice = event.target.value
+                                                        setErrorChangedPrice('')
+                                                    }
                                                 }}
                                                 InputProps={{
                                                     endAdornment: (
