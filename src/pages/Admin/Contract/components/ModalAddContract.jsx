@@ -136,17 +136,6 @@ export default function ModalAddContract({ title, isOpen, handleClose, handleCon
                             )}
                         />
                     )}
-                    {/* <TextField
-                        fullWidth
-                        size="small"
-                        id="outlined-basic"
-                        type="number"
-                        label="Số lần ký"
-                        variant="outlined"
-                        {...register('signTimes')}
-                        error={errors.signTimes ? true : false}
-                        helperText={errors.signTimes?.message}
-                    /> */}
                     <Controller
                         name="salary"
                         variant="outlined"
