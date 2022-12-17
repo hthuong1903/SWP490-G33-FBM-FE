@@ -97,7 +97,8 @@ function CreateReceipt() {
                 priceOut: i.priceOut
             },
             quantity: i.quantity,
-            changedPrice: i.discount
+            changedPrice: 0,
+            discountProduct: i.discount
         }
     })
 
@@ -230,7 +231,7 @@ function CreateReceipt() {
                                             {row?.product.priceOut.toLocaleString('vi-vn')} VND
                                         </StyledTableCell>
                                         <StyledTableCell>
-                                            {row.product.percent} %
+                                            {row?.discountProduct} %
                                         </StyledTableCell>
                                         <StyledTableCell align="center">
                                             <Box sx={{ display: 'flex' }}>
