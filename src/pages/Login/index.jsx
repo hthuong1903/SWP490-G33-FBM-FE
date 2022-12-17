@@ -105,7 +105,7 @@ export default function Login() {
 							<Box sx={{ maxWidth: "450px", margin: "0 auto" }}>
 								<Box sx={{ textAlign: "center" }}>
 									<TextField
-										label="Email"
+										label="Tên Đăng Nhập"
 										variant="outlined"
 										size="small"
 										fullWidth
@@ -115,7 +115,7 @@ export default function Login() {
 										helperText={errors.username?.message}
 									/>
 									<TextField sx={{mt: 1.5}}
-										label="Password"
+										label="Mật Khẩu"
 										variant="outlined"
 										size="small"
 										fullWidth
