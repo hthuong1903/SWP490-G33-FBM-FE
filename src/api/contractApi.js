@@ -15,7 +15,7 @@ const contractApi = {
         const url = `/contracts`
         return axios.post(`${BASE_URL}` + url, params)
     },
-    updateCategory: (params) => {
+    updateContract: (params) => {
         const url = `/contracts`
         return axios.put(`${BASE_URL}` + url, params)
     }

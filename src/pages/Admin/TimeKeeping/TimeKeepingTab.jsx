@@ -94,8 +94,8 @@ function TimeKeepingTab({ value, index, periodCode }) {
         { field: 'absentDay', headerName: 'VẮNG', flex: 0.5, headerAlign: 'center', align: 'center' },
         { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 0.65 , headerAlign: 'center', align: 'center'},
         { field: 'haftDayWorking', headerName: 'CÔNG NỬA NGÀY', flex: 1, headerAlign: 'center', align: 'center' },
-        { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', headerAlign: 'center', flex: 1.4, align: 'center' },
         { field: 'workingDay', headerName: 'NGÀY THƯỜNG', flex: 1, headerAlign: 'center', align: 'center' },
+        { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', headerAlign: 'center', flex: 1.4, align: 'center' },
         {
             field: 'actions',
             headerName: 'TÁC VỤ',

@@ -53,7 +53,7 @@ export default function ModalUpdateContract({
         }
         console.log(dataSubmit)
         contractApi
-            .updateCategory(dataSubmit)
+            .updateContract(dataSubmit)
             .then((res) => {
                 if (res.data) {
                     console.log(res)
