@@ -57,11 +57,11 @@ export default function ManagerAccount() {
     }
 
     const columns = [
-        {
-            field: 'staffCode',
-            headerName: 'UserID',
-            flex: 1,
-        },
+        // {
+        //     field: 'staffCode',
+        //     headerName: 'UserID',
+        //     flex: 1,
+        // },
         {
             field: 'name',
             headerName: 'HỌ VÀ TÊN',
@@ -75,12 +75,12 @@ export default function ManagerAccount() {
         { 
             field: 'email', 
             headerName: 'EMAIL', 
-            flex: 1 
+            flex: 1.25
         },
         { 
             field: 'updateDate', 
             headerName: 'NGÀY CẬP NHẬP', 
-            flex: 1,
+            flex: 0.75,
             headerAlign: 'center',
             align: 'center',
         },
@@ -92,7 +92,7 @@ export default function ManagerAccount() {
                 return (
                     <Box sx={{ display: 'flex', justifyContent: 'center', width: '80%' }}>
                         <Button
-                            variant="outlined"
+                            variant="contained"
                             onClick={() => {
                                 setSelectedRow(params)
                                 setIsEdit(false)
@@ -107,14 +107,14 @@ export default function ManagerAccount() {
         { 
             field: 'action', 
             headerName: 'TÁC VỤ', 
-            flex: 1,
+            flex: 1.75,
             headerAlign: 'center',
             align: 'center',
             renderCell: (params) => {
                 return (
                     <>
                         <Button
-                            variant="outlined"
+                            variant="contained"
                             onClick={() => {
                                 setIsEdit(true)
                                 setSelectedRow(params)
@@ -123,8 +123,8 @@ export default function ManagerAccount() {
                             }}>
                             Edit
                         </Button>
-                        <Button sx={{ml: 0.25}}
-                            variant="outlined"
+                        <Button sx={{ml: 2.5}}
+                            variant="contained"
                             onClick={() => {
                                 setSelectedRow(params)
                                 setIsEdit(false)
@@ -133,8 +133,8 @@ export default function ManagerAccount() {
                             }}>
                             Xóa
                         </Button>
-                        <Button sx={{m: 0.25}}
-                            variant="outlined"
+                        <Button sx={{m: 2.5}}
+                            variant="contained"
                             onClick={() => {
                                 setSelectedRow(params)
                                 setIsEdit(false)

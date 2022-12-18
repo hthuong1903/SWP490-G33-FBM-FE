@@ -216,7 +216,7 @@ export default function ModelUpdateAccount({ title, isOpen, handleClose, handleC
                         label="Tên Đăng Nhập"
                         variant="outlined"
                         defaultValue={selectedData?.username}
-                        disabled={disabled}
+                        // disabled={disabled}
                         {...register('username')}
                         error={errors.username ? true : false}
                         helperText={errors.username?.message}

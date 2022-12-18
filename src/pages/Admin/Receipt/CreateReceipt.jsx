@@ -47,6 +47,7 @@ function CreateReceipt() {
     const { auth } = useAuth()
     const [errorChangedPrice, setErrorChangedPrice] = useState('')
     let navigate = useNavigate()
+    // const [listProductOrder, setListProductOrder] = useState([])
 
     const handleSelect = (event) => {
         setValue(event.target.value)
@@ -87,6 +88,9 @@ function CreateReceipt() {
         // setRows([...location.state[0].orderProductDtos])
     }, [location])
 
+    // useEffect(() => {
+        
+    // })
     const formatProductList = productList.map((i) => {
         return {
             productId: i.id,

@@ -238,118 +238,118 @@ export default function ModelUpdateCustomer({ title, isOpen, handleClose, handle
                     />
             </Box>
             <Box sx={{ mt: 2}}>
-                    <Controller
-                        name="province"
-                        variant="outlined"
-                        defaultValue={selectedData?.province.id}
-                        control={control}
-                        render={({ field: { onChange, value }, fieldState: { error } }) => (
-                            <TextField
-                                fullWidth
-                                id="outlined-select-currency"
-                                select
-                                size="small"
-                                label="Tỉnh/Thành phố"
-                                value={value}
-                                onChange={(event) => {
-                                    setSelectedProvince(event.target.value)
-                                    onChange(Number(event.target.value))
-                                }}
-                                sx={{ mr: 2 }}
-                                error={!!error}
-                                helperText={error ? error.message : null}>
-                                {provinceList.map((province) => {
-                                    return (
-                                        <MenuItem key={province.code} value={province.code}>
-                                            {province.name}
-                                        </MenuItem>
-                                    )
-                                })}
-                            </TextField>
-                        )}
-                    />
-                </Box>
+                <Controller
+                    name="province"
+                    variant="outlined"
+                    defaultValue={selectedData?.province.id}
+                    control={control}
+                    render={({ field: { onChange, value }, fieldState: { error } }) => (
+                        <TextField
+                            fullWidth
+                            id="outlined-select-currency"
+                            select
+                            size="small"
+                            label="Tỉnh/Thành phố"
+                            value={value}
+                            onChange={(event) => {
+                                setSelectedProvince(event.target.value)
+                                onChange(Number(event.target.value))
+                            }}
+                            sx={{ mr: 2 }}
+                            error={!!error}
+                            helperText={error ? error.message : null}>
+                            {provinceList.map((province) => {
+                                return (
+                                    <MenuItem key={province.code} value={province.code}>
+                                        {province.name}
+                                    </MenuItem>
+                                )
+                            })}
+                        </TextField>
+                    )}
+                />
+            </Box>
 
-                <Box sx={{ mt: 2}}>
-                    <Controller
-                        name="district"
-                        variant="outlined"
-                        defaultValue={selectedData?.district.id}
-                        control={control}
-                        render={({ field: { onChange, value }, fieldState: { error } }) => (
-                            <TextField
-                                fullWidth
-                                id="outlined-select-currency"
-                                select
-                                size="small"
-                                label="Quận/Huyện"
-                                value={value}
-                                onChange={(event) => {
-                                    setSelectedDistrict(event.target.value)
-                                    onChange(Number(event.target.value))
-                                }}
-                                sx={{ mr: 2 }}
-                                error={!!error}
-                                helperText={error ? error.message : null}>
-                                {districtList.map((district) => {
-                                    return (
-                                        <MenuItem key={district.code} value={district.code}>
-                                            {district.name}
-                                        </MenuItem>
-                                    )
-                                })}
-                            </TextField>
-                        )}
-                    />
-                </Box>
+            <Box sx={{ mt: 2}}>
+                <Controller
+                    name="district"
+                    variant="outlined"
+                    defaultValue={selectedData?.district.id}
+                    control={control}
+                    render={({ field: { onChange, value }, fieldState: { error } }) => (
+                        <TextField
+                            fullWidth
+                            id="outlined-select-currency"
+                            select
+                            size="small"
+                            label="Quận/Huyện"
+                            value={value}
+                            onChange={(event) => {
+                                setSelectedDistrict(event.target.value)
+                                onChange(Number(event.target.value))
+                            }}
+                            sx={{ mr: 2 }}
+                            error={!!error}
+                            helperText={error ? error.message : null}>
+                            {districtList.map((district) => {
+                                return (
+                                    <MenuItem key={district.code} value={district.code}>
+                                        {district.name}
+                                    </MenuItem>
+                                )
+                            })}
+                        </TextField>
+                    )}
+                />
+            </Box>
 
-                <Box sx={{ mt: 2}}>
-                    <Controller
-                        name="ward"
-                        variant="outlined"
-                        defaultValue={selectedData?.ward.id}
-                        control={control}
-                        render={({ field: { onChange, value }, fieldState: { error } }) => (
-                            <TextField
-                                fullWidth
-                                id="outlined-select-currency"
-                                select
-                                size="small"
-                                label="Phường/Xã"
-                                value={value}
-                                onChange={(event) => {
-                                    setSelectedWard(event.target.value)
-                                    onChange(Number(event.target.value))
-                                }}
-                                sx={{ mr: 2 }}
-                                error={!!error}
-                                helperText={error ? error.message : null}>
-                                {wardList.map((ward) => {
-                                    return (
-                                        <MenuItem key={ward.code} value={ward.code}>
-                                            {ward.name}
-                                        </MenuItem>
-                                    )
-                                })}
-                            </TextField>
-                        )}
-                    />
-                </Box>
+            <Box sx={{ mt: 2}}>
+                <Controller
+                    name="ward"
+                    variant="outlined"
+                    defaultValue={selectedData?.ward.id}
+                    control={control}
+                    render={({ field: { onChange, value }, fieldState: { error } }) => (
+                        <TextField
+                            fullWidth
+                            id="outlined-select-currency"
+                            select
+                            size="small"
+                            label="Phường/Xã"
+                            value={value}
+                            onChange={(event) => {
+                                setSelectedWard(event.target.value)
+                                onChange(Number(event.target.value))
+                            }}
+                            sx={{ mr: 2 }}
+                            error={!!error}
+                            helperText={error ? error.message : null}>
+                            {wardList.map((ward) => {
+                                return (
+                                    <MenuItem key={ward.code} value={ward.code}>
+                                        {ward.name}
+                                    </MenuItem>
+                                )
+                            })}
+                        </TextField>
+                    )}
+                />
+            </Box>
 
-                <Box sx={{ mt: 2}}>
-                    <TextField
-                        fullWidth
-                        size="small"
-                        id="outlined-basic"
-                        label="Địa chỉ cụ thể"
-                        placeholder="Tòa nhà, tên đường ..."
-                        variant="outlined"
-                        defaultValue={selectedData?.address}
-                        {...register('address')}
-                        error={errors.address ? true : false}
-                        helperText={errors.address?.message}
-                    />
-                </Box>
+            <Box sx={{ mt: 2}}>
+                <TextField
+                    fullWidth
+                    size="small"
+                    id="outlined-basic"
+                    label="Địa chỉ cụ thể"
+                    placeholder="Tòa nhà, tên đường ..."
+                    variant="outlined"
+                    defaultValue={selectedData?.address}
+                    {...register('address')}
+                    error={errors.address ? true : false}
+                    helperText={errors.address?.message}
+                />
+            </Box>
             
         </DialogContent>
         <DialogActions>

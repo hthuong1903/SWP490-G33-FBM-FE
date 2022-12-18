@@ -57,11 +57,11 @@ export default function FixerAccount() {
     }
 
     const columns = [
-        {
-            field: 'staffCode',
-            headerName: 'UserID',
-            flex: 1,
-        },
+        // {
+        //     field: 'staffCode',
+        //     headerName: 'UserID',
+        //     flex: 1,
+        // },
         {
             field: 'name',
             headerName: 'TÊN NHÂN VIÊN',
@@ -75,7 +75,7 @@ export default function FixerAccount() {
         { 
             field: 'email', 
             headerName: 'EMAIL', 
-            flex: 1 
+            flex: 1.25
         },
         { 
             field: 'updateDate', 
@@ -92,7 +92,7 @@ export default function FixerAccount() {
                 return (
                     <Box sx={{ display: 'flex', justifyContent: 'center', width: '80%' }}>
                         <Button
-                            variant="outlined"
+                            variant="contained"
                             onClick={() => {
                                 setSelectedRow(params)
                                 setIsEdit(false)
@@ -107,14 +107,14 @@ export default function FixerAccount() {
         { 
             field: 'action', 
             headerName: 'TÁC VỤ', 
-            flex: 1,
+            flex: 1.75,
             headerAlign: 'center',
             align: 'center',
             renderCell: (params) => {
                 return (
                     <>
                         <Button
-                            variant="outlined"
+                            variant="contained"
                             onClick={() => {
                                 setIsEdit(true)
                                 setSelectedRow(params)
@@ -123,8 +123,8 @@ export default function FixerAccount() {
                             }}>
                             Edit
                         </Button>
-                        <Button sx={{ml: 0.25}}
-                            variant="outlined"
+                        <Button sx={{ml: 2.5}}
+                            variant="contained"
                             onClick={() => {
                                 setSelectedRow(params)
                                 setIsEdit(false)
@@ -133,8 +133,8 @@ export default function FixerAccount() {
                             }}>
                             Xóa
                         </Button>
-                        <Button sx={{ml: 0.25}}
-                            variant="outlined"
+                        <Button sx={{ml: 2.5}}
+                            variant="contained"
                             onClick={() => {
                                 setSelectedRow(params)
                                 setIsEdit(false)
