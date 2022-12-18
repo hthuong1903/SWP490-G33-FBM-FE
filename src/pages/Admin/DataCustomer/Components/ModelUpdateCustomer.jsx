@@ -20,7 +20,7 @@ export default function ModelUpdateCustomer({ title, isOpen, handleClose, handle
     const [selectedProvince, setSelectedProvince] = useState(selectedData?.province.id)
     const [selectedDistrict, setSelectedDistrict] = useState(selectedData?.district.id)
     const [selectedWard, setSelectedWard] = useState(selectedData?.ward.id)
-    const [gender, setGender] = useState(selectedData?.gender.id)
+    const [gender, setGender] = useState(selectedData?.gender)
     const [disabled, setDisabled] = useState(true);
 
     const genderList = [

@@ -1,14 +1,13 @@
 import axios from 'axios'
 import axiosClient from './axiosClient'
 import { BASE_URL } from './constraint'
-const baseURL = 'https://provinces.open-api.vn/api'
 const AccountApi = {
     getAllAccount: () => {
-        const url = `/user_internal`
+        const url = `user_internal`
         return axiosClient.get(url)
     },
     getAllAccountCustomer: () => {
-        const url = `/customer_online`
+        const url = `customer_online`
         return axiosClient.get(url)
     },
 
