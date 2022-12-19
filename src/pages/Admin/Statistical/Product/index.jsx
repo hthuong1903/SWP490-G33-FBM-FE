@@ -50,59 +50,65 @@ function ProductSale() {
 
     return (
         <>
-            <Box sx={{ mb: 2, mt: 3, display: 'flex', justifyContent: 'space-between' }}>
-                <TextField
-                    id="outlined-select-currency"
-                    select
-                    size="small"
-                    label="Tháng"
-                    value={month}
-                    onChange={(event) => {
-                        setMonth(event.target.value)
-                    }}
-                    sx={{ mr: 2 }}>
-                    <MenuItem value={-1}>Tất cả</MenuItem>
-                    {monthInSemester.map((provider) => {
-                        return (
-                            <MenuItem key={provider} value={provider}>
-                                {provider}
-                            </MenuItem>
-                        )
-                    })}
-                </TextField>
-                <TextField
-                    id="outlined-select-currency"
-                    select
-                    size="small"
-                    label="Năm"
-                    value={year}
-                    onChange={(event) => {
-                        setYear(event.target.value)
-                    }}
-                    sx={{ mr: 2 }}>
-                    <MenuItem value={-1}>Tất cả</MenuItem>
-                    {years.map((provider) => {
-                        return (
-                            <MenuItem key={provider} value={provider}>
-                                {provider}
-                            </MenuItem>
-                        )
-                    })}
-                </TextField>
-                <TextField
-                    id="outlined-select-currency"
-                    select
-                    size="small"
-                    label="Loại"
-                    value={type}
-                    onChange={(event) => {
-                        setType(event.target.value)
-                    }}
-                    sx={{ mr: 2 }}>
-                    {/* <MenuItem value={-1}>Tất cả</MenuItem> */}
-                    <MenuItem value={1}>Sản phẩm bán chạy</MenuItem>
-                    <MenuItem value={2}>Sản phẩm không bán chạy</MenuItem>
-                </TextField>
+            <h2>Thông kê sản phẩm bán chạy</h2>
+            <Box sx={{mb: 2, mt: 3, display: 'flex', justifyContent: 'space-between' }}>
+                <Box>                
+                    <TextField
+                        id="outlined-select-currency"
+                        select
+                        size="small"
+                        label="Tháng"
+                        value={month}
+                        onChange={(event) => {
+                            setMonth(event.target.value)
+                        }}
+                        sx={{ mr: 2 }}
+                        >
+                        <MenuItem value={-1}>Tất cả</MenuItem>
+                        {monthInSemester.map((provider) => {
+                            return (
+                                <MenuItem key={provider} value={provider}>
+                                    {provider}
+                                </MenuItem>
+                            )
+                        })}
+                    </TextField>
+                    <TextField
+                        id="outlined-select-currency"
+                        select
+                        size="small"
+                        label="Năm"
+                        value={year}
+                        onChange={(event) => {
+                            setYear(event.target.value)
+                        }}
+                        sx={{ mr: 2}}
+                        >
+                        <MenuItem value={-1}>Tất cả</MenuItem>
+                        {years.map((provider) => {
+                            return (
+                                <MenuItem key={provider} value={provider}>
+                                    {provider}
+                                </MenuItem>
+                            )
+                        })}
+                    </TextField>
+                    <TextField
+                        id="outlined-select-currency"
+                        select
+                        size="small"
+                        label="Loại"
+                        value={type}
+                        onChange={(event) => {
+                            setType(event.target.value)
+                        }}
+                        // sx={{ mr: 2 }}
+                        >
+                        {/* <MenuItem value={-1}>Tất cả</MenuItem> */}
+                        <MenuItem value={1}>Sản phẩm bán chạy</MenuItem>
+                        <MenuItem value={2}>Sản phẩm không bán chạy</MenuItem>
+                    </TextField>
+                </Box>
             </Box>
             <DataTable columns={columns} rows={rows} />
         </>
