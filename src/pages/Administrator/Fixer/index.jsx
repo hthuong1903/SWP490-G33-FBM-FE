@@ -66,6 +66,13 @@ export default function FixerAccount() {
             field: 'name',
             headerName: 'TÊN NHÂN VIÊN',
             flex: 1,
+            renderCell: (params) => {
+                return (
+                    <Typography sx={{ fontWeight: 'bold' }}>{
+                    params.row.name }
+                    </Typography>
+                )
+            }
         },
         {
             field: 'username',
@@ -188,13 +195,13 @@ export default function FixerAccount() {
             />
             <h2>Quản lý Tài Khoản Nhân Viên Sửa Chữa</h2>
             <Box sx={{ mb: 2, mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
-                <Button sx={{mr: 2}}
+                {/* <Button sx={{mr: 2}}
                     variant="contained"
                     onClick={() => {
                         
                     }}>
                     Xóa bản ghi đã chọn
-                </Button>
+                </Button> */}
                 <Button 
                     variant="contained"
                     onClick={() => {

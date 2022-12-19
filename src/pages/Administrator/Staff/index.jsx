@@ -69,6 +69,13 @@ export default function StaffAccount() {
             field: 'name',
             headerName: 'HỌ VÀ TÊN',
             flex: 1,
+            renderCell: (params) => {
+                return (
+                    <Typography sx={{ fontWeight: 'bold' }}>{
+                    params.row.name }
+                    </Typography>
+                )
+            }
         },
         {
             field: 'username',
@@ -197,13 +204,13 @@ export default function StaffAccount() {
 
             <h2>Quản lý Tài Khoản Nhân Viên Bán Hàng</h2>
             <Box sx={{ mb: 2, mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
-                <Button sx={{mr: 2}}
+                {/* <Button sx={{mr: 2}}
                     variant="contained"
                     onClick={() => {
                         
                     }}>
                     Xóa Bản Ghi Đã Chọn
-                </Button>
+                </Button> */}
                 <Button 
                     variant="contained"
                     onClick={() => {
