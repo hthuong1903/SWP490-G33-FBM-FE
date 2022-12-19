@@ -54,7 +54,7 @@ function Sidebar() {
                 handleConfirm={() => {
                     // toast.success('Đăng xuất thành công!')
                     localStorage.removeItem('fbm-user')
-                    navigate('/')
+                    navigate('/manager')
                     setAuth(null)}
                 }
             />

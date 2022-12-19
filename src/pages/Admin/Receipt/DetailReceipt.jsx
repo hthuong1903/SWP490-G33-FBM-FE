@@ -125,9 +125,10 @@ function DetailReceipt() {
                                             </StyledTableCell>
                                             <StyledTableCell align="left">
                                                 {(
-                                                    row.product.priceOut -
-                                                    row.product.priceOut *
-                                                        (row.product.discount / 100)
+                                                    row.product.priceOut 
+                                                    // -
+                                                    // row.product.priceOut *
+                                                    //     (row.product.discount / 100)
                                                 ).toLocaleString('vi-vn')}{' '}
                                                 VND
                                             </StyledTableCell>
@@ -143,6 +144,7 @@ function DetailReceipt() {
                                             <StyledTableCell align="left">
                                                 <b>
                                                     {(
+                                                        row.product.priceOut * row?.quantity -
                                                         row.product.priceOut *
                                                             (row.product.discount / 100) *
                                                             row?.quantity -
