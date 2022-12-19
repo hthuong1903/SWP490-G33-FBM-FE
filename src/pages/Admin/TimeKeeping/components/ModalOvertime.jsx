@@ -34,7 +34,8 @@ function ModalOvertime({ title, content, isOpen, handleClose, handleConfirm, emp
     }
 
     const onSubmit = (data) => {
-        const dataSubmit = { ...employee, hour: data.hour + employee.hour, content: data.content }
+        //+ employee.hour
+        const dataSubmit = { ...employee, hour: data.hour, content: data.content }
         updateOvertime(dataSubmit)
     }
     return (
