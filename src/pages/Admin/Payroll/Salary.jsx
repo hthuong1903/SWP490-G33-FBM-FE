@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import DataTable from '@/components/Common/DataTable'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import SalaryApi from '@/api/SalaryApi'
 import { toast } from 'react-toastify'
 
@@ -49,7 +49,15 @@ function Salary({ value, index, periodCode }) {
     }, [salary, isRender, state])
 
     const columns = [
-        { field: 'employeeName', headerName: 'TÊN NHÂN VIÊN', flex: 1.5 },
+        { field: 'employeeName', headerName: 'TÊN NHÂN VIÊN', flex: 1.5, 
+            renderCell: (params) => {
+                return (
+                    <Typography sx={{ fontWeight: 'bold' }}>{
+                    params.row.employeeName }
+                    </Typography>
+                )
+            }
+        },
         { field: 'allowedDay', headerName: 'NGHỈ PHÉP', flex: 0.75, headerAlign: 'center',align: 'center' },
         { field: 'absentDay', headerName: 'VẮNG', flex: 0.75, headerAlign: 'center',align: 'center' },
         { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 1, headerAlign: 'center',align: 'center' },

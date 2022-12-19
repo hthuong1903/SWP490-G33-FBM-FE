@@ -1,6 +1,6 @@
 import TimeKeepingApi from '@/api/TimeKeepingApi'
 import DataTable from '@/components/Common/DataTable'
-import { Button, Tooltip, Chip } from '@mui/material'
+import { Button, Tooltip, Chip, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -70,7 +70,15 @@ function TimeKeepingTab({ value, index, periodCode }) {
     const columns = [
         { field: 'employee', headerName: 'Số thứ tự', flex: 0.5, hide: true },
         { field: 'id', headerName: 'SỐ THỨ TỰ', flex: 0.75, align: 'center', hide: true},
-        { field: 'name', headerName: 'TÊN NHÂN VIÊN', flex: 1},
+        { field: 'name', headerName: 'TÊN NHÂN VIÊN', flex: 1,
+            renderCell: (params) => {
+                return (
+                    <Typography sx={{ fontWeight: 'bold' }}>{
+                    params.row.name }
+                    </Typography>
+                )
+            }
+        },
         {
             field: 'roles',
             headerName: 'VAI TRÒ',

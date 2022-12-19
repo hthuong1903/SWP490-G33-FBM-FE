@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, MenuItem, TextField } from '@mui/material'
+import { Box, MenuItem, TextField, Typography} from '@mui/material'
 import DataTable from '@/components/Common/DataTable'
 import StatisticAPI from '@/api/StatisticAPI'
 import { useEffect } from 'react'
@@ -38,7 +38,15 @@ function ProductSale() {
     })
 
     const columns = [
-        { field: 'productCode', headerName: 'MÃ SẢN PHẨM', flex: 1 },
+        { field: 'productCode', headerName: 'MÃ SẢN PHẨM', flex: 1,
+            renderCell: (params) => {
+                return (
+                    <Typography sx={{ fontWeight: 'bold' }}>{
+                    params.row.productCode }
+                    </Typography>
+                )
+            }
+        },
         { field: 'nameProduct', headerName: 'TÊN SẢN PHẨM', flex: 1 },
         { field: 'nameCategory', headerName: 'DANH MỤC SẢN PHẨM', flex: 1 },
         {

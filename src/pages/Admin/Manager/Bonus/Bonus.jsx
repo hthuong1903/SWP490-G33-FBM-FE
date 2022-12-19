@@ -2,7 +2,7 @@ import BonusApi from '@/api/BonusApi'
 import DataTable from '@/components/Common/DataTable'
 import ConfirmModal from '@/components/Common/Modal/ConfirmModal'
 import { ClearRounded, EditRounded } from '@mui/icons-material'
-import { Box, Button, IconButton, Tooltip } from '@mui/material'
+import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import ModalAddBonus from './components/ModalAddBonus'
@@ -50,7 +50,15 @@ function Bonus() {
 
     const columns = [
         { field: 'id', headerName: 'MÃ SẢN PHẨM', flex: 1, hide: true },
-        { field: 'typeOfBonus', headerName: 'NỘI DUNG', flex: 1 },
+        { field: 'typeOfBonus', headerName: 'NỘI DUNG', flex: 1,
+            renderCell: (params) => {
+                return (
+                    <Typography sx={{ fontWeight: 'bold' }}>{
+                    params.row.typeOfBonus }
+                    </Typography>
+                )
+            }
+        },
         { field: 'money', headerName: 'SỐ TIỀN', flex: 1, headerAlign: 'center',
         align: 'center'},
         { field: 'content', headerName: 'NỘI DUNG CHI TIẾT', flex: 1},

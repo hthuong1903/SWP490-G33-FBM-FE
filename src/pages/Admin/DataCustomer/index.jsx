@@ -50,7 +50,14 @@ export default function DataCustomer() {
         {
             field: 'name',
             headerName: 'TÊN KHÁCH HÀNG',
-            flex: 1
+            flex: 1,
+            renderCell: (params) => {
+                return (
+                    <Typography sx={{ fontWeight: 'bold' }}>{
+                    params.row.name }
+                    </Typography>
+                )
+            }
         },
         {
             field: 'phone',

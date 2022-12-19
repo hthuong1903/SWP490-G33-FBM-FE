@@ -1,6 +1,6 @@
 import BonusApi from '@/api/BonusApi'
 import DataTable from '@/components/Common/DataTable'
-import { Box, Button, Tooltip, Chip } from '@mui/material'
+import { Box, Button, Tooltip, Chip, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import ModalBonus from './components/ModalBonus'
 import ModalBonusDetail from './components/ModalBonusDetail'
@@ -63,7 +63,15 @@ function Bonus({ value, index, periodCode }) {
     }
 
     const columns = [
-        { field: 'employeeName', headerName: 'TÊN NHÂN VIÊN', flex: 1 },
+        { field: 'employeeName', headerName: 'TÊN NHÂN VIÊN', flex: 1,
+            renderCell: (params) => {
+                return (
+                    <Typography sx={{ fontWeight: 'bold' }}>{
+                    params.row.employeeName }
+                    </Typography>
+                )
+            }
+        },
         {
             field: 'role',
             headerName: 'VAI TRÒ',
