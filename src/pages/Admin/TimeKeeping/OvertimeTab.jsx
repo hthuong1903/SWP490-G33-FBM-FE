@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Tooltip, Chip } from '@mui/material'
+import { Button, Tooltip, Chip, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import DataTable from '@/components/Common/DataTable'
 import ModalOvertime from './components/ModalOvertime'
@@ -49,7 +49,15 @@ function OvertimeTab({ value, index, periodCode }) {
     const columns = [
         { field: 'employee', headerName: 'Số thứ tự', flex: 0.5, hide: true },
         { field: 'item', headerName: 'TÊN', flex: 1, hide: true },
-        { field: 'name', headerName: 'TÊN NHÂN VIÊN', flex: 1},
+        { field: 'name', headerName: 'TÊN NHÂN VIÊN', flex: 1,
+            renderCell: (params) => {
+                return (
+                    <Typography sx={{ fontWeight: 'bold' }}>{
+                    params.row.name }
+                    </Typography>
+                )
+            }
+        },
         {
             field: 'roles',
             headerName: 'VAI TRÒ',
