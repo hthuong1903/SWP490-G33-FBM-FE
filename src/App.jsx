@@ -69,7 +69,7 @@ function App() {
                 <Route path="/manager/admin" element={<AdminLayout />}>
                     <Route element={<RequireAuth allowedRoles={[ROLES.MANAGER]} />}>
                         <Route index element={<Category />} />
-                        <Route path="products" element={<Product />} />
+                        {/* <Route path="products" element={<Product />} /> */}
                         <Route path="suppliers" element={<Provider />} />
                         <Route path="timekeeping" element={<TimeKeeping />} />
                         <Route path="contracts" element={<Contract />} />
@@ -77,12 +77,15 @@ function App() {
                         <Route path="manager" element={<Allowance />} />
                         <Route path="manager/allowance" element={<Allowance />} />
                         <Route path="manager/bonus" element={<Bonus />} />
-                        {/* <Route path="statisticals" element={<Income />} />
+                        <Route path="statisticals" element={<Income />} />
                         <Route path="statisticals/income" element={<Income />} />
-                        <Route path="statisticals/product" element={<ProductSale />} /> */}
+                        <Route path="statisticals/product" element={<ProductSale />} />
                     </Route>
                     <Route element={<RequireAuth allowedRoles={[ROLES.MANAGER, ROLES.SELLER]} />}>
                         <Route path="products" element={<Product />} />
+                    </Route>
+                    <Route element={<RequireAuth allowedRoles={[ROLES.SELLER]} />}>
+                        {/* <Route path="products" element={<Product />} /> */}
                         <Route path="receipts" element={<Receipt />} />
                         <Route path="receipts/details/:receiptId" element={<DetailReceipt />} />
                         <Route path="receipts/createReceipt" element={<CreateReceipt />} />
@@ -90,9 +93,6 @@ function App() {
                         <Route path="orders/details/:orderId" element={<OrderDetails />} />
                         <Route path="orders/createOrder" element={<CreateOrder />} />
                         <Route path="dataCustomer" element={<DataCustomer />} />
-                        <Route path="statisticals" element={<Income />} />
-                        <Route path="statisticals/income" element={<Income />} />
-                        <Route path="statisticals/product" element={<ProductSale />} />
                     </Route>
                 </Route>
 

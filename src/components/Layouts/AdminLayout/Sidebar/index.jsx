@@ -99,7 +99,7 @@ function Sidebar() {
             name: 'Thống kê',
             href: '/manager/admin/statisticals',
             path: '/statisticals',
-            allow: ['MANAGER', 'SELLER']
+            allow: ['MANAGER']
         },
         {
             name: 'Nhà cung cấp',
@@ -149,7 +149,7 @@ function Sidebar() {
                             <Box sx={{ overflow: 'auto'}}>
                                 <Divider />
                                 {items.map((item, index) =>
-                                    item.name == 'Thống kê' ? (
+                                    item.name == 'Thống kê' && auth?.roles.includes("MANAGER")? (
                                         <Box key={index}>
                                             <ListItem button onClick={handleClick}>
                                                 <ListItemText
