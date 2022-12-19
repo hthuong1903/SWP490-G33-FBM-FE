@@ -8,7 +8,7 @@ function DataTable({ columns, rows }) {
     const [pageSize, setPageSize] = useState(15)
 
     return (
-        <Paper style={{ display: 'flex', height: '85%' }}>
+        <Paper style={{ display: 'flex', height: '87%' }}>
             <div style={{ flexGrow: 1 }}>
                 <DataGrid
                     sx={{
