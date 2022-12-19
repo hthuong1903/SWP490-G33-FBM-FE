@@ -99,7 +99,7 @@ function Sidebar() {
             name: 'Thống kê',
             href: '/manager/admin/statisticals',
             path: '/statisticals',
-            allow: ['MANAGER']
+            allow: ['MANAGER', 'SELLER']
         },
         {
             name: 'Nhà cung cấp',
