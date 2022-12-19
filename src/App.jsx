@@ -83,6 +83,13 @@ function App() {
                     </Route>
                     <Route element={<RequireAuth allowedRoles={[ROLES.MANAGER, ROLES.SELLER]} />}>
                         <Route path="products" element={<Product />} />
+                        <Route path="dataCustomer" element={<DataCustomer />} />
+                        <Route path="receipts" element={<Receipt />} />
+                        <Route path="receipts/details/:receiptId" element={<DetailReceipt />} />
+                        <Route path="receipts/createReceipt" element={<CreateReceipt />} />
+                        <Route path="orders" element={<Order />} />
+                        <Route path="orders/details/:orderId" element={<OrderDetails />} />
+                        <Route path="orders/createOrder" element={<CreateOrder />} />
                     </Route>
                     <Route element={<RequireAuth allowedRoles={[ROLES.SELLER]} />}>
                         {/* <Route path="products" element={<Product />} /> */}
@@ -92,7 +99,7 @@ function App() {
                         <Route path="orders" element={<Order />} />
                         <Route path="orders/details/:orderId" element={<OrderDetails />} />
                         <Route path="orders/createOrder" element={<CreateOrder />} />
-                        <Route path="dataCustomer" element={<DataCustomer />} />
+                        {/* <Route path="dataCustomer" element={<DataCustomer />} /> */}
                     </Route>
                 </Route>
 
@@ -102,7 +109,6 @@ function App() {
                     <Route path="registor/confirm" element={<ConfirmEmailCode />} />
                 </Route>
                 <Route path="*" element={<NotFoundPage />} />
-
                 <Route path="/manager/administrator" element={<AdministratorLayout />}>
                     <Route index element={<StaffAccount />} />
                     <Route path="manager" element={<ManagerAccount />} />
