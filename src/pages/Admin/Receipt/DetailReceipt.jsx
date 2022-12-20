@@ -26,8 +26,9 @@ function DetailReceipt() {
             try {
                 const response = await orderApi.getAllOrderById(receiptId)
                 setReceiptDetail(response.data[0])
-                console.log(response.data[0])
+                console.log("setReceiptDetail", response.data[0])
                 setListProduct(response.data[0].orderProductDtos)
+                console.log('setListProduct', response.data[0].orderProductDtos)
             } catch (error) {
                 console.log('fail when getAllProduct', error)
             }
@@ -125,7 +126,8 @@ function DetailReceipt() {
                                             </StyledTableCell>
                                             <StyledTableCell align="left">
                                                 {(
-                                                    row.product.priceOut 
+                                                    // row.product.priceOut 
+                                                    row.priceOutProduct
                                                     // -
                                                     // row.product.priceOut *
                                                     //     (row.product.discount / 100)
@@ -144,11 +146,12 @@ function DetailReceipt() {
                                             <StyledTableCell align="left">
                                                 <b>
                                                     {(
-                                                        row.product.priceOut * row?.quantity -
-                                                        row.product.priceOut *
-                                                            (row.product.discount / 100) *
-                                                            row?.quantity -
-                                                        row?.changedPrice
+                                                        // row.product.priceOut * row?.quantity -
+                                                        // row.product.priceOut *
+                                                        //     (row.product.discount / 100) *
+                                                        //     row?.quantity -
+                                                        // row?.changedPrice
+                                                        ((100 - row.discount)/100)*row.priceOutProduct*row.quantity  - row.changedPrice
                                                     ).toLocaleString('vi-VN')}{' '}
                                                     VND
                                                 </b>
@@ -159,14 +162,6 @@ function DetailReceipt() {
                         </Table>
                     </TableContainer>
                     <Paper>
-                        {/* <Box 
-                        sx={{
-                            display: 'flex',
-                            my: 2,
-                            pt: 1
-                        }}>
-                            <p>Lí do hủy hóa đơn</p>
-                        </Box> */}
                         <Box
                             sx={{
                                 display: 'flex',
@@ -178,7 +173,7 @@ function DetailReceipt() {
                                 <tbody>
                                     <tr>
                                         <td className="td">Tổng</td>
-                                        <td>{totalAmount?.toLocaleString('vi-VN')} VND</td>
+                                        <td>{receiptDetail.totalOrderPrice?.toLocaleString('vi-VN')} VND</td>
                                     </tr>
                                     <tr>
                                         <td>Tổng tiền chiết khấu</td>
@@ -190,11 +185,20 @@ function DetailReceipt() {
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td>Tổng tiền giảm giá</td>
+                                        <td>
+                                            {receiptDetail.totalDiscountPrice.toLocaleString(
+                                                'vi-VN'
+                                            )}{' '}
+                                            VND
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>
                                             <b>Tổng tiền</b>
                                         </td>
                                         <td>
-                                            <b>{totalAmountAfter?.toLocaleString('vi-VN')} VND</b>
+                                            <b>{(receiptDetail.totalOrderPrice-receiptDetail.totalDiscountPrice-receiptDetail.totalOrderPriceAfter)?.toLocaleString('vi-VN')} VND</b>
                                         </td>
                                     </tr>
                                 </tbody>

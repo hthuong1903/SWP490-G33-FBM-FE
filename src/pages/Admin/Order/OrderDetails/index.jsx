@@ -18,6 +18,7 @@ import Loading from '@/components/Common/Loading'
 
 export default function OrderDetails() {
     const [orderDetail, setOrderDetail] = useState([])
+    const [listProduct, setListProduct] = useState([])
     let { orderId } = useParams()
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(true)
@@ -28,9 +29,11 @@ export default function OrderDetails() {
         const getOrderById = async (orderId) => {
             try {
                 const response = await orderApi.getAllOrderById(orderId)
+                console.log("setOrderDetail", response.data)
                 if (response.data) {
                     setIsLoading(false)
                     setOrderDetail(response.data)
+                    setListProduct(response.data[0].orderProductDtos)
                 }
             } catch (error) {
                 console.log('fail when getOrderById', error)
@@ -119,7 +122,7 @@ export default function OrderDetails() {
                             <TableRow>
                                 <StyledTableCell align="left">Sản phẩm</StyledTableCell>
                                 <StyledTableCell align="left">Giá bán</StyledTableCell>
-                                {/* <StyledTableCell align="left">Giảm giá</StyledTableCell> */}
+                                <StyledTableCell align="left">Giảm giá</StyledTableCell>
                                 <StyledTableCell align="left">Số lượng</StyledTableCell>
                                 <StyledTableCell align="left">Chiết khấu</StyledTableCell>
                                 <StyledTableCell align="left">Thành tiền</StyledTableCell>
@@ -153,15 +156,16 @@ export default function OrderDetails() {
                                         </StyledTableCell>
                                         <StyledTableCell align="left">
                                             {(
-                                                row?.product.priceOut -
-                                                (row?.product.priceOut * row?.product.discount) /
-                                                    100
+                                                // row?.product.priceOut -
+                                                // (row?.product.priceOut * row?.product.discount) /
+                                                //     100
+                                                row.priceOutProduct
                                             ).toLocaleString('vi-VN')}{' '}
                                             VND
                                         </StyledTableCell>
-                                        {/* <StyledTableCell align="left">
+                                        <StyledTableCell align="left">
                                             {row?.discount}%
-                                        </StyledTableCell> */}
+                                        </StyledTableCell>
                                         <StyledTableCell align="left">
                                             {row?.quantity}
                                         </StyledTableCell>
@@ -171,12 +175,13 @@ export default function OrderDetails() {
                                         <StyledTableCell align="left">
                                             <b>
                                                 {(
-                                                    (row?.product.priceOut -
-                                                        (row?.product.priceOut *
-                                                            row?.product.discount) /
-                                                            100) *
-                                                        row?.quantity -
-                                                    row?.changedPrice
+                                                    // (row?.product.priceOut -
+                                                    //     (row?.product.priceOut *
+                                                    //         row?.product.discount) /
+                                                    //         100) *
+                                                    //     row?.quantity -
+                                                    // row?.changedPrice
+                                                    ((100 - row.discount)/100)*row.priceOutProduct*row.quantity  - row.changedPrice
                                                 ).toLocaleString('vi-VN')}{' '}
                                                 VND
                                             </b>
@@ -204,7 +209,7 @@ export default function OrderDetails() {
                             <table>
                                 <tr>
                                     <td className="td">Tổng</td>
-                                    <td>{totalAmount?.toLocaleString('vi-VN')} VND</td>
+                                    <td>{orderDetail[0].totalOrderPrice?.toLocaleString('vi-VN')} VND</td>
                                 </tr>
                                 <tr>
                                     <td>Tổng tiền chiết khấu</td>
@@ -216,13 +221,22 @@ export default function OrderDetails() {
                                     </td>
                                 </tr>
                                 <tr>
+                                        <td>Tổng tiền giảm giá</td>
+                                        <td>
+                                            {orderDetail[0].totalDiscountPrice.toLocaleString(
+                                                'vi-VN'
+                                            )}{' '}
+                                            VND
+                                        </td>
+                                    </tr>
+                                <tr>
                                     <td>
                                         <b>Tổng tiền</b>
                                     </td>
                                     <td>
                                         <b>
                                             {(
-                                                totalAmount - orderDetail[0]?.totalOrderPriceAfter
+                                                orderDetail[0].totalOrderPrice-orderDetail[0].totalDiscountPrice-orderDetail[0].totalOrderPriceAfter
                                             ).toLocaleString('vi-VN')}{' '}
                                             VND
                                         </b>
