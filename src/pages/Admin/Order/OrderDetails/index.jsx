@@ -109,7 +109,7 @@ export default function OrderDetails() {
                         Thông tin chi tiết đơn hàng {orderDetail[0]?.orderCode}
                     </Typography>
                     <Box sx={{ display: 'flex', gap: '12px' }}>
-                        <Button variant="contained">Xem báo giá</Button>
+                        {/* <Button variant="contained">Xem báo giá</Button> */}
                         {orderDetail[0]?.status !== 3 && orderDetail[0]?.status !== 4 ? (
                             <Button
                                 variant="contained"

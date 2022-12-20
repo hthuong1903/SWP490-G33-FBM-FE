@@ -190,9 +190,9 @@ export default function CreateOrder() {
                     Thông tin chi tiết đơn hàng {location.state[0]?.orderCode}
                 </Typography>
                 <Box sx={{ display: 'flex', gap: '12px' }}>
-                    <Button variant="contained" onClick={() => navigate(-1)}>
+                    {/* <Button variant="contained" onClick={() => navigate(-1)}>
                         Xem báo giá
-                    </Button>
+                    </Button> */}
                     <Button variant="contained" onClick={() => handleCreate(2)}>
                         Tạo báo giá
                     </Button>
