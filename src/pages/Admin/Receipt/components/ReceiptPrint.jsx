@@ -185,7 +185,7 @@ function ReceiptPrint({ data }) {
                         <TableBody>
                             {data.orderProductDtos.map((item, index) => (
                                 <TableRow key={index}>
-                                    <StyledTableCell>{index}</StyledTableCell>
+                                    <StyledTableCell>{index+1}</StyledTableCell>
                                     <StyledTableCell>{item.product.name}</StyledTableCell>
                                     <StyledTableCell>{item.quantity}</StyledTableCell>
                                     <StyledTableCell>
