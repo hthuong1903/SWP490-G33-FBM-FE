@@ -34,11 +34,12 @@ function ProductSale() {
         container['nameProduct'] = item.nameProduct
         container['nameCategory'] = item.nameCategory
         container['numberProduct'] = item.numberProduct
+        container['numberProductInShop'] = item.numberProductInShop
         return container
     })
 
     const columns = [
-        { field: 'productCode', headerName: 'MÃ SẢN PHẨM', flex: 1,
+        { field: 'productCode', headerName: 'MÃ SẢN PHẨM', flex: 0.75,
             renderCell: (params) => {
                 return (
                     <Typography sx={{ fontWeight: 'bold' }}>{
@@ -47,12 +48,20 @@ function ProductSale() {
                 )
             }
         },
-        { field: 'nameProduct', headerName: 'TÊN SẢN PHẨM', flex: 1 },
-        { field: 'nameCategory', headerName: 'DANH MỤC SẢN PHẨM', flex: 1 },
+        { field: 'nameProduct', headerName: 'TÊN SẢN PHẨM', flex: 1.5},
+        { field: 'nameCategory', headerName: 'DANH MỤC SẢN PHẨM', flex: 0.75 },
         {
             field: 'numberProduct',
-            headerName: 'SỐ LƯỢNG',
-            flex: 1
+            headerName: 'SỐ LƯỢNG ĐÃ BÁN',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'numberProductInShop',
+            headerName: 'SỐ LƯỢNG CÒN TRONG CỬẢ HÀNG',
+            flex: 1, align: 'center',
+            headerAlign: 'center',
         }
     ]
 
