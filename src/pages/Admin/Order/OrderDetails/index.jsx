@@ -60,6 +60,11 @@ export default function OrderDetails() {
             ? `${orderDetail[0]?.customer.address}, ${orderDetail[0]?.customer.districtName}, ${orderDetail[0]?.customer.wardName}, ${orderDetail[0]?.customer.provinceName}`
             : 'Khách hàng chưa có địa chỉ'
 
+    const addressDetails1 = () =>
+    orderDetail[0]?.customer.address
+        ? `${orderDetail[0].addressDetail}, ${orderDetail[0].districtName}, ${orderDetail[0].wardName}, ${orderDetail[0].provinceName}`
+        : 'Khách hàng chưa có địa chỉ'
+
     const paymentMethod = () => orderDetail[0] && PAYMENT_METHOD[orderDetail[0]?.typeOfPay - 1].name
 
     const orderStatus = () =>
@@ -248,23 +253,43 @@ export default function OrderDetails() {
                     <Divider />
                     <Grid container sx={{ px: 4, py: 2 }}>
                         <Grid item xs={4}>
-                            <Box>
-                                <Typography variant="subtitle1">
-                                    <b>THÔNG TIN KHÁCH HÀNG</b>
-                                </Typography>
-                                <Typography variant="subtitle1">
-                                    {orderDetail[0]?.customer.username}
-                                </Typography>
-                                <Typography variant="subtitle1">
-                                    <b>Địa chỉ: </b> {addressDetails()}
-                                </Typography>
-                                <Typography variant="subtitle1">
-                                    <b>SĐT: </b> {orderDetail[0]?.customer.phone}
-                                </Typography>
-                                <Typography variant="subtitle1">
-                                    <b>Email: </b> {orderDetail[0]?.customer.email}
-                                </Typography>
-                            </Box>
+                            { orderDetail[0].isAddAddress == false ? 
+                                <Box>
+                                    <Typography variant="subtitle1">
+                                        <b>THÔNG TIN KHÁCH HÀNG</b>
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        {orderDetail[0]?.customer.username}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        <b>Địa chỉ: </b> {addressDetails()}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        <b>SĐT: </b> {orderDetail[0]?.customer.phone}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        <b>Email: </b> {orderDetail[0]?.customer.email}
+                                    </Typography>
+                                </Box>
+                            : 
+                                <Box>
+                                    <Typography variant="subtitle1">
+                                        <b>THÔNG TIN KHÁCH HÀNG</b>
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        {orderDetail[0]?.customer.username}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        <b>Địa chỉ: </b> {addressDetails1()}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        <b>SĐT: </b> {orderDetail[0]?.customer.phone}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        <b>Email: </b> {orderDetail[0]?.customer.email}
+                                    </Typography>
+                                </Box>
+                            }
                         </Grid>
                         <Grid item xs={4}>
                             <Typography variant="subtitle1">
