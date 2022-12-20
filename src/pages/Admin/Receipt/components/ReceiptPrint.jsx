@@ -117,6 +117,8 @@ function ReceiptPrint({ data }) {
     useEffect(() => {
         console.log(data)
     }, [data])
+
+    console.log("data *****", data)
     const totalAmountAfter =
         data &&
         data.orderProductDtos.reduce(
@@ -126,7 +128,9 @@ function ReceiptPrint({ data }) {
                 value?.changedPrice,
             0
         )
+    const totalAmountAfter1 = data.totalOrderPrice - data.totalDiscountPrice - data.totalOrderPriceAfter
     let text = to_vietnamese(totalAmountAfter)
+    let text1 = to_vietnamese(totalAmountAfter1)
 
     return (
         <Container className="print">
@@ -163,13 +167,29 @@ function ReceiptPrint({ data }) {
                     Tên khách hàng : {data.customer.firstName} {data.customer.middleName}{' '}
                     {data.customer.lastName}
                 </Typography>
-                <Typography variant="body2" sx={{ mb: 1 }}>
-                    Địa chỉ: {data.customer.wardName}, {data.customer.provinceName},{' '}
-                    {data.customer.districtName}
-                </Typography>
-                <Typography variant="body2" sx={{ mb: 1 }}>
-                    Địa chỉ chi tiết: {data.customer.address}
-                </Typography>
+                { data.isAddAddress == false ? 
+                <Box>
+                    <Typography variant="body2" sx={{ mb: 1 }}>
+                        Địa chỉ: {data.customer.wardName}, {data.customer.provinceName},{' '}
+                        {data.customer.districtName}
+                    </Typography>
+                    
+                    <Typography variant="body2" sx={{ mb: 1 }}>
+                        Địa chỉ chi tiết: {data.customer.address}
+                    </Typography>
+                </Box>
+                :
+                <Box>
+                    <Typography variant="body2" sx={{ mb: 1 }}>
+                        Địa chỉ: {data.wardName}, {data.provinceName},{' '}
+                        {data.districtName}
+                    </Typography>
+                    
+                    <Typography variant="body2" sx={{ mb: 1 }}>
+                        Địa chỉ chi tiết: {data.addressDetail}
+                    </Typography>
+                </Box>
+                }
                 <TableContainer>
                     <Table>
                         <TableHead>
@@ -190,8 +210,9 @@ function ReceiptPrint({ data }) {
                                     <StyledTableCell>{item.quantity}</StyledTableCell>
                                     <StyledTableCell>
                                         {(
-                                            item.product.priceOut *
-                                            (item.product.discount / 100)
+                                            // item.product.priceOut *
+                                            // (item.product.discount / 100)
+                                            ((100 - item.discount)/100)*item.priceOutProduct
                                         ).toLocaleString('vi-vn')}{' '}
                                         VND
                                     </StyledTableCell>
@@ -201,10 +222,11 @@ function ReceiptPrint({ data }) {
                                     <StyledTableCell>
                                         {' '}
                                         {(
-                                            item.product.priceOut *
-                                                (item.product.discount / 100) *
-                                                item?.quantity -
-                                            item?.changedPrice
+                                            // item.product.priceOut *
+                                            //     (item.product.discount / 100) *
+                                            //     item?.quantity -
+                                            // item?.changedPrice
+                                            ((100 - item.discount)/100)*item.priceOutProduct*item.quantity  - item.changedPrice
                                         ).toLocaleString('vi-VN')}{' '}
                                         VND
                                     </StyledTableCell>
@@ -217,14 +239,14 @@ function ReceiptPrint({ data }) {
                                     </strong>
                                 </StyledTableCell>
                                 <StyledTableCell>
-                                    {totalAmountAfter?.toLocaleString('vi-VN')} VND
+                                    {totalAmountAfter1?.toLocaleString('vi-VN')} VND
                                 </StyledTableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
                 </TableContainer>
                 <Typography variant="body2" sx={{ my: 2 }}>
-                    Thành tiền (bằng chữ): {text}
+                    Thành tiền (bằng chữ): {text1}
                 </Typography>
                 <Box
                     sx={{

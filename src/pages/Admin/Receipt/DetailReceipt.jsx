@@ -41,6 +41,11 @@ function DetailReceipt() {
             ? `${receiptDetail?.customer.address}, ${receiptDetail?.customer.districtName}, ${receiptDetail?.customer.wardName}, ${receiptDetail?.customer.provinceName}`
             : 'Khách hàng chưa có địa chỉ'
 
+    const addressDetailsOrder = () =>
+    receiptDetail.addressDetail
+        ? `${receiptDetail.addressDetail}, ${receiptDetail.districtName}, ${receiptDetail.wardName}, ${receiptDetail.provinceName}`
+        : 'Khách hàng chưa có địa chỉ'
+
     const paymentMethod = () => receiptDetail && PAYMENT_METHOD[receiptDetail?.typeOfPay - 1].name
     const orderStatus = () =>
         receiptDetail && ORDER_STATUS.filter((item) => item.id === receiptDetail?.status)[0]
@@ -207,6 +212,7 @@ function DetailReceipt() {
                         <Divider />
                         <Grid container sx={{ px: 4, py: 2 }}>
                             <Grid item xs={4}>
+                            { receiptDetail.isAddAddress == false ? 
                                 <Box>
                                     <Typography variant="subtitle1">
                                         <b>THÔNG TIN KHÁCH HÀNG</b>
@@ -224,6 +230,26 @@ function DetailReceipt() {
                                         <b>Email: </b> {receiptDetail?.customer.email}
                                     </Typography>
                                 </Box>
+                            :
+                            <Box>
+                                    <Typography variant="subtitle1">
+                                        <b>THÔNG TIN KHÁCH HÀNG</b>
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        {receiptDetail.customer.username}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        <b>Địa chỉ: </b> {addressDetailsOrder()}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        <b>SĐT: </b> {receiptDetail?.customer.phone}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        <b>Email: </b> {receiptDetail?.customer.email}
+                                    </Typography>
+                                </Box>
+                            }
+
                             </Grid>
                             <Grid item xs={4}>
                                 <Typography variant="subtitle1">

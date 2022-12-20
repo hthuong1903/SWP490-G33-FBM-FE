@@ -61,7 +61,7 @@ export default function OrderDetails() {
             : 'Khách hàng chưa có địa chỉ'
 
     const addressDetails1 = () =>
-    orderDetail[0]?.customer.address
+    orderDetail[0].addressDetail
         ? `${orderDetail[0].addressDetail}, ${orderDetail[0].districtName}, ${orderDetail[0].wardName}, ${orderDetail[0].provinceName}`
         : 'Khách hàng chưa có địa chỉ'
 
