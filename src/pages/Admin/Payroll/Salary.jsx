@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import DataTable from '@/components/Common/DataTable'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Tooltip, Typography } from '@mui/material'
 import SalaryApi from '@/api/SalaryApi'
 import { toast } from 'react-toastify'
 
@@ -30,8 +30,23 @@ function Salary({ value, index, periodCode }) {
         }
     }
 
+    const sendEmailToEmployee = async (data) => {
+        try {
+            const response = await SalaryApi.sendEmailSalaryEmployee(data)
+            toast.success(response.data.message)
+        } catch (error) {
+            console.log('Failed when send email')
+        }
+    }
+
     const handleSendEmail = () => {
         sendEmail(periodCode)
+    }
+
+    const handleAction = (params) => {
+        const data = { id: [params.id], periodCode: periodCode }
+        console.log(data)
+        sendEmailToEmployee(data)
     }
 
     console.log(state)
@@ -49,29 +64,111 @@ function Salary({ value, index, periodCode }) {
     }, [salary, isRender, state])
 
     const columns = [
-        { field: 'employeeName', headerName: 'TÊN NHÂN VIÊN', flex: 1.5, 
+        {
+            field: 'employeeName',
+            headerName: 'TÊN NHÂN VIÊN',
+            flex: 1.5,
             renderCell: (params) => {
                 return (
-                    <Typography sx={{ fontWeight: 'bold' }}>{
-                    params.row.employeeName }
-                    </Typography>
+                    <Typography sx={{ fontWeight: 'bold' }}>{params.row.employeeName}</Typography>
                 )
             }
         },
-        { field: 'allowedDay', headerName: 'NGHỈ PHÉP', flex: 0.75, headerAlign: 'center',align: 'center' },
-        { field: 'absentDay', headerName: 'VẮNG', flex: 0.75, headerAlign: 'center',align: 'center' },
-        { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 1, headerAlign: 'center',align: 'center' },
-        { field: 'haftDayWorking', headerName: 'CÔNG NỬA NGÀY', flex: 1, headerAlign: 'center',align: 'center' },
-        { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', flex: 1, headerAlign: 'center',align: 'center' },
-        { field: 'totalOvertimeMoney', headerName: 'TỔNG TIỀN LÀM THÊM', flex: 1, headerAlign: 'center',align: 'center' },
-        { field: 'totalAllowanceMoney', headerName: 'TỔNG PHỤ CẤP', flex: 1, headerAlign: 'center',align: 'center' },
-        { field: 'totalBonusMoney', headerName: 'TỔNG THƯỞNG', flex: 1, headerAlign: 'center',align: 'center' },
-        { field: 'basicSalary', headerName: 'LƯƠNG CƠ BẢN', flex: 1, headerAlign: 'center',align: 'center' },
-        { field: 'totalSalary', headerName: 'TỔNG THỰC LÃNH', flex: 1, headerAlign: 'center',align: 'center' }
+        {
+            field: 'allowedDay',
+            headerName: 'NGHỈ PHÉP',
+            flex: 0.75,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'absentDay',
+            headerName: 'VẮNG',
+            flex: 0.75,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'holidaysWorking',
+            headerName: 'CÔNG LỄ',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'haftDayWorking',
+            headerName: 'CÔNG NỬA NGÀY',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'totalDayWorking',
+            headerName: 'TỔNG SỐ NGÀY LÀM VIỆC',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'totalOvertimeMoney',
+            headerName: 'TỔNG TIỀN LÀM THÊM',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'totalAllowanceMoney',
+            headerName: 'TỔNG PHỤ CẤP',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'totalBonusMoney',
+            headerName: 'TỔNG THƯỞNG',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'basicSalary',
+            headerName: 'LƯƠNG CƠ BẢN',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'totalSalary',
+            headerName: 'TỔNG THỰC LÃNH',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'actions',
+            headerName: 'TÁC VỤ',
+            flex: 1.5,
+            headerAlign: 'center',
+            align: 'center',
+            renderCell: (params) => {
+                return (
+                    <>
+                        <Tooltip title="Gửi mail">
+                            <Button
+                                variant="contained"
+                                size="small"
+                                onClick={() => handleAction(params.row)}>
+                                Gửi lương
+                            </Button>
+                        </Tooltip>
+                    </>
+                )
+            }
+        }
     ]
-    const rows = salary.map((item, index) => {
+    const rows = salary.map((item) => {
         const container = {}
-        container['id'] = index + 1
+        container['id'] = item.employeeId
         container['absentDay'] = item.absentDay
         container['allowedDay'] = item.allowedDay
         container['holidaysWorking'] = item.holidaysWorking
@@ -100,7 +197,11 @@ function Salary({ value, index, periodCode }) {
                         p: 1
                     }
                 }}>
-                <Button sx={{mb: 2, ml: 170}} variant="contained" onClick={() => handleSendEmail()} autoFocus>
+                <Button
+                    sx={{ mb: 2, ml: 170 }}
+                    variant="contained"
+                    onClick={() => handleSendEmail()}
+                    autoFocus>
                     Gửi lương
                 </Button>
                 <DataTable columns={columns} rows={rows} />
