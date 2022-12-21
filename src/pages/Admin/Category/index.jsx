@@ -3,7 +3,7 @@ import DataTable from '@/components/Common/DataTable'
 import ConfirmModal from '@/components/Common/Modal/ConfirmModal'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
 import EditRoundedIcon from '@mui/icons-material/EditRounded'
-import { Button, IconButton, Tooltip, Typography } from '@mui/material'
+import { Button, IconButton, Tooltip, Typography, Avatar } from '@mui/material'
 import { Box } from '@mui/system'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -49,6 +49,18 @@ export default function Category() {
     }
 
     const columns = [
+        {
+            field: 'urlImage',
+            headerName: 'ẢNH SẢN PHẨM',
+            flex: 0.5,
+            renderCell: (params) => {
+                return (
+                    <Box>
+                        <Avatar sx={{width: 48, height: 48}} src={params.row.urlImage} />
+                    </Box>
+                )
+            }
+        },
         {
             field: 'name',
             headerName: 'TÊN DANH MỤC',

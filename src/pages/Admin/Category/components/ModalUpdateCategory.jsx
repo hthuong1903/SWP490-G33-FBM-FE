@@ -1,6 +1,6 @@
 import categoryApi from '@/api/categoryApi'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Box, TextField } from '@mui/material'
+import { Box, TextField, Grid} from '@mui/material'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -9,6 +9,8 @@ import DialogTitle from '@mui/material/DialogTitle'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import schema from '../validation'
+import { useEffect, useState } from 'react'
+import ImageUpload from '../../Provider/components/ImageUpload'
 
 export default function ModalUpdateCategory({
     title,
@@ -18,6 +20,8 @@ export default function ModalUpdateCategory({
     isEdit,
     selectedData
 }) {
+    const [imageData, setImageData] = useState(null)
+
     const {
         register,
         handleSubmit,
@@ -27,18 +31,46 @@ export default function ModalUpdateCategory({
         resolver: yupResolver(schema)
     })
     const onSubmit = (data) => {
-        const dataSubmit = { ...data, id: selectedData?.row.id }
+        console.log("imageData", imageData)
+        const formData = new FormData()
+        imageData?.photoMainName
+            ? formData.append('photo_main', imageData?.photoMainName)
+            : formData.append('photo_main_name', selectedData?.row.productPhoto.photoMainName)
+        
+        // const dataSubmit = { ...data, id: selectedData?.row.id }
+
         categoryApi
-            .updateCategory(dataSubmit)
+            .uploadImage(formData)
             .then((res) => {
-                console.log(res)
-                toast.success('Cập nhật thành công danh mục')
-                handleConfirm && handleConfirm(true)
-                handleClose && handleClose()
+                console.log('Tải ảnh thành công', res.data.data[0])
+                const dataSubmit = {
+                    ...data,
+                    id: selectedData?.row.id,
+                    urlImage: res.data.data[0].photoMainName             
+                }
+                categoryApi
+                    .updateCategory(dataSubmit)
+                    .then((res) => {
+                        console.log(res)
+                        toast.success('Cập nhật thành công danh mục')
+                        handleConfirm && handleConfirm(true)
+                        handleClose && handleClose()
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
             })
-            .catch((error) => {
-                console.log(error)
-            })
+        // categoryApi
+        //     .updateCategory(dataSubmit)
+        //     .then((res) => {
+        //         console.log(res)
+        //         toast.success('Cập nhật thành công danh mục')
+        //         handleConfirm && handleConfirm(true)
+        //         handleClose && handleClose()
+        //     })
+        //     .catch((error) => {
+        //         console.log(error)
+        //     })
     }
     console.log(selectedData)
 
@@ -49,42 +81,56 @@ export default function ModalUpdateCategory({
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             fullWidth
-            maxWidth="sm">
+            maxWidth="md">
             <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
 
             <DialogContent>
-                <Box sx={{ mt: 1 }}>
-                    <TextField
-                        fullWidth
-                        size="small"
-                        id="outlined-basic"
-                        label="Tên"
-                        defaultValue={selectedData?.row.name}
-                        variant="outlined"
-                        placeholder="Nhập tên thể loại"
-                        {...register('name')}
-                        error={errors.name ? true : false}
-                        helperText={errors.name?.message}
-                    />
-                </Box>
+            <Grid container sx={{ mt: 1 }}>
+                <Grid item xs={6}>
+                    {/* Upload image */}
+                    {isOpen && (
+                        <ImageUpload
+                            onSubmit={(images) => setImageData(images)}
+                            selectedData={selectedData}
+                            isEdit={isEdit}
+                        />
+                    )}
+                </Grid>
+                <Grid item xs={6} sx={{ '& .MuiTextField-root': { mb: 3 } }}>
+                    <Box sx={{ mt: 1 }}>
+                        <TextField
+                            fullWidth
+                            size="small"
+                            id="outlined-basic"
+                            label="Tên"
+                            defaultValue={selectedData?.row.name}
+                            variant="outlined"
+                            placeholder="Nhập tên thể loại"
+                            {...register('name')}
+                            error={errors.name ? true : false}
+                            helperText={errors.name?.message}
+                        />
+                    </Box>
 
-                <Box sx={{ mt: 2 }}>
-                    <TextField
-                        fullWidth
-                        multiline
-                        rows={6}
-                        maxRows={10}
-                        size="small"
-                        id="outlined-basic"
-                        label="Mô tả"
-                        defaultValue={selectedData?.row.description}
-                        variant="outlined"
-                        placeholder="Nhập nội dung"
-                        {...register('description')}
-                        error={errors.description ? true : false}
-                        helperText={errors.description?.message}
-                    />
-                </Box>
+                    <Box sx={{ mt: 2 }}>
+                        <TextField
+                            fullWidth
+                            multiline
+                            rows={6}
+                            maxRows={10}
+                            size="small"
+                            id="outlined-basic"
+                            label="Mô tả"
+                            defaultValue={selectedData?.row.description}
+                            variant="outlined"
+                            placeholder="Nhập nội dung"
+                            {...register('description')}
+                            error={errors.description ? true : false}
+                            helperText={errors.description?.message}
+                        />
+                    </Box>
+                </Grid>
+            </Grid>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Hủy bỏ</Button>
