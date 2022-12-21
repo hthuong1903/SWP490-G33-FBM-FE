@@ -53,6 +53,7 @@ function Receipt() {
         setIsRender(false)
     }, [listProducts, isRender])
 
+    // console.log("listProducts", listProducts[0].totalOrderPrice-listProducts[0].totalDiscountPrice-listProducts[0].totalOrderPriceAfter)
     const columns = [
         { field: 'id', headerName: 'ID', flex: 1, hide: true },
         {
@@ -94,17 +95,21 @@ function Receipt() {
             }
         },
         {
-            field: 'totalOrderPrice',
+            field: 'totalOrderPrices',
             headerName: 'TỔNG HÓA ĐƠN',
             headerAlign: 'center',
             align: 'center',
             flex: 1,
-            valueFormatter: (params) => {
-                if (params.value == null) {
-                    return ''
-                }
-                return `${params.value.toLocaleString('vi-VN')} VND`
+            renderCell: (params) => {
+                return `${(params.row.totalOrderPrice - params.row.totalDiscountPrice - params.row.totalOrderPriceAfter).toLocaleString('vi-VN')} VND`
             }
+            // ,
+            // valueFormatter: (params) => {
+            //     if (params.value == null) {
+            //         return ''
+            //     }
+            //     return `${params.value.toLocaleString('vi-VN')} VND`
+            // }
         },
         {
             field: 'dateCreated',
@@ -174,6 +179,7 @@ function Receipt() {
             }
         }
     ]
+
     return (
         <>
             {/* <ConfirmModal
