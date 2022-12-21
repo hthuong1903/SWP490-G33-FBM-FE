@@ -1,4 +1,6 @@
+import axios from "axios";
 import axiosClient from "./axiosClient";
+import { BASE_URL } from "./constraint";
 
 const TimeKeepingApi = {
     /**
@@ -60,6 +62,11 @@ const TimeKeepingApi = {
     sendEmailTimeSheetDetail: (period_code) => {
         const url = '/send_email/time_sheet_detail'
         return axiosClient.get(url, { params: { period_code } })
+    },
+
+    sendEmailTimeSheetDetailToEmployee: (data) => {
+        const url = '/send_email/time_sheet_detail/employee'
+        return axios.post(`${BASE_URL}` + url, data)
     },
 
     getTimeSheetDetail: (period_code, employee_id) => {

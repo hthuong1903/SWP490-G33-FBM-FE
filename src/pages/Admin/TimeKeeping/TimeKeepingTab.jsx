@@ -14,8 +14,8 @@ function TimeKeepingTab({ value, index, periodCode }) {
     const [isDetail, setIsDetail] = useState(false)
 
     const ROLES = [
-        { id: 1, name: 'Nhân Viên Sửa Chữa', color:'#decd59' },
-        { id: 2, name: 'Nhân Viên Bán Hàng', color:'#7cd992' }
+        { id: 1, name: 'Nhân Viên Sửa Chữa', color: '#decd59' },
+        { id: 2, name: 'Nhân Viên Bán Hàng', color: '#7cd992' }
     ]
 
     const getTimeSheetDetail = async (period_code) => {
@@ -38,7 +38,15 @@ function TimeKeepingTab({ value, index, periodCode }) {
     const sendEmail = async (periodCode) => {
         try {
             const response = await TimeKeepingApi.sendEmailTimeSheetDetail(periodCode)
-            toast.success(response.message)
+            toast.success(response.data.message)
+        } catch (error) {
+            console.log('Failed when send email')
+        }
+    }
+    const sendEmailToEmployee = async (data) => {
+        try {
+            const response = await TimeKeepingApi.sendEmailTimeSheetDetailToEmployee(data)
+            toast.success(response.data.message)
         } catch (error) {
             console.log('Failed when send email')
         }
@@ -67,16 +75,28 @@ function TimeKeepingTab({ value, index, periodCode }) {
         setIsDetail(true)
     }
 
+    const handleActionSendEmail = (params) => {
+        const data = { id: [params.employeeId], periodCode: periodCode }
+        console.log(data)
+        sendEmailToEmployee(data)
+    }
+
     const columns = [
         { field: 'employee', headerName: 'Số thứ tự', flex: 0.5, hide: true },
-        { field: 'id', headerName: 'SỐ THỨ TỰ', flex: 0.75, align: 'center', hide: true},
-        { field: 'name', headerName: 'TÊN NHÂN VIÊN', flex: 1,
+        { field: 'id', headerName: 'SỐ THỨ TỰ', flex: 0.75, align: 'center', hide: true },
+        {
+            field: 'employeeId',
+            headerName: 'Mã Nhân Viên',
+            flex: 0.75,
+            align: 'center',
+            hide: true
+        },
+        {
+            field: 'name',
+            headerName: 'TÊN NHÂN VIÊN',
+            flex: 1,
             renderCell: (params) => {
-                return (
-                    <Typography sx={{ fontWeight: 'bold' }}>{
-                    params.row.name }
-                    </Typography>
-                )
+                return <Typography sx={{ fontWeight: 'bold' }}>{params.row.name}</Typography>
             }
         },
         {
@@ -86,11 +106,15 @@ function TimeKeepingTab({ value, index, periodCode }) {
             headerAlign: 'center',
             align: 'center',
             renderCell: (params) => {
-                return <Chip label={ROLES[params.row.employee.roles[0].id - 2].name}
-                    sx={{color: `${ROLES[params.row.employee.roles[0].id - 2].color}`,
-                    border: `1px solid ${ROLES[params.row.employee.roles[0].id - 2].color}`
-                }}
-                />
+                return (
+                    <Chip
+                        label={ROLES[params.row.employee.roles[0].id - 2].name}
+                        sx={{
+                            color: `${ROLES[params.row.employee.roles[0].id - 2].color}`,
+                            border: `1px solid ${ROLES[params.row.employee.roles[0].id - 2].color}`
+                        }}
+                    />
+                )
             }
         },
         {
@@ -99,11 +123,41 @@ function TimeKeepingTab({ value, index, periodCode }) {
             flex: 0.75,
             align: 'center'
         },
-        { field: 'absentDay', headerName: 'VẮNG', flex: 0.5, headerAlign: 'center', align: 'center' },
-        { field: 'holidaysWorking', headerName: 'CÔNG LỄ', flex: 0.65 , headerAlign: 'center', align: 'center'},
-        { field: 'haftDayWorking', headerName: 'CÔNG NỬA NGÀY', flex: 1, headerAlign: 'center', align: 'center' },
-        { field: 'workingDay', headerName: 'NGÀY THƯỜNG', flex: 1, headerAlign: 'center', align: 'center' },
-        { field: 'totalDayWorking', headerName: 'TỔNG SỐ NGÀY LÀM VIỆC', headerAlign: 'center', flex: 1.4, align: 'center' },
+        {
+            field: 'absentDay',
+            headerName: 'VẮNG',
+            flex: 0.5,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'holidaysWorking',
+            headerName: 'CÔNG LỄ',
+            flex: 0.65,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'haftDayWorking',
+            headerName: 'CÔNG NỬA NGÀY',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'workingDay',
+            headerName: 'NGÀY THƯỜNG',
+            flex: 1,
+            headerAlign: 'center',
+            align: 'center'
+        },
+        {
+            field: 'totalDayWorking',
+            headerName: 'TỔNG SỐ NGÀY LÀM VIỆC',
+            headerAlign: 'center',
+            flex: 1.4,
+            align: 'center'
+        },
         {
             field: 'actions',
             headerName: 'TÁC VỤ',
@@ -120,15 +174,21 @@ function TimeKeepingTab({ value, index, periodCode }) {
                                 onClick={() => handleAction(params.row)}>
                                 Chấm công
                             </Button>
-
                         </Tooltip>
-                        <Tooltip title="Làm thêm" sx={{ml: 1.5}}>
+                        <Tooltip title="Làm thêm" sx={{ ml: 1.5 }}>
                             <Button
                                 variant="contained"
                                 size="small"
-                                onClick={() => handleActionDetail(params.row)}
-                                >
+                                onClick={() => handleActionDetail(params.row)}>
                                 Xem chi tiết
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Gửi chấm công" sx={{ ml: 1.5 }}>
+                            <Button
+                                variant="contained"
+                                size="small"
+                                onClick={() => handleActionSendEmail(params.row)}>
+                                Gửi chấm công
                             </Button>
                         </Tooltip>
                     </>
@@ -139,6 +199,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
     const rows = timeSheetDetail.map((item, index) => {
         const container = {}
         container['id'] = index + 1
+        container['employeeId'] = item.employee.id
         container['absentDay'] = item.allowedAbsentDay
         container['allowedDay'] = item.absentDay
         container['holidaysWorking'] = item.holidaysWorking
@@ -148,7 +209,11 @@ function TimeKeepingTab({ value, index, periodCode }) {
         container['workingDay'] = item.workingDay
         container['employee'] = item.employee
         container['name'] =
-            (item.employee.firstName  || '') +' '+(item.employee.middleName || '') + ' '+ (item.employee.lastName || '')
+            (item.employee.firstName || '') +
+            ' ' +
+            (item.employee.middleName || '') +
+            ' ' +
+            (item.employee.lastName || '')
         container['roles'] = item.employee.roles[0].name
         return container
     })
@@ -173,7 +238,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
             )}
 
             {isDetail && employee && (
-                <ModelDetailTimeKeeping 
+                <ModelDetailTimeKeeping
                     isOpen={isDetail}
                     title={`Xem chi tiết chấm công của ${employee.employee.employeeCode} - ${employee.name}`}
                     handleClose={() => {
@@ -193,11 +258,12 @@ function TimeKeepingTab({ value, index, periodCode }) {
                         borderRadius: 2,
                         p: 1
                     }
-                }}
-                >
-                <Button 
-                    sx={{mb: 2, ml: 165}}
-                variant="contained" onClick={() => handleSendEmail()} autoFocus>
+                }}>
+                <Button
+                    sx={{ mb: 2, ml: 165 }}
+                    variant="contained"
+                    onClick={() => handleSendEmail()}
+                    autoFocus>
                     Gửi chấm công
                 </Button>
                 <DataTable columns={columns} rows={rows} />
