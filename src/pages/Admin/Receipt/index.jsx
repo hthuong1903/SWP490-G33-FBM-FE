@@ -122,7 +122,7 @@ function Receipt() {
                 if (params.value == null) {
                     return ''
                 }
-                return moment(params.value).format('DD/MM/YYYY HH:MM')
+                return moment(params.value).format('DD/MM/YYYY')
             }
         },
 

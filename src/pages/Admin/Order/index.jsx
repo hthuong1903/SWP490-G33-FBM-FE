@@ -78,11 +78,14 @@ export default function Order() {
             headerAlign: 'center',
             align: 'center',
             flex: 1,
-            valueFormatter: (params) => {
-                if (params.value == null) {
-                    return ''
-                }
-                return `${params.value.toLocaleString('vi-VN')} VND`
+            // valueFormatter: (params) => {
+            //     if (params.value == null) {
+            //         return ''
+            //     }
+            //     return `${params.value.toLocaleString('vi-VN')} VND`
+            // }
+            renderCell: (params) => {
+                return `${(params.row.totalOrderPrice - params.row.totalDiscountPrice - params.row.totalOrderPriceAfter).toLocaleString('vi-VN')} VND`
             }
         },
         {
@@ -96,7 +99,7 @@ export default function Order() {
                 if (params.value == null) {
                     return ''
                 }
-                return moment(params.value).format('DD/MM/YYYY HH:MM')
+                return moment(params.value).format('DD/MM/YYYY')
             }
         },
         {
