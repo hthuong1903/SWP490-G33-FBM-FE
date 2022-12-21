@@ -18,17 +18,8 @@ import { toast } from 'react-toastify'
 import { Context } from '../contexts/contexts'
 import { schemaSubsidize } from '../validation'
 
-function ModalAllowance({
-    title,
-    content,
-    isOpen,
-    handleClose,
-    handleConfirm,
-    allowanceDetail,
-    employee,
-    periodCode
-}) {
-    const [type, setType] = useState(1)
+function ModalAllowance({ title, isOpen, handleClose, allowanceDetail, employee, periodCode }) {
+    const [type, setType] = useState(allowanceDetail[0].id)
     const [state, dispatch] = useContext(Context)
 
     const {
@@ -97,6 +88,7 @@ function ModalAllowance({
                             ))}
                         </TextField>
                     </Grid>
+
                     <Grid item xs={6}>
                         <Box>
                             <TextField
@@ -110,6 +102,7 @@ function ModalAllowance({
                                 helperText={errors.subsidize?.message}
                             />
                         </Box>
+
                         <Box>
                             <Typography variant="body1">
                                 Số tiền:{' '}
@@ -124,6 +117,7 @@ function ModalAllowance({
                     </Grid>
                 </Grid>
             </DialogContent>
+
             <DialogActions>
                 <Button onClick={handleClose}>Hủy bỏ</Button>
                 <Button onClick={handleSubmit(onSubmit)} autoFocus>

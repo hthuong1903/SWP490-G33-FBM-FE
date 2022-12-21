@@ -157,13 +157,21 @@ export default function CreateOrder() {
             totalOrderPriceAfter: totalPriceOut * totalQuantity - totalDiscount,
             typeOfPay: location.state[0]?.typeOfPay
         }
+
         try {
             const response = await orderApi.createOrderT(dataSubmit)
             if (response.data.data) {
-                orderApi
-                    .createQuoteT(location.state[0]?.id, dataSubmit)
-                    .then((res) => console.log(res))
-                    .catch((error) => console.log(error))
+                if (status === 3) {
+                    orderApi
+                        .createInvoice(location.state[0]?.id)
+                        .then((res) => console.log(res))
+                        .catch((error) => console.log(error))
+                } else {
+                    orderApi
+                        .createQuoteT(location.state[0]?.id, dataSubmit)
+                        .then((res) => console.log(res))
+                        .catch((error) => console.log(error))
+                }
                 toast.success(response.data.message)
                 navigate(-1)
             } else {
@@ -337,8 +345,14 @@ export default function CreateOrder() {
                                                 sx={{ width: '250px' }}
                                                 onChange={(event) => {
                                                     // row.changedPrice = event.target.value
-                                                    if (event.target.value < 0 || event.target.value >= row.product.priceOut) { setErrorChangedPrice('Chiết khấu không được < 0 hoặc >= giá bán')}
-                                                    else {
+                                                    if (
+                                                        event.target.value < 0 ||
+                                                        event.target.value >= row.product.priceOut
+                                                    ) {
+                                                        setErrorChangedPrice(
+                                                            'Chiết khấu không được < 0 hoặc >= giá bán'
+                                                        )
+                                                    } else {
                                                         row.changedPrice = event.target.value
                                                         setErrorChangedPrice('')
                                                     }

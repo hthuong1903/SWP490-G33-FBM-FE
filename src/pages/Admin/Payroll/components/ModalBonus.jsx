@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Constants from '@/components/Constants'
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
@@ -13,23 +14,14 @@ import {
 } from '@mui/material'
 import { Box } from '@mui/system'
 import axios from 'axios'
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { Context } from '../contexts/contexts'
 import { schemaBonus } from '../validation'
 
-function ModalBonus({
-    title,
-    content,
-    isOpen,
-    handleClose,
-    handleConfirm,
-    bonusDetail,
-    employee,
-    periodCode
-}) {
-    const [type, setType] = useState(1)
+function ModalBonus({ title, isOpen, handleClose, bonusDetail, employee, periodCode }) {
+    const [type, setType] = useState(bonusDetail[0].id)
     const [state, dispatch] = useContext(Context)
 
     const {
@@ -40,6 +32,7 @@ function ModalBonus({
         mode: 'onChange',
         resolver: yupResolver(schemaBonus)
     })
+
     const onSubmit = (data) => {
         console.log(data)
         const newObj = {

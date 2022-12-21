@@ -1,4 +1,3 @@
-import categoryApi from '@/api/categoryApi'
 import contractApi from '@/api/contractApi'
 import DataTable from '@/components/Common/DataTable'
 import ConfirmModal from '@/components/Common/Modal/ConfirmModal'

@@ -16,19 +16,15 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
 import ConfirmModal from '../../../Common/Modal/ConfirmModal'
 
 function Sidebar() {
     const user = JSON.parse(localStorage.getItem('fbm-user')) || []
     let navigate = useNavigate()
     const { auth, setAuth } = useAuth()
-    const [selectedIndex, setSelectedIndex] = useState(0)
     const [isOpenConfirmDialog, setIsOpenConfirmDialog] = useState(false)
     const [open, setOpen] = useState(false)
-    const handleListItemClick = (event, index) => {
-        setSelectedIndex(index)
-    }
+
     const handleClick = () => {
         setOpen(!open)
     }
@@ -128,7 +124,6 @@ function Sidebar() {
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'space-between'
-                            // height: '100%'
                         }}>
                         <Box>
                             <Box>
@@ -146,20 +141,25 @@ function Sidebar() {
                                     />
                                 </ListItem>
                             </Box>
-                            <Box sx={{ overflow: 'auto'}}>
+                            <Box sx={{ overflow: 'auto' }}>
                                 <Divider />
                                 {items.map((item, index) =>
-                                    item.name == 'Thống kê' && auth?.roles.includes("MANAGER")? (
+                                    item.name == 'Thống kê' ? (
                                         <Box key={index}>
-                                            <ListItem button onClick={handleClick}>
-                                                <ListItemText
-                                                    sx={{
-                                                        '& .MuiTypography-root': {
-                                                            fontWeight: '500'
-                                                        }
-                                                    }}>
-                                                    {item.name}
-                                                </ListItemText>
+                                            <ListItem
+                                                button
+                                                onClick={handleClick}
+                                                sx={{
+                                                    '& .MuiTypography-root': {
+                                                        fontWeight: '500'
+                                                    },
+                                                    ...(item.allow.find((i) =>
+                                                        i.includes(auth.roles)
+                                                    )
+                                                        ? null
+                                                        : { display: 'none' })
+                                                }}>
+                                                <ListItemText>{item.name}</ListItemText>
                                                 {open ? <ExpandLess /> : <ExpandMore />}
                                             </ListItem>
                                             <Collapse in={open} timeout="auto" unmountOnExit>
@@ -169,9 +169,9 @@ function Sidebar() {
                                                         sx={{ pl: 4 }}
                                                         component={Link}
                                                         to="/manager/admin/statisticals/income"
-                                                        selected={selectedIndex === 91}
-                                                        onClick={(event) =>
-                                                            handleListItemClick(event, 91)
+                                                        selected={
+                                                            '/manager/admin/statisticals/income' ===
+                                                            location.pathname
                                                         }>
                                                         <ListItemText
                                                             sx={{
@@ -187,9 +187,9 @@ function Sidebar() {
                                                         sx={{ pl: 4 }}
                                                         component={Link}
                                                         to="/manager/admin/statisticals/product"
-                                                        selected={selectedIndex === 92}
-                                                        onClick={(event) =>
-                                                            handleListItemClick(event, 92)
+                                                        selected={
+                                                            '/manager/admin/statisticals/product' ===
+                                                            location.pathname
                                                         }>
                                                         <ListItemText
                                                             sx={{
