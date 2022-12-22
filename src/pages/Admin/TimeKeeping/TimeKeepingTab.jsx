@@ -172,7 +172,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
                                 variant="contained"
                                 size="small"
                                 onClick={() => handleAction(params.row)}>
-                                Chấm công
+                                Chấm
                             </Button>
                         </Tooltip>
                         <Tooltip title="Làm thêm" sx={{ ml: 1.5 }}>
@@ -180,7 +180,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
                                 variant="contained"
                                 size="small"
                                 onClick={() => handleActionDetail(params.row)}>
-                                Xem chi tiết
+                                Xem
                             </Button>
                         </Tooltip>
                         <Tooltip title="Gửi chấm công" sx={{ ml: 1.5 }}>
@@ -188,7 +188,7 @@ function TimeKeepingTab({ value, index, periodCode }) {
                                 variant="contained"
                                 size="small"
                                 onClick={() => handleActionSendEmail(params.row)}>
-                                Gửi chấm công
+                                Gửi
                             </Button>
                         </Tooltip>
                     </>
