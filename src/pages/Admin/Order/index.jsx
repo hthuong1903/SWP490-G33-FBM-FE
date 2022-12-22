@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { ORDER_STATUS } from './constant'
+import CancelOrder from './CancelOrder'
 
 export default function Order() {
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false)
@@ -18,17 +19,7 @@ export default function Order() {
     const [status, setStatus] = useState(-1)
     const [isUpdated, setIsUpdated] = useState(false)
     const navigate = useNavigate()
-
-    const handleDelete = async () => {
-        try {
-            await orderApi.deleteOrder(selectedRow?.row.id)
-            toast.success('Xóa thành công !')
-            setIsOpenConfirmModal(false)
-            setIsUpdated(true)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const [isCancelModel, setIsCancelModel] = useState(false)
 
     useEffect(() => {
         const getAllProduct = async (status) => {
@@ -78,12 +69,6 @@ export default function Order() {
             headerAlign: 'center',
             align: 'center',
             flex: 1,
-            // valueFormatter: (params) => {
-            //     if (params.value == null) {
-            //         return ''
-            //     }
-            //     return `${params.value.toLocaleString('vi-VN')} VND`
-            // }
             renderCell: (params) => {
                 return `${(params.row.totalOrderPrice - params.row.totalDiscountPrice - params.row.totalOrderPriceAfter).toLocaleString('vi-VN')} VND`
             }
@@ -146,7 +131,7 @@ export default function Order() {
                                     size="small"
                                     onClick={() => {
                                         setSelectedRow(params)
-                                        setIsOpenConfirmModal(true)
+                                        setIsCancelModel(true)
                                     }}>
                                     <ClearRoundedIcon fontSize="inherit" />
                                 </IconButton>
@@ -159,13 +144,15 @@ export default function Order() {
     ]
     return (
         <>
-            <ConfirmModal
-                isOpen={isOpenConfirmModal}
-                title="Xác nhận"
-                content={`Bạn có muốn xóa đơn hàng này ${selectedRow?.row.orderCode}?`}
-                handleClose={() => setIsOpenConfirmModal(false)}
-                handleConfirm={() => handleDelete()}
-            />
+            {isCancelModel && (
+                <CancelOrder 
+                    isOpen={isCancelModel}
+                    title={`Bạn có muốn xóa đơn hàng này ${selectedRow?.row.orderCode}?`}
+                    orderId={selectedRow?.row.id}
+                    handleClose={() => setIsCancelModel(false)}
+                    handleConfirm={() => setIsUpdated(true)}
+                />
+            )}
             <h2>Danh sách đơn hàng</h2>
             <Box sx={{ mb: 2, mt: 3, display: 'flex', justifyContent: 'space-between' }}>
                 <TextField
