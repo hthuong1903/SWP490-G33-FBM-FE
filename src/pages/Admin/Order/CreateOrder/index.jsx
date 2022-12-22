@@ -111,8 +111,6 @@ export default function CreateOrder() {
         }
     }
 
-    // const totalDiscount = rows.reduce((result, value) => result + value.changedPrice, 0)
-
     const totalDiscount = useMemo(
         () => rows.reduce((result, value) => result + value.changedPrice, 0),
         [rows]
@@ -129,15 +127,17 @@ export default function CreateOrder() {
 
     const totalAmount = rows.reduce(
         (result, value) =>
-            result +
-            value?.product.priceOut -
-            (value?.product.priceOut * value?.product.discount) / 100,
+            result + value?.priceOutProduct * value?.quantity,
         0
     )
-    const totalAmountAfter = rows.reduce(
-        (result, value) => result + value.quantity * value.product.priceOut - value.changedPrice,
+
+    const totalSale = rows.reduce(
+        (result, value) =>
+            result + 
+            (value?.priceOutProduct * value?.product.discount * value?.quantity) / 100,
         0
     )
+
     const addressDetails = () =>
         location.state[0]?.customer.address
             ? `${location.state[0]?.customer.address}, ${location.state[0]?.customer.districtName}, ${location.state[0]?.customer.wardName}, ${location.state[0]?.customer.provinceName}`
@@ -216,6 +216,7 @@ export default function CreateOrder() {
                             <TableRow>
                                 <StyledTableCell align="left">Sản phẩm</StyledTableCell>
                                 <StyledTableCell align="left">Giá bán</StyledTableCell>
+                                <StyledTableCell align="center">Giảm giá</StyledTableCell>
                                 <StyledTableCell align="center">Số lượng</StyledTableCell>
                                 <StyledTableCell align="left">Chiết khấu</StyledTableCell>
                                 <StyledTableCell align="left">Thành tiền</StyledTableCell>
@@ -250,11 +251,12 @@ export default function CreateOrder() {
                                         </StyledTableCell>
                                         <StyledTableCell align="left">
                                             {(
-                                                row?.product.priceOut -
-                                                (row?.product.priceOut * row?.product.discount) /
-                                                    100
+                                                row.priceOutProduct
                                             ).toLocaleString('vi-VN')}{' '}
                                             VND
+                                        </StyledTableCell>
+                                        <StyledTableCell align="left">
+                                            {row?.discount}%
                                         </StyledTableCell>
                                         <StyledTableCell align="center">
                                             <Box>
@@ -344,7 +346,6 @@ export default function CreateOrder() {
                                                 defaultValue={row?.changedPrice}
                                                 sx={{ width: '250px' }}
                                                 onChange={(event) => {
-                                                    // row.changedPrice = event.target.value
                                                     if (
                                                         event.target.value < 0 ||
                                                         event.target.value >= row.product.priceOut
@@ -508,17 +509,24 @@ export default function CreateOrder() {
                                 <td>Tổng</td>
                                 <td>{totalAmount.toLocaleString('vi-VN')} VND</td>
                             </tr>
+
+                            <tr>
+                                <td>Tổng tiền giảm giá</td>
+                                <td>{totalSale.toLocaleString('vi-VN')} VND</td>
+                            </tr>
+
                             <tr>
                                 <td>Tổng tiền chiết khấu</td>
                                 <td>{totalDiscount.toLocaleString('vi-VN')} VND</td>
                             </tr>
+
                             <tr>
                                 <td>
                                     <b>Tổng tiền</b>
                                 </td>
                                 <td>
                                     <b>
-                                        {(totalAmount - totalDiscount).toLocaleString('vi-VN')} VND
+                                        {(totalAmount - totalDiscount - totalSale).toLocaleString('vi-VN')} VND
                                     </b>
                                 </td>
                             </tr>
