@@ -47,7 +47,6 @@ function CreateReceipt() {
     const { auth } = useAuth()
     const [errorChangedPrice, setErrorChangedPrice] = useState('')
     let navigate = useNavigate()
-    // const [listProductOrder, setListProductOrder] = useState([])
 
     const handleSelect = (event) => {
         setValue(event.target.value)
@@ -88,9 +87,6 @@ function CreateReceipt() {
         // setRows([...location.state[0].orderProductDtos])
     }, [location])
 
-    // useEffect(() => {
-        
-    // })
     const formatProductList = productList.map((i) => {
         return {
             productId: i.id,
@@ -139,10 +135,9 @@ function CreateReceipt() {
         0
     )
     const totalAmountAfter = rows.reduce(
-        (result, value) => result + value.quantity * value.product.priceOut - value.changedPrice,
+        (result, value) => result + ((100-value.discountProduct)/100*value.quantity * value.product.priceOut) - value.changedPrice,
         0
     )
-    // const resultDiscount = () => rows.reduce((result, value) => result + value.discount, 0)
     const handleCreate = async () => {
         const dataSubmit = {
             customerId: selectedEmployee.id,
@@ -313,12 +308,10 @@ function CreateReceipt() {
                                                 error
                                                 type="number"
                                                 size="small"
-                                                // id="outlined-error-helper-text"
                                                 id="outlined-basic"
                                                 variant="outlined"
                                                 helperText={errorChangedPrice}
                                                 defaultValue={row?.changedPrice}
-                                                // helperText={errorChangedPrice}
                                                 sx={{ width: '250px' }}
                                                 onChange={(event) => {
                                                     if (event.target.value < 0 || event.target.value >= row.product.priceOut) { setErrorChangedPrice('Chiết khấu không được < 0 hoặc >= giá bán')}
@@ -326,18 +319,6 @@ function CreateReceipt() {
                                                         row.changedPrice = event.target.value
                                                         setErrorChangedPrice('')
                                                     }
-                                                    // let newQuantity = Number(row.changedPrice)aoh
-                                                    // setRows((oldRow) => {
-                                                    //     return oldRow.map((item) => {
-                                                    //         if (item.id === row.id) {
-                                                    //             return {
-                                                    //                 ...item,
-                                                    //                 changedPrice: newQuantity
-                                                    //             }
-                                                    //         }
-                                                    //         return item
-                                                    //     })
-                                                    // })
                                                 }}
                                                 onBlur={() => {
                                                     let newQuantity = Number(row.changedPrice)
@@ -360,26 +341,11 @@ function CreateReceipt() {
                                                         </InputAdornment>
                                                     )
                                                 }}
-                                                // onBlur={() => {
-                                                //     let newQuantity = Number(row.changedPrice)
-                                                //     setRows((oldRow) => {
-                                                //         return oldRow.map((item) => {
-                                                //             if (item.id === row.id) {
-                                                //                 return {
-                                                //                     ...item,
-                                                //                     changedPrice: newQuantity
-                                                //                 }
-                                                //             }
-                                                //             return item
-                                                //         })
-                                                //     })
-                                                // }}
                                             />
                                         </StyledTableCell>
                                         <StyledTableCell align="left">
                                             {(
-                                                row?.product.priceOut * row.quantity -
-                                                row.changedPrice
+                                                ((100 - row?.discountProduct)*row?.product.priceOut * row.quantity) / 100 - row.changedPrice
                                             ).toLocaleString('vi-VN')}{' '}
                                             VND
                                         </StyledTableCell>
@@ -513,9 +479,6 @@ function CreateReceipt() {
                             </Collapse>
                             {selectedEmployee && (
                                 <Box sx={{ mt: 2, mr: 3 }}>
-                                    {/* <Typography variant="subtitle1">
-                                    <b>THÔNG TIN KHÁCH HÀNG</b>
-                                </Typography> */}
                                     <hr />
                                     <Typography variant="subtitle1">
                                         {selectedEmployee.firstName +
