@@ -12,7 +12,6 @@ import axios from 'axios'
 import Constants from '@/components/Constants'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { vi } from 'date-fns/locale'
-// import { toast } from 'react-toastify'
 import moment from 'moment'
 import { useState } from 'react'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
@@ -51,8 +50,7 @@ function ModalOvertime({ title, content, isOpen, handleClose, handleConfirm, emp
         try {
             await axios.put(Constants.baseAPI + 'api/overtime', data).then((res) => {
                 console.log(res)
-                toast.success(res.message)
-                handleClose && handleClose()
+                toast.success("Thêm làm thêm giờ thành công !")
             })
             handleClose && handleClose()
         } catch (error) {
