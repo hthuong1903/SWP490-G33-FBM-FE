@@ -74,86 +74,91 @@ function ModalOvertime({ title, content, isOpen, handleClose, handleConfirm, emp
             <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
 
             <DialogContent>
-                <Grid container sx={{ mt: 1 }} spacing={4}>
-                    <Grid item xs={4} sx={{ '& .MuiTextField-root': { mb: 2 } }}>
-                        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={vi}>
-                            <Box>
-                                <Controller
-                                    required
-                                    name="date"
-                                    control={control}
-                                    defaultValue={new Date()}
-                                    render={({
-                                        field: { onChange, value },
-                                        fieldState: { error }
-                                    }) => (
-                                        <DatePicker
-                                            label="Chọn ngày công"
-                                            disableFuture
-                                            shouldDisableDate={disablePrevDates(
-                                                firstDayCurrentMonth
-                                            )}
-                                            ampm={false}
-                                            value={value}
-                                            // onChange={(value) => onChange(value)}
-                                            // value={new Date(datePlayerDeadline)}
-                                            onChange={(value) => {
-                                                onChange(value)
-                                                // setDatePlayerDeadline(value)
-                                            }}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    sx={{
-                                                        marginTop: '0px !important',
-                                                        marginBottom: '16px !important'
-                                                    }}
-                                                    {...params}
-                                                    required
-                                                    id="outlined-disabled"
-                                                    error={!!error}
-                                                    helperText={error ? error.message : null}
-                                                    // id="startDate"
-                                                    variant="outlined"
-                                                    margin="dense"
-                                                    fullWidth
-                                                />
-                                            )}
-                                        />
-                                    )}
-                                />
-                            </Box>
-                        </LocalizationProvider>
+                <Box
+                    component="form"
+                    noValidate
+                    autoComplete="off"
+                    sx={{
+                        '& .MuiTextField-root': { mb: 1 },
+                        '& .MuiBox-root': { width: '90%', ml: 1, mr: 2 }
+                    }}>
+                    <Grid container sx={{ mt: 1 }} spacing={4}>
+                        <Grid item xs={4} sx={{ '& .MuiTextField-root': { mb: 2 } }}>
+                            <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={vi}>
+                                <Box>
+                                    <Controller
+                                        required
+                                        name="date"
+                                        control={control}
+                                        defaultValue={new Date()}
+                                        render={({
+                                            field: { onChange, value },
+                                            fieldState: { error }
+                                        }) => (
+                                            <DatePicker
+                                                label="Chọn ngày công"
+                                                disableFuture
+                                                shouldDisableDate={disablePrevDates(
+                                                    firstDayCurrentMonth
+                                                )}
+                                                ampm={false}
+                                                value={value}
+                                                onChange={(value) => {
+                                                    onChange(value)
+                                                }}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        sx={{
+                                                            marginTop: '0px !important',
+                                                            marginBottom: '16px !important'
+                                                        }}
+                                                        {...params}
+                                                        required
+                                                        id="outlined-disabled"
+                                                        error={!!error}
+                                                        helperText={error ? error.message : null}
+                                                        variant="outlined"
+                                                        margin="dense"
+                                                        fullWidth
+                                                    />
+                                                )}
+                                            />
+                                        )}
+                                    />
+                                </Box>
+                            </LocalizationProvider>
+                        </Grid>
+                        <Grid item xs={8}>
+                            <Grid container sx={{ display: 'flex', flexDirection: 'column' }}>
+                                <Grid item xs={6} sx={{ '& .MuiTextField-root': { mb: 4 } }}>
+                                    <TextField
+                                        fullWidth
+                                        size="small"
+                                        id="outlined-basic"
+                                        label="Số giờ làm thêm"
+                                        variant="outlined"
+                                        {...register('hour')}
+                                        error={errors.hour ? true : false}
+                                        helperText={errors.hour?.message}
+                                    />
+                                </Grid>
+                                <Grid item xs={10}>
+                                    <TextField
+                                        fullWidth
+                                        id="outlined-multiline-static"
+                                        label="Nội dung"
+                                        multiline
+                                        rows={2}
+                                        defaultValue=""
+                                        {...register('content')}
+                                        error={errors.content ? true : false}
+                                        helperText={errors.content?.message}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Grid container sx={{ mt: 1 }} spacing={2}>
-                    <Grid item xs={6} sx={{ '& .MuiTextField-root': { mb: 2 } }}>
-                        <Box>
-                            <TextField
-                                fullWidth
-                                size="small"
-                                id="outlined-basic"
-                                label="Số giờ làm thêm"
-                                variant="outlined"
-                                {...register('hour')}
-                                error={errors.hour ? true : false}
-                                helperText={errors.hour?.message}
-                            />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            fullWidth
-                            id="outlined-multiline-static"
-                            label="Nội dung"
-                            multiline
-                            rows={2}
-                            defaultValue=""
-                            {...register('content')}
-                            error={errors.content ? true : false}
-                            helperText={errors.content?.message}
-                        />
-                    </Grid>
-                </Grid>
+                </Box>
             </DialogContent>
             <DialogActions>
                 <Button variant="outlined" onClick={handleClose}>
