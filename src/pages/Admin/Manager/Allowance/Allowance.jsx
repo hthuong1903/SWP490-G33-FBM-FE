@@ -60,9 +60,24 @@ function Allowance() {
                 )
             }
         },
-        { field: 'money', headerName: 'SỐ TIỀN', flex: 1, headerAlign: 'center',
-        align: 'center', },
-        { field: 'content', headerName: 'NỘI DUNG CHI TIẾT', flex: 1.5},
+        { 
+            field: 'money', 
+            headerName: 'SỐ TIỀN', 
+            flex: 1, 
+            headerAlign: 'center',
+            align: 'center',
+            valueFormatter: (params) => {
+                if (params.value == null) {
+                    return ''
+                }
+                return `${params.value.toLocaleString('vi-VN')} VND`
+            }
+        },
+        { 
+            field: 'content', 
+            headerName: 'NỘI DUNG CHI TIẾT', 
+            flex: 1.5
+        },
         {
             field: 'actions',
             headerName: 'TÁC VỤ',

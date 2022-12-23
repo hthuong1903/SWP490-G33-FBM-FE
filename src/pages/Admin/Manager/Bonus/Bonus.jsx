@@ -59,8 +59,19 @@ function Bonus() {
                 )
             }
         },
-        { field: 'money', headerName: 'SỐ TIỀN', flex: 1, headerAlign: 'center',
-        align: 'center'},
+        { 
+            field: 'money', 
+            headerName: 'SỐ TIỀN', 
+            flex: 1, 
+            headerAlign: 'center',
+            align: 'center',
+            valueFormatter: (params) => {
+                if (params.value == null) {
+                    return ''
+                }
+                return `${params.value.toLocaleString('vi-VN')} VND`
+            }
+        },
         { field: 'content', headerName: 'NỘI DUNG CHI TIẾT', flex: 1},
         {
             field: 'actions',

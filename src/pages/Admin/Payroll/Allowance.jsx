@@ -112,7 +112,6 @@ function Allowance({ value, index, periodCode }) {
                                 variant="contained"
                                 size="small"
                                 onClick={() => handleAction(params.row)}>
-                                {/* <EditRounded fontSize="inherit" /> */}
                                 Phụ cấp
                             </Button>
                         </Tooltip>
@@ -121,7 +120,6 @@ function Allowance({ value, index, periodCode }) {
                                 variant="contained"
                                 size="small"
                                 onClick={() => handleView(params.row)}>
-                                {/* <EditRounded fontSize="inherit" /> */}
                                 Xem
                             </Button>
                         </Tooltip>
