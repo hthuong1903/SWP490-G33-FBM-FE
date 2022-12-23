@@ -72,10 +72,12 @@ export default function CreateOrder() {
         console.log(location.state[0])
     }, [location])
 
+    // console.log('productList', productList)
     const formatProductList2 = productList.filter(
         ({ id: id1 }) => !rows.some(({ productId: id2 }) => id2 === id1)
     )
 
+    // console.log('formatProductList2', formatProductList2)
     const formatProductList = formatProductList2.map((i) => {
         return {
             productId: i.id,
@@ -249,10 +251,12 @@ export default function CreateOrder() {
                                                 </Box>
                                             </Box>
                                         </StyledTableCell>
+
                                         <StyledTableCell align="left">
-                                            {(
+                                            {row.priceOutProduct ? (
                                                 row.priceOutProduct
-                                            ).toLocaleString('vi-VN')}{' '}
+                                                // row?.product.priceOut
+                                            ).toLocaleString('vi-VN') : ' '}
                                             VND
                                         </StyledTableCell>
                                         <StyledTableCell align="left">

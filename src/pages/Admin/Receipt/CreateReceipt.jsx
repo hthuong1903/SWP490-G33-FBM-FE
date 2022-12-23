@@ -121,6 +121,11 @@ function CreateReceipt() {
         [rows]
     )
 
+    const totalSale = useMemo(
+        () => rows.reduce((result, value) => result + (value.discountProduct)/100*value.quantity * value.product.priceOut, 0),
+        [rows]
+    )
+
     const totalPriceOut = useMemo(
         () => rows.reduce((result, value) => result + value.product.priceOut, 0),
         [rows]
@@ -507,6 +512,10 @@ function CreateReceipt() {
                                 <tr>
                                     <td>Tổng</td>
                                     <td>{totalAmount.toLocaleString('vi-VN')} VND</td>
+                                </tr>
+                                <tr>
+                                    <td>Tổng số tiền giảm giá</td>
+                                    <td>{totalSale.toLocaleString('vi-VN')} VND</td>
                                 </tr>
                                 <tr>
                                     <td>Tổng tiền chiết khấu</td>
