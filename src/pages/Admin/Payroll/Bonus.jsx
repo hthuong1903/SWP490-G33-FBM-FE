@@ -72,6 +72,7 @@ function Bonus({ value, index, periodCode }) {
                 )
             }
         },
+
         {
             field: 'role',
             headerName: 'VAI TRÒ',
@@ -86,8 +87,21 @@ function Bonus({ value, index, periodCode }) {
                 />
             }
         },
-        { field: 'totalMoney', headerName: 'TỔNG SỐ TIỀN THƯỞNG', flex: 1, headerAlign: 'center',
-        align: 'center'},
+
+        { 
+            field: 'totalMoney', 
+            headerName: 'TỔNG SỐ TIỀN THƯỞNG', 
+            flex: 1, 
+            headerAlign: 'center',
+            align: 'center',
+            valueFormatter: (params) => {
+                if (params.value == null) {
+                    return ''
+                }
+                return `${params.value.toLocaleString('vi-VN')} VND`
+            }
+        },
+
         {
             field: 'actions',
             headerName: 'TÁC VỤ',
@@ -102,7 +116,6 @@ function Bonus({ value, index, periodCode }) {
                                 variant="contained"
                                 size="small"
                                 onClick={() => handleAction(params.row)}>
-                                {/* <EditRounded fontSize="inherit" /> */}
                                 Thưởng
                             </Button>
                         </Tooltip>
@@ -111,7 +124,6 @@ function Bonus({ value, index, periodCode }) {
                                 variant="contained"
                                 size="small"
                                 onClick={() => handleView(params.row)}>
-                                {/* <EditRounded fontSize="inherit" /> */}
                                 Xem
                             </Button>
                         </Tooltip>

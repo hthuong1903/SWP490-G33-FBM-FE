@@ -34,7 +34,6 @@ function Allowance({ value, index, periodCode }) {
     const getAllowance = async () => {
         try {
             const response = await AllowanceApi.getAllowance()
-            // console.log('get allowance detail', response.data)
             setAllowanceDetail(response.data)
         } catch (error) {
             console.warn('Failed to get allowance detail', error)
@@ -44,7 +43,6 @@ function Allowance({ value, index, periodCode }) {
     const getAllowanceByPeriodCode = async (period_code) => {
         try {
             const response = await AllowanceApi.createAllowance(period_code)
-            // console.log('Get allowance', response.data)
             setAllowance(response.data)
         } catch (error) {
             console.warn('Failed to get allowance', error)
@@ -87,7 +85,19 @@ function Allowance({ value, index, periodCode }) {
                 />
             }
         },
-        { field: 'totalMoney', headerName: 'TỔNG TIỀN PHỤ CẤP', flex: 1, headerAlign: 'center',align: 'center' },
+        { 
+            field: 'totalMoney', 
+            headerName: 'TỔNG TIỀN PHỤ CẤP', 
+            flex: 1, 
+            headerAlign: 'center',
+            align: 'center',
+            valueFormatter: (params) => {
+                if (params.value == null) {
+                    return ''
+                }
+                return `${params.value.toLocaleString('vi-VN')} VND`
+            }
+        },
         {
             field: 'actions',
             headerName: 'TÁC VỤ',
