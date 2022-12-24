@@ -117,7 +117,7 @@ export default function ModalAddProvider({ title, isOpen, handleClose, handleCon
                 <Grid container sx={{ mt: 1 }}>
                     <Grid item xs={6}>
                         {/* Upload image */}
-                        <ImageUpload onSubmit={(images) => setImageData(images)} />
+                        <ImageUpload onSubmit={(images) => setImageData(images)} isEdit={!isEdit}/>
                     </Grid>
                     <Grid item xs={6} sx={{ '& .MuiTextField-root': { mb: 3 } }}>
                         <Box>

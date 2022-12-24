@@ -112,8 +112,9 @@ function Sidebar() {
                 isOpen={isOpenConfirmDialog}
                 handleClose={() => setIsOpenConfirmDialog(false)}
                 handleConfirm={() => {
-                    localStorage.removeItem('fbm-user')
+                    localStorage.clear()
                     navigate('/manager')
+                    window.location.reload()
                     setAuth(null)
                 }}
             />

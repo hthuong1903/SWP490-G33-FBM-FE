@@ -26,22 +26,21 @@ import TableRow from '@mui/material/TableRow'
 import { Box } from '@mui/system'
 import moment from 'moment/moment'
 import { useEffect, useMemo, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import './style.css'
 
 export default function CreateOrder() {
     const [checkedProduct, setCheckedProduct] = useState(false)
-    const [checkedCustomer, setCheckedCustomer] = useState(false)
+    // eslint-disable-next-line no-unused-vars
     const [userList, setUserList] = useState([])
     const [productList, setProductList] = useState([])
-    const [selectedEmployee, setSelectedEmployee] = useState(null)
+    // eslint-disable-next-line no-unused-vars
     const [selectedProduct, setSelectedProduct] = useState([])
     const [rows, setRows] = useState([])
     const { auth } = useAuth()
     let navigate = useNavigate()
     const location = useLocation()
-    let { orderId } = useParams()
     const [errorChangedPrice, setErrorChangedPrice] = useState('')
     console.log(location)
     const min = 1
@@ -72,12 +71,10 @@ export default function CreateOrder() {
         console.log(location.state[0])
     }, [location])
 
-    // console.log('productList', productList)
     const formatProductList2 = productList.filter(
         ({ id: id1 }) => !rows.some(({ productId: id2 }) => id2 === id1)
     )
 
-    // console.log('formatProductList2', formatProductList2)
     const formatProductList = formatProductList2.map((i) => {
         return {
             productId: i.id,
@@ -101,10 +98,12 @@ export default function CreateOrder() {
     }, [rows, productList])
 
     const handleSelectedProduct = (event, value) => {
+        console.log('day ne heheheh', value)
         const createdValue = {
             ...value,
             quantity: 1,
-            changedPrice: 0
+            changedPrice: 0,
+            priceOutProduct: value.product.priceOut
         }
         setSelectedProduct(value)
         if (value) {
@@ -122,21 +121,20 @@ export default function CreateOrder() {
         () => rows.reduce((result, value) => result + value.product.priceOut, 0),
         [rows]
     )
+
     const totalQuantity = useMemo(
         () => rows.reduce((result, value) => result + value.quantity, 0),
         [rows]
     )
 
     const totalAmount = rows.reduce(
-        (result, value) =>
-            result + value?.priceOutProduct * value?.quantity,
+        (result, value) => result + value?.priceOutProduct * value?.quantity,
         0
     )
 
     const totalSale = rows.reduce(
         (result, value) =>
-            result + 
-            (value?.priceOutProduct * value?.product.discount * value?.quantity) / 100,
+            result + (value?.priceOutProduct * value?.product.discount * value?.quantity) / 100,
         0
     )
 
@@ -253,10 +251,11 @@ export default function CreateOrder() {
                                         </StyledTableCell>
 
                                         <StyledTableCell align="left">
-                                            {row.priceOutProduct ? (
-                                                row.priceOutProduct
-                                                // row?.product.priceOut
-                                            ).toLocaleString('vi-VN') : ' '}
+                                            {row.priceOutProduct
+                                                ? row.priceOutProduct
+                                                      // row?.product.priceOut
+                                                      .toLocaleString('vi-VN')
+                                                : ' '}
                                             VND
                                         </StyledTableCell>
                                         <StyledTableCell align="left">
@@ -530,7 +529,10 @@ export default function CreateOrder() {
                                 </td>
                                 <td>
                                     <b>
-                                        {(totalAmount - totalDiscount - totalSale).toLocaleString('vi-VN')} VND
+                                        {(totalAmount - totalDiscount - totalSale).toLocaleString(
+                                            'vi-VN'
+                                        )}{' '}
+                                        VND
                                     </b>
                                 </td>
                             </tr>

@@ -1,13 +1,12 @@
 import placeholderImage from '@/assets/image/placeholderImage.png'
-import { Button, IconButton} from '@mui/material'
+import { Button } from '@mui/material'
 import { Box } from '@mui/system'
 import { useEffect, useState } from 'react'
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded'
 
 function ImageUpload({ onSubmit, selectedData, isEdit }) {
     const [image, setImage] = useState(null)
     const [imageFile, setImageFile] = useState(null)
-    
+
     const handleFileUpload = (event) => {
         let file = URL.createObjectURL(event.target.files[0])
         let img = new Image()
@@ -22,11 +21,21 @@ function ImageUpload({ onSubmit, selectedData, isEdit }) {
 
     useEffect(() => {
         if (selectedData) {
-            setImage({
-                photoMainName: selectedData?.imageUrl,
-            })
+            if (selectedData?.imageUrl) {
+                setImage({
+                    photoMainName: selectedData?.imageUrl
+                })
+            } else {
+                setImage({
+                    photoMainName: selectedData?.urlImage
+                })
+            }
             console.log(image)
         }
+    }, [])
+
+    useEffect(() => {
+        console.log('selectedData from image upload', selectedData)
     }, [])
 
     return (

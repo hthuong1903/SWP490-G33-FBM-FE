@@ -1,11 +1,9 @@
+import useAuth from '@/hooks/useAuth'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
-import useAuth from '@/hooks/useAuth'
 import {
     Avatar,
-    Box,
-    Collapse,
-    Divider,
+    Box, Divider,
     List,
     ListItem,
     ListItemAvatar,
@@ -15,12 +13,10 @@ import {
     Paper
 } from '@mui/material'
 import { useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
+import { Link, useNavigate } from 'react-router-dom'
 import ConfirmModal from '../../../Common/Modal/ConfirmModal'
 
 function Sidebar() {
-    const user = JSON.parse(localStorage.getItem('fbm-user')) || []
     let navigate = useNavigate()
     const { auth, setAuth } = useAuth()
     console.log(auth)
@@ -34,8 +30,6 @@ function Sidebar() {
     const handleClick = () => {
         setOpen(!open)
     }
-
-    const location = useLocation()
 
     const items = [
         { name: 'Tài Khoản Nhân Viên Bán Hàng', href: '/manager/administrator' },

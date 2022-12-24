@@ -74,7 +74,6 @@ export default function ModalUpdateProvider({
                     .catch((error) => {
                         console.log(error)
                     })
-                console.log(dataSubmit)
             })
             .catch(async () => {
                 const provinceName = await provincesApi.getProvinceById(Number(data.province))
@@ -164,6 +163,7 @@ export default function ModalUpdateProvider({
                         <ImageUpload
                             onSubmit={(images) => setImageData(images)}
                             selectedData={selectedData}
+                            isEdit={!isEdit}
                         />
                     </Grid>
                     <Grid item xs={6} sx={{ '& .MuiTextField-root': { mb: 3 } }}>
