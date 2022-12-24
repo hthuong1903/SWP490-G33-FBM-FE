@@ -50,7 +50,7 @@ function ModalOvertime({ title, content, isOpen, handleClose, handleConfirm, emp
         try {
             await axios.put(Constants.baseAPI + 'api/overtime', data).then((res) => {
                 console.log(res)
-                toast.success("Thêm làm thêm giờ thành công !")
+                toast.success(res.data.message)
             })
             handleClose && handleClose()
         } catch (error) {
