@@ -5,11 +5,14 @@ import StatisticAPI from '@/api/StatisticAPI'
 import { useEffect } from 'react'
 
 const monthInSemester = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-const years = [2021, 2022]
+const years = [2021, 2022, 2023]
+const _month = new Date().getMonth() + 1
+const _year = new Date().getFullYear()
 
 function ProductSale() {
-    const [month, setMonth] = useState(11)
-    const [year, setYear] = useState(2022)
+
+    const [month, setMonth] = useState(_month)
+    const [year, setYear] = useState(_year)
     const [type, setType] = useState(1)
     const [listProducts, setListProducts] = useState([])
 
@@ -27,7 +30,7 @@ function ProductSale() {
         getTopSellingProduct(type, month, year)
     }, [type, month, year])
 
-    const rows = listProducts.map((item, index) => {
+    const rows = (listProducts || [] ).map((item, index) => {
         const container = {}
         container['id'] = index
         container['productCode'] = item.productCode
@@ -67,7 +70,7 @@ function ProductSale() {
 
     return (
         <>
-            <h2>Thông kê sản phẩm bán chạy</h2>
+            <h2>Thông kê sản phẩm</h2>
             <Box sx={{mb: 2, mt: 3, display: 'flex', justifyContent: 'space-between' }}>
                 <Box>                
                     <TextField
