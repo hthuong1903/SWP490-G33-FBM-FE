@@ -72,10 +72,26 @@ function OvertimeTab({ value, index, periodCode }) {
                 />
             }
         },
-        { field: 'totalTime', headerName: 'TỔNG SỐ GIỜ LÀM THÊM', flex: 1, headerAlign: 'center',
-        align: 'center' },
-        { field: 'totalAmount', headerName: 'TỔNG SỐ TIỀN', flex: 1, headerAlign: 'center',
-        align: 'center' },
+        { 
+            field: 'totalTime', 
+            headerName: 'TỔNG SỐ GIỜ LÀM THÊM', 
+            flex: 1, 
+            headerAlign: 'center',
+            align: 'center'
+        },
+        { 
+            field: 'totalAmount', 
+            headerName: 'TỔNG SỐ TIỀN', 
+            flex: 1, 
+            headerAlign: 'center',
+            align: 'center',
+            valueFormatter: (params) => {
+                if (params.value == null) {
+                    return ''
+                }
+                return `${params.value.toLocaleString('vi-VN')} VND`
+            }
+        },
         {
             field: 'actions',
             headerName: 'TÁC VỤ',
