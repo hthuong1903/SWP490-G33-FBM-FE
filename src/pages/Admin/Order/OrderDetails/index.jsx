@@ -127,8 +127,8 @@ export default function OrderDetails() {
                             <TableRow>
                                 <StyledTableCell align="left">Sản phẩm</StyledTableCell>
                                 <StyledTableCell align="left">Giá bán</StyledTableCell>
-                                <StyledTableCell align="left">Giảm giá</StyledTableCell>
-                                <StyledTableCell align="left">Số lượng</StyledTableCell>
+                                <StyledTableCell align="center">Giảm giá</StyledTableCell>
+                                <StyledTableCell align="center">Số lượng</StyledTableCell>
                                 <StyledTableCell align="left">Chiết khấu</StyledTableCell>
                                 <StyledTableCell align="left">Thành tiền</StyledTableCell>
                             </TableRow>
@@ -168,10 +168,10 @@ export default function OrderDetails() {
                                             ).toLocaleString('vi-VN')}{' '}
                                             VND
                                         </StyledTableCell>
-                                        <StyledTableCell align="left">
+                                        <StyledTableCell align="center">
                                             {row?.discount}%
                                         </StyledTableCell>
-                                        <StyledTableCell align="left">
+                                        <StyledTableCell align="center">
                                             {row?.quantity}
                                         </StyledTableCell>
                                         <StyledTableCell align="left">

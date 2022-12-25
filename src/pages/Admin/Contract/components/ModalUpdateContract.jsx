@@ -46,7 +46,7 @@ export default function ModalUpdateContract({
         const dataSubmit = {
             ...data,
             id: selectedData?.row.id,
-            employee: selectedEmployee,
+            employeeId: selectedEmployee.id,
             contractTerm: contractTerm,
             startDate: moment(data.startDate).format('YYYY-MM-DD'),
             endDate: moment(getEndDateBycontractTerm(contractTerm)).format('YYYY-MM-DD')
@@ -106,7 +106,7 @@ export default function ModalUpdateContract({
     }, [])
 
     useEffect(() => {
-        console.log(selectedEmployee)
+        console.log("selectedEmployee1", selectedEmployee)
     }, [selectedEmployee])
     useEffect(() => {
         console.log(startDate)

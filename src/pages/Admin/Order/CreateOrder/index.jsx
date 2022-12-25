@@ -254,11 +254,11 @@ export default function CreateOrder() {
                                             {row.priceOutProduct
                                                 ? row.priceOutProduct
                                                       // row?.product.priceOut
-                                                      .toLocaleString('vi-VN')
+                                                    .toLocaleString('vi-VN')
                                                 : ' '}
                                             VND
                                         </StyledTableCell>
-                                        <StyledTableCell align="left">
+                                        <StyledTableCell align="center">
                                             {row?.discount}%
                                         </StyledTableCell>
                                         <StyledTableCell align="center">

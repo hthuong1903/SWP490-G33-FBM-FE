@@ -94,8 +94,8 @@ function DetailReceipt() {
                                 <TableRow>
                                     <StyledTableCell align="left">Sản phẩm</StyledTableCell>
                                     <StyledTableCell align="left">Giá bán</StyledTableCell>
-                                    <StyledTableCell align="left">Giảm giá</StyledTableCell>
-                                    <StyledTableCell align="left">Số lượng</StyledTableCell>
+                                    <StyledTableCell align="center">Giảm giá</StyledTableCell>
+                                    <StyledTableCell align="center">Số lượng</StyledTableCell>
                                     <StyledTableCell align="left">Chiết khấu</StyledTableCell>
                                     <StyledTableCell align="left">Thành tiền</StyledTableCell>
                                 </TableRow>
@@ -139,10 +139,10 @@ function DetailReceipt() {
                                                 ).toLocaleString('vi-vn')}{' '}
                                                 VND
                                             </StyledTableCell>
-                                            <StyledTableCell align="left">
+                                            <StyledTableCell align="center">
                                                 {row?.discount}%
                                             </StyledTableCell>
-                                            <StyledTableCell align="left">
+                                            <StyledTableCell align="center">
                                                 {row?.quantity}
                                             </StyledTableCell>
                                             <StyledTableCell align="left">

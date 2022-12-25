@@ -37,7 +37,7 @@ export default function ModalAddContract({ title, isOpen, handleClose, handleCon
         console.log(data)
         const dataSubmit = {
             ...data,
-            employee: selectedEmployee,
+            employeeId: selectedEmployee.id,
             contractTerm: contractTerm,
             startDate: moment(data.startDate).format('YYYY-MM-DD'),
             endDate: moment(getEndDateBycontractTerm(contractTerm)).format('YYYY-MM-DD')
@@ -95,8 +95,9 @@ export default function ModalAddContract({ title, isOpen, handleClose, handleCon
     }, [])
 
     useEffect(() => {
-        console.log(selectedEmployee)
+        console.log("selectedEmployee", selectedEmployee.id)
     }, [selectedEmployee])
+
     useEffect(() => {
         console.log(startDate)
     }, [startDate])
