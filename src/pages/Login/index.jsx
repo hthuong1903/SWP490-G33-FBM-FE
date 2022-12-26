@@ -29,9 +29,12 @@ export default function Login() {
         setIsLoading(true)
 
         try {
+            //call api
             const response = await authApi.signIn(data)
+
             localStorage.setItem('fbm-user', JSON.stringify(response.data.data[0]))
             localStorage.setItem('TOKEN', JSON.stringify(response.data.data[0].token))
+
             const username = JSON.parse(localStorage.getItem('fbm-user')).username
             const userId = JSON.parse(localStorage.getItem('fbm-user')).userId
             const pwd = JSON.parse(localStorage.getItem('fbm-user')).pwd

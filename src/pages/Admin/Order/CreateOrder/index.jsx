@@ -204,9 +204,6 @@ export default function CreateOrder() {
                     <Button variant="contained" onClick={() => handleCreate(2)}>
                         Tạo báo giá
                     </Button>
-                    <Button variant="contained" onClick={() => handleCreate(3)}>
-                        Tạo hóa đơn
-                    </Button>
                 </Box>
             </Box>
             <Collapse in={Boolean(rows)}>
@@ -254,7 +251,7 @@ export default function CreateOrder() {
                                             {row.priceOutProduct
                                                 ? row.priceOutProduct
                                                       // row?.product.priceOut
-                                                    .toLocaleString('vi-VN')
+                                                      .toLocaleString('vi-VN')
                                                 : ' '}
                                             VND
                                         </StyledTableCell>

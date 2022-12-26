@@ -25,32 +25,30 @@ export default function ModalAddCategory({ title, isOpen, handleClose, handleCon
     })
     const onSubmit = (data) => {
         console.log(data)
-        console.log("imaeData", imageData)
         const formData = new FormData()
         formData.append('photo_main', imageData?.photoMainName)
-        categoryApi
-            .uploadImage(formData)
-            .then((res) => {
-                console.log('up anh thanh cong', res)
-                const dataSubmit = {
-                    ...data,
-                    urlImage: res.data.data[0].photoMainName
-                }        
+
+        categoryApi.uploadImage(formData).then((res) => {
+            console.log('up anh thanh cong', res)
+            const dataSubmit = {
+                ...data,
+                urlImage: res.data.data[0].photoMainName
+            }
             categoryApi
-            .createCategory(dataSubmit)
-            .then((res) => {
-                console.log('data', res.data.data)
-                if (res.data.data.length) {
-                    toast.success(res.data.message)
-                    handleConfirm && handleConfirm(true)
-                    handleClose && handleClose()
-                } else {
-                    toast.error(res.data.message)
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+                .createCategory(dataSubmit)
+                .then((res) => {
+                    console.log('data', res.data.data)
+                    if (res.data.data.length) {
+                        toast.success(res.data.message)
+                        handleConfirm && handleConfirm(true)
+                        handleClose && handleClose()
+                    } else {
+                        toast.error(res.data.message)
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         })
     }
 

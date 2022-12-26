@@ -15,6 +15,7 @@ import orderApi from '@/api/orderApi'
 import { ORDER_STATUS, PAYMENT_METHOD } from '../constant'
 import moment from 'moment'
 import Loading from '@/components/Common/Loading'
+import { toast } from 'react-toastify'
 
 export default function OrderDetails() {
     const [orderDetail, setOrderDetail] = useState([])
@@ -22,14 +23,14 @@ export default function OrderDetails() {
     let { orderId } = useParams()
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(true)
+    const [reload, setReload] = useState(false)
 
-    // const [listOrder, setListOrder] = useState([])
 
     useEffect(() => {
         const getOrderById = async (orderId) => {
             try {
                 const response = await orderApi.getAllOrderById(orderId)
-                console.log("setOrderDetail", response.data)
+                console.log('setOrderDetail', response.data)
                 if (response.data) {
                     setIsLoading(false)
                     setOrderDetail(response.data)
@@ -40,20 +41,19 @@ export default function OrderDetails() {
             }
         }
         getOrderById(orderId)
-    }, [])
+        setReload(false)
+    }, [reload])
 
-    // useEffect(() => {
-    //     const getAllProduct = async (status) => {
-    //         try {
-    //             const response = await orderApi.getAllOrder(status)
-    //             setListProducts(response.data)
-    //         } catch (error) {
-    //             console.log('fail when getAllProduct', error)
-    //         }
-    //     }
-    //     getAllProduct(status)
-    //     setIsUpdated(false)
-    // }, [isUpdated, status])
+    const handleCreateReceipt = async () => {
+        try {
+            const response = await orderApi.createInvoice(orderId)
+            toast.success(response.message)
+            setReload(true)
+        } catch (error) {
+            toast.error(error)
+            console.log('fail when handleCreateReceipt', error.message)
+        }
+    }
 
     const addressDetails = () =>
         orderDetail[0]?.customer.address
@@ -61,38 +61,15 @@ export default function OrderDetails() {
             : 'Khách hàng chưa có địa chỉ'
 
     const addressDetails1 = () =>
-    orderDetail[0].addressDetail
-        ? `${orderDetail[0].addressDetail}, ${orderDetail[0].districtName}, ${orderDetail[0].wardName}, ${orderDetail[0].provinceName}`
-        : 'Khách hàng chưa có địa chỉ'
+        orderDetail[0].addressDetail
+            ? `${orderDetail[0].addressDetail}, ${orderDetail[0].districtName}, ${orderDetail[0].wardName}, ${orderDetail[0].provinceName}`
+            : 'Khách hàng chưa có địa chỉ'
 
     const paymentMethod = () => orderDetail[0] && PAYMENT_METHOD[orderDetail[0]?.typeOfPay - 1].name
 
     const orderStatus = () =>
         orderDetail[0] && ORDER_STATUS.filter((item) => item.id === orderDetail[0]?.status)[0]
 
-    const totalAmount =
-        orderDetail[0] &&
-        orderDetail[0].orderProductDtos.reduce(
-            (result, value) =>
-                result +
-                value?.product.priceOut -
-                (value?.product.priceOut * value?.product.discount) / 100,
-            0
-        )
-
-    const totalAmountAfter =
-        orderDetail[0] &&
-        orderDetail[0].orderProductDtos.reduce(
-            (result, value) =>
-                result + value.quantity * value.product.priceOut - value.changedPrice,
-            0
-        )
-
-    useEffect(() => {
-        console.log(isLoading)
-    }, [isLoading])
-
-    console.log('orderDetail', orderDetail)
     if (isLoading) return <Loading />
     else
         return (
@@ -111,13 +88,19 @@ export default function OrderDetails() {
                     <Box sx={{ display: 'flex', gap: '12px' }}>
                         {/* <Button variant="contained">Xem báo giá</Button> */}
                         {orderDetail[0]?.status !== 3 && orderDetail[0]?.status !== 4 ? (
-                            <Button
-                                variant="contained"
-                                onClick={() =>
-                                    navigate('../orders/createOrder', { state: orderDetail })
-                                }>
-                                Tạo báo giá
-                            </Button>
+                            <>
+                                <Button
+                                    variant="outlined"
+                                    onClick={() =>
+                                        navigate('../orders/createOrder', { state: orderDetail })
+                                    }>
+                                    Tạo báo giá
+                                </Button>
+
+                                <Button variant="contained" onClick={handleCreateReceipt}>
+                                    Tạo hóa đơn
+                                </Button>
+                            </>
                         ) : null}
                     </Box>
                 </Box>
@@ -160,12 +143,8 @@ export default function OrderDetails() {
                                             </Box>
                                         </StyledTableCell>
                                         <StyledTableCell align="left">
-                                            {(
-                                                // row?.product.priceOut -
-                                                // (row?.product.priceOut * row?.product.discount) /
-                                                //     100
-                                                row.priceOutProduct
-                                            ).toLocaleString('vi-VN')}{' '}
+                                            {row.priceOutProduct //     100 // (row?.product.priceOut * row?.product.discount) / // row?.product.priceOut -
+                                                .toLocaleString('vi-VN')}{' '}
                                             VND
                                         </StyledTableCell>
                                         <StyledTableCell align="center">
@@ -179,15 +158,20 @@ export default function OrderDetails() {
                                         </StyledTableCell>
                                         <StyledTableCell align="left">
                                             <b>
-                                                {(
+                                                {
                                                     // (row?.product.priceOut -
                                                     //     (row?.product.priceOut *
                                                     //         row?.product.discount) /
                                                     //         100) *
                                                     //     row?.quantity -
                                                     // row?.changedPrice
-                                                    ((100 - row.discount)/100)*row.priceOutProduct*row.quantity  - row.changedPrice
-                                                ).toLocaleString('vi-VN')}{' '}
+                                                    (
+                                                        ((100 - row.discount) / 100) *
+                                                            row.priceOutProduct *
+                                                            row.quantity -
+                                                        row.changedPrice
+                                                    ).toLocaleString('vi-VN')
+                                                }{' '}
                                                 VND
                                             </b>
                                         </StyledTableCell>
@@ -214,7 +198,10 @@ export default function OrderDetails() {
                             <table>
                                 <tr>
                                     <td className="td">Tổng</td>
-                                    <td>{orderDetail[0].totalOrderPrice?.toLocaleString('vi-VN')} VND</td>
+                                    <td>
+                                        {orderDetail[0].totalOrderPrice?.toLocaleString('vi-VN')}{' '}
+                                        VND
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Tổng tiền chiết khấu</td>
@@ -226,14 +213,12 @@ export default function OrderDetails() {
                                     </td>
                                 </tr>
                                 <tr>
-                                        <td>Tổng tiền giảm giá</td>
-                                        <td>
-                                            {orderDetail[0].totalDiscountPrice.toLocaleString(
-                                                'vi-VN'
-                                            )}{' '}
-                                            VND
-                                        </td>
-                                    </tr>
+                                    <td>Tổng tiền giảm giá</td>
+                                    <td>
+                                        {orderDetail[0].totalDiscountPrice.toLocaleString('vi-VN')}{' '}
+                                        VND
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>
                                         <b>Tổng tiền</b>
@@ -241,7 +226,9 @@ export default function OrderDetails() {
                                     <td>
                                         <b>
                                             {(
-                                                orderDetail[0].totalOrderPrice-orderDetail[0].totalDiscountPrice-orderDetail[0].totalOrderPriceAfter
+                                                orderDetail[0].totalOrderPrice -
+                                                orderDetail[0].totalDiscountPrice -
+                                                orderDetail[0].totalOrderPriceAfter
                                             ).toLocaleString('vi-VN')}{' '}
                                             VND
                                         </b>
@@ -253,7 +240,7 @@ export default function OrderDetails() {
                     <Divider />
                     <Grid container sx={{ px: 4, py: 2 }}>
                         <Grid item xs={4}>
-                            { orderDetail[0].isAddAddress == false ? 
+                            {orderDetail[0].isAddAddress == false ? (
                                 <Box>
                                     <Typography variant="subtitle1">
                                         <b>THÔNG TIN KHÁCH HÀNG</b>
@@ -271,7 +258,7 @@ export default function OrderDetails() {
                                         <b>Email: </b> {orderDetail[0]?.customer.email}
                                     </Typography>
                                 </Box>
-                            : 
+                            ) : (
                                 <Box>
                                     <Typography variant="subtitle1">
                                         <b>THÔNG TIN KHÁCH HÀNG</b>
@@ -289,7 +276,7 @@ export default function OrderDetails() {
                                         <b>Email: </b> {orderDetail[0]?.customer.email}
                                     </Typography>
                                 </Box>
-                            }
+                            )}
                         </Grid>
                         <Grid item xs={4}>
                             <Typography variant="subtitle1">

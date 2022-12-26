@@ -41,21 +41,11 @@ function ImageUpload({ onSubmit, selectedData, isEdit }) {
     return (
         <>
             <Box sx={{ display: 'flex', flexDirection: 'column', px: 3 }}>
-                {/* <Box sx={{ position: 'relative' }}>
-                    {image?.photoMainName && isEdit && (
-                    <IconButton
-                        aria-label="delete"
-                        sx={{ position: 'absolute' }}
-                        onClick={() => handleDeleteImage(1)}>
-                        <CancelRoundedIcon />
-                    </IconButton>
-                    )} */}
                 <img
                     src={image?.photoMainName || placeholderImage}
                     alt="placeholderImage"
                     width="100%"
                 />
-                {/* </Box> */}
                 <Button variant="contained" component="label" sx={{ mt: 2 }}>
                     Chọn ảnh
                     {isEdit && (

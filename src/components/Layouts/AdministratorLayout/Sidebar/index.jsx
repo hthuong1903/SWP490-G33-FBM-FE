@@ -47,7 +47,7 @@ function Sidebar() {
                 handleClose={() => setIsOpenConfirmDialog(false)}
                 handleConfirm={() => {
                     // toast.success('Đăng xuất thành công!')
-                    localStorage.removeItem('fbm-user')
+                    localStorage.clear()
                     navigate('/manager')
                     setAuth(null)}
                 }

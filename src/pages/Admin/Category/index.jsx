@@ -35,10 +35,9 @@ export default function Category() {
     const handleDelete = async () => {
         try {
             const response = await categoryApi.deleteCategory(selectedRow?.row.id)
-            if (response.message == 'Xóa thất bại'){
+            if (response.message == 'Xóa thất bại') {
                 toast.error('Danh mục có chứa sản phẩm, không thể xóa !')
-            }
-            else{
+            } else {
                 toast.success('Xóa thành công !')
             }
             setIsOpenConfirmModal(false)
@@ -56,7 +55,7 @@ export default function Category() {
             renderCell: (params) => {
                 return (
                     <Box>
-                        <Avatar sx={{width: 48, height: 48}} src={params.row.urlImage} />
+                        <Avatar sx={{ width: 48, height: 48 }} src={params.row.urlImage} />
                     </Box>
                 )
             }
@@ -65,15 +64,8 @@ export default function Category() {
             field: 'name',
             headerName: 'TÊN DANH MỤC',
             flex: 1,
-            // renderCell: (params) => {
-            //     return <Typography sx={{ fontWeight: 'bold' }}>{params.value}</Typography>
-            // }
             renderCell: (params) => {
-                return (
-                    <Typography sx={{ fontWeight: 'bold' }}>
-                        {params.value}
-                    </Typography>
-                )
+                return <Typography sx={{ fontWeight: 'bold' }}>{params.value}</Typography>
             }
         },
         {
