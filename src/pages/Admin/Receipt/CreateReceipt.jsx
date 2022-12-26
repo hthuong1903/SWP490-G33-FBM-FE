@@ -191,7 +191,7 @@ function CreateReceipt() {
                             <TableRow>
                                 <StyledTableCell align="left">Tên sản phẩm</StyledTableCell>
                                 <StyledTableCell align="left">Giá bán</StyledTableCell>
-                                <StyledTableCell align="left">Giảm giá</StyledTableCell>
+                                <StyledTableCell align="center">Giảm giá</StyledTableCell>
                                 <StyledTableCell align="center">Số lượng</StyledTableCell>
                                 <StyledTableCell align="left">Chiết khấu</StyledTableCell>
                                 <StyledTableCell align="left">Thành tiền</StyledTableCell>
@@ -234,8 +234,8 @@ function CreateReceipt() {
                                         <StyledTableCell align="left">
                                             {row?.product.priceOut.toLocaleString('vi-vn')} VND
                                         </StyledTableCell>
-                                        <StyledTableCell>
-                                            {row?.discountProduct} %
+                                        <StyledTableCell align="center">
+                                            {row?.discountProduct}%
                                         </StyledTableCell>
                                         <StyledTableCell align="center">
                                             <Box sx={{ display: 'flex' }}>

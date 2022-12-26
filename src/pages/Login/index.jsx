@@ -127,7 +127,7 @@ export default function Login() {
                                             />
                                         }
                                     />
-                                    <Typography
+                                    {/* <Typography
                                         sx={{
                                             mt: 2,
                                             color: 'primary.main',
@@ -137,7 +137,7 @@ export default function Login() {
                                         component={Link}
                                         to="/manager/admin">
                                         Quên mật khẩu?
-                                    </Typography>
+                                    </Typography> */}
                                 </Box>
                                 <Box>
                                     <LoadingButton
