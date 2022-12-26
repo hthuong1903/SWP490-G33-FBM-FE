@@ -12,7 +12,7 @@ const authApi = {
         return axiosClient.get(url)
     },
     getUserInternal:()=>{
-        const url = `/user_internal`
+        const url = `/employee`
         return axiosClient.get(url)
     },
     signUpCustomer: (data) => {

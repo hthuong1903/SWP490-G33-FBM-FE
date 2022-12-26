@@ -10,6 +10,7 @@ function Salary({ value, index, periodCode }) {
     const [salary, setSalary] = useState([])
     const [isRender, setIsRender] = useState(true)
     const [state, dispatch] = useContext(Context)
+    const [disabled, setDisabled] = useState(true);
 
     const getSalary = async (period_code) => {
         try {
@@ -197,13 +198,20 @@ function Salary({ value, index, periodCode }) {
                         p: 1
                     }
                 }}>
-                <Button
-                    sx={{ mb: 2, ml: 170 }}
-                    variant="contained"
-                    onClick={() => handleSendEmail()}
-                    autoFocus>
-                    Gửi lương
-                </Button>
+                {salary.length > 0 ?
+                    <Button
+                        sx={{ mb: 2, ml: 170 }}
+                        variant="contained"
+                        onClick={() => handleSendEmail()}
+                        autoFocus>
+                        Gửi lương
+                    </Button>
+                    : <Button sx={{ mb: 2, ml: 170 }}
+                        variant="contained" 
+                        disabled>Gửi lương
+                    </Button>
+                }
+                
                 <DataTable columns={columns} rows={rows} />
             </Box>
         </div>
