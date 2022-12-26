@@ -42,6 +42,10 @@ export default function Provider() {
         getAllProvider()
     }, [isUpdated])
 
+    useEffect(() => {
+        console.log('123', isEdit)
+    }, [isEdit])
+
     const columns = [
         {
             field: 'name',
@@ -58,7 +62,7 @@ export default function Provider() {
             align: 'center',
             flex: 1
         },
-        { field: 'email', headerName: 'EMAIL', flex: 1.5, headerAlign: 'center',align: 'center' },
+        { field: 'email', headerName: 'EMAIL', flex: 1.5, headerAlign: 'center', align: 'center' },
         {
             field: 'content',
             headerName: 'ĐỊA CHỈ',
@@ -87,7 +91,6 @@ export default function Provider() {
                         onClick={() => {
                             console.log(params)
                             setSelectedRow(params)
-                            setIsEdit(false)
                             setIsOpenUpdateModal(true)
                         }}>
                         Xem
@@ -108,7 +111,6 @@ export default function Provider() {
                         variant="contained"
                         onClick={() => {
                             setSelectedRow(params)
-                            setIsEdit(false)
                             setIsOpenConfirmModal(true)
                         }}>
                         Xóa
@@ -125,7 +127,7 @@ export default function Provider() {
                     title={'Thêm nhà cung cấp'}
                     handleClose={() => setIsOpenAddModal(false)}
                     handleConfirm={() => setIsUpdated(true)}
-                    isEdit={isEdit}
+                    isEdit={!isEdit}
                 />
             )}
 
@@ -136,7 +138,7 @@ export default function Provider() {
                     handleClose={() => setIsOpenUpdateModal(false)}
                     handleConfirm={() => setIsUpdated(true)}
                     selectedData={selectedRow.row}
-                    isEdit={isEdit}
+                    isEdit={!isEdit}
                 />
             )}
 
